@@ -5,14 +5,32 @@ import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 
-class EditAddressBottomSheet extends StatefulWidget {
+class FilterBottomSheet extends StatefulWidget {
   @override
-  _EditAddressBottomSheetState createState() => _EditAddressBottomSheetState();
+  _FilterBottomSheetState createState() => _FilterBottomSheetState();
 }
 
 
-class _EditAddressBottomSheetState extends State<EditAddressBottomSheet> with TickerProviderStateMixin{
+class _FilterBottomSheetState extends State<FilterBottomSheet> with TickerProviderStateMixin{
 
+  var _financialyear = [
+    "2019-2020",
+    "2020-2021",
+    "2021-2022",
+    "2022-2023",
+  ];
+
+  var selectedFinancialValue = '2021-2022';
+
+  var _segment = [
+    "ABC",
+    "DEF",
+    "GHI",
+    "JKL",
+    "MNO",
+  ];
+
+  var selectedSegmentValue = 'DEF';
 
 
 @override
@@ -39,7 +57,7 @@ Widget build(BuildContext context) {
             child: Row(
               children: [
                 Expanded(
-                  child: Text('Update the Address',
+                  child: Text('Filter',
                     style: GoogleFonts.roboto(
                       textStyle: Theme.of(context).textTheme.bodyMedium,
                       fontWeight: FontWeight.w600,
@@ -66,11 +84,10 @@ Widget build(BuildContext context) {
                     Container(
                       child: Column(
                         children: [
-
                           Container(
                             alignment: Alignment.topLeft,
                             padding: EdgeInsets.symmetric(vertical: 5),
-                            child: Text('Address Line',
+                            child: Text('Date Range',
                             style: GoogleFonts.robotoCondensed(
                               textStyle: Theme.of(context).textTheme.labelLarge,
                               letterSpacing: 1.75,
@@ -78,107 +95,24 @@ Widget build(BuildContext context) {
                             ),
                             ),
                           ),
-                          
                           TextField(
                             style: GoogleFonts.roboto(
                               textStyle: Theme.of(context).textTheme.bodyMedium,
                               fontWeight: FontWeight.w600,
                               letterSpacing: 1.2,
                             ),
-                            maxLines: 4,
+                            autofocus: false,
                             decoration: InputDecoration(
+                              contentPadding: EdgeInsets.symmetric(vertical: 15, horizontal: 15),
                               floatingLabelBehavior: FloatingLabelBehavior.never,
-                              hintText: 'Enter Address Line'.toLowerCase(),
+                              hintText: 'Date Range'.toLowerCase(),
                               hintStyle: GoogleFonts.roboto(
                                 textStyle: Theme.of(context).textTheme.bodyMedium,
                                 letterSpacing: 1.8,
                                 fontWeight: FontWeight.w300),
-                              enabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(color: Theme.of(context).colorScheme.outline),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(color: Theme.of(context).colorScheme.primary, width: 1),
-                              ),
-                            ),
-                          ),
-                        ],
-                      )
-                    ),
-                    
-                    
-                    
-                    SizedBox(height: 10),
-                    Container(
-                      child: Column(
-                        children: [
 
-                          Container(
-                            alignment: Alignment.topLeft,
-                            padding: EdgeInsets.symmetric(vertical: 5),
-                            child: Text('Pincode',
-                            style: GoogleFonts.robotoCondensed(
-                              textStyle: Theme.of(context).textTheme.labelLarge,
-                              letterSpacing: 1.75,
-                              fontWeight: FontWeight.w400,
-                            ),
-                            ),
-                          ),
-                          
-                          TextField(
-                            style: GoogleFonts.roboto(
-                              textStyle: Theme.of(context).textTheme.bodyMedium,
-                              fontWeight: FontWeight.w600,
-                              letterSpacing: 1.2,
-                            ),
-                            decoration: InputDecoration(
-                              floatingLabelBehavior: FloatingLabelBehavior.never,
-                              hintText: 'Enter Pincode'.toLowerCase(),
-                              hintStyle: GoogleFonts.roboto(
-                                textStyle: Theme.of(context).textTheme.bodyMedium,
-                                letterSpacing: 1.8,
-                                fontWeight: FontWeight.w300),
-                              enabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(color: Theme.of(context).colorScheme.outline),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(color: Theme.of(context).colorScheme.primary, width: 1),
-                              ),
-                            ),
-                          ),
-                        ],
-                      )
-                    ),
-                    SizedBox(height: 10),
-
-                    Container(
-                      child: Column(
-                        children: [
-
-                          Container(
-                            alignment: Alignment.topLeft,
-                            padding: EdgeInsets.symmetric(vertical: 5),
-                            child: Text('Country',
-                            style: GoogleFonts.robotoCondensed(
-                              textStyle: Theme.of(context).textTheme.labelLarge,
-                              letterSpacing: 1.75,
-                              fontWeight: FontWeight.w400,
-                            ),
-                            ),
-                          ),
-                          
-                          TextField(
-                            style: GoogleFonts.roboto(
-                              textStyle: Theme.of(context).textTheme.bodyMedium,
-                              fontWeight: FontWeight.w600,
-                              letterSpacing: 1.2,
-                            ),
-                            decoration: InputDecoration(
-                              floatingLabelBehavior: FloatingLabelBehavior.never,
-                              hintText: 'Select Country'.toLowerCase(),
-                              hintStyle: GoogleFonts.roboto(
-                                textStyle: Theme.of(context).textTheme.bodyMedium,
-                                letterSpacing: 1.8,
-                                fontWeight: FontWeight.w300),
+                              suffixIcon: Icon(Icons.calendar_month_outlined),
+                              
                               enabledBorder: OutlineInputBorder(
                                 borderSide: BorderSide(color: Theme.of(context).colorScheme.outline),
                               ),
@@ -194,11 +128,10 @@ Widget build(BuildContext context) {
                     Container(
                       child: Column(
                         children: [
-
                           Container(
                             alignment: Alignment.topLeft,
                             padding: EdgeInsets.symmetric(vertical: 5),
-                            child: Text('State',
+                            child: Text('Financial Year',
                             style: GoogleFonts.robotoCondensed(
                               textStyle: Theme.of(context).textTheme.labelLarge,
                               letterSpacing: 1.75,
@@ -206,20 +139,21 @@ Widget build(BuildContext context) {
                             ),
                             ),
                           ),
-                          
-                          TextField(
+                          DropdownButtonFormField(
                             style: GoogleFonts.roboto(
                               textStyle: Theme.of(context).textTheme.bodyMedium,
                               fontWeight: FontWeight.w600,
                               letterSpacing: 1.2,
                             ),
                             decoration: InputDecoration(
-                              floatingLabelBehavior: FloatingLabelBehavior.never,
-                              hintText: 'Select State'.toLowerCase(),
+                              contentPadding: EdgeInsets.all(10),
+                              floatingLabelBehavior: FloatingLabelBehavior.auto,
+                              hintText: 'Financial Year'.toLowerCase(),
                               hintStyle: GoogleFonts.roboto(
                                 textStyle: Theme.of(context).textTheme.bodyMedium,
                                 letterSpacing: 1.8,
                                 fontWeight: FontWeight.w300),
+                              
                               enabledBorder: OutlineInputBorder(
                                 borderSide: BorderSide(color: Theme.of(context).colorScheme.outline),
                               ),
@@ -227,19 +161,36 @@ Widget build(BuildContext context) {
                                 borderSide: BorderSide(color: Theme.of(context).colorScheme.primary, width: 1),
                               ),
                             ),
+                            items: _financialyear.map((String value) {
+                              return DropdownMenuItem<String>(
+                                value: value,
+                                child: Text(value,
+                                style: GoogleFonts.roboto(
+                                  textStyle: Theme.of(context).textTheme.bodyMedium,
+                                  fontWeight: FontWeight.w600,
+                                  letterSpacing: 1.2,
+                                ),
+                                ),
+                              );
+                            }).toList(), 
+                            focusColor: Colors.white,
+                            onChanged: (String? newValue){
+                              setState(() {
+                                selectedFinancialValue = newValue!;
+                              });
+                            },
                           ),
                         ],
-                      )
+                      ),
                     ),
                     SizedBox(height: 10),
-
                     Container(
                       child: Column(
                         children: [
                           Container(
                             alignment: Alignment.topLeft,
                             padding: EdgeInsets.symmetric(vertical: 5),
-                            child: Text('City',
+                            child: Text('Segment',
                             style: GoogleFonts.robotoCondensed(
                               textStyle: Theme.of(context).textTheme.labelLarge,
                               letterSpacing: 1.75,
@@ -247,16 +198,16 @@ Widget build(BuildContext context) {
                             ),
                             ),
                           ),
-                          
-                          TextField(
+                          DropdownButtonFormField(
                             style: GoogleFonts.roboto(
                               textStyle: Theme.of(context).textTheme.bodyMedium,
                               fontWeight: FontWeight.w600,
                               letterSpacing: 1.2,
                             ),
                             decoration: InputDecoration(
-                              floatingLabelBehavior: FloatingLabelBehavior.never,
-                              hintText: 'Select City'.toLowerCase(),
+                              contentPadding: EdgeInsets.all(10),
+                              floatingLabelBehavior: FloatingLabelBehavior.auto,
+                              hintText: 'Segment'.toLowerCase(),
                               hintStyle: GoogleFonts.roboto(
                                 textStyle: Theme.of(context).textTheme.bodyMedium,
                                 letterSpacing: 1.8,
@@ -268,12 +219,30 @@ Widget build(BuildContext context) {
                                 borderSide: BorderSide(color: Theme.of(context).colorScheme.primary, width: 1),
                               ),
                             ),
+                            items: _segment.map((String value) {
+                              return DropdownMenuItem<String>(
+                                value: value,
+                                child: Text(value,
+                                style: GoogleFonts.roboto(
+                                  textStyle: Theme.of(context).textTheme.bodyMedium,
+                                  fontWeight: FontWeight.w600,
+                                  letterSpacing: 1.2,
+                                ),
+                                ),
+                              );
+                            }).toList(), 
+                            focusColor: Colors.white,
+                            onChanged: (String? newValue){
+                              setState(() {
+                                selectedSegmentValue = newValue!;
+                              });
+                            },
                           ),
+
                         ],
-                      )
+                      ),
                     ),
 
-                    
                   ],
                 ),
               ),
@@ -294,24 +263,28 @@ Widget build(BuildContext context) {
                     onPressed: (){
                       Navigator.pop(context);
                     },
-                    style: OutlinedButton.styleFrom(             
+                    style: OutlinedButton.styleFrom(
                       side: BorderSide(color: Theme.of(context).colorScheme.secondary),
                       foregroundColor: Theme.of(context).colorScheme.secondary,
                       padding: EdgeInsets.symmetric(horizontal: 15, vertical: 15),
                       alignment: Alignment.center,
                     ),
-                    child: Text('Cancel'),
+                    child: Text('Cancel',
+                    ),
                   ),
                 ),
                 SizedBox(width: 10),
                 Expanded(
                   child: ElevatedButton(
-                  onPressed: (){}, 
+                  onPressed: (){
+                  }, 
                   style: ElevatedButton.styleFrom(
+                    backgroundColor: Theme.of(context).colorScheme.primary, 
+                    foregroundColor: Theme.of(context).colorScheme.onPrimary,
                     padding: EdgeInsets.symmetric(horizontal: 15, vertical: 15),
                     alignment: Alignment.center,
                   ),
-                  child: Text('Update'),
+                  child: Text('Apply'),
                 ),
                 ),
               ],

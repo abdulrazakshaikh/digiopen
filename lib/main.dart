@@ -1,7 +1,9 @@
-import 'package:digiopeners/dashboard.dart';
-import 'package:digiopeners/profile/profile.dart';
-import 'package:digiopeners/splashscreen.dart';
-import 'package:digiopeners/theme/color_schemes.g.dart';
+import 'package:xceednet/dashboard.dart';
+import 'package:xceednet/profile/profile.dart';
+import 'package:xceednet/splashscreen.dart';
+import 'package:xceednet/subscribers/subscribers_add.dart';
+import 'package:xceednet/subscribers/subscribers_list.dart';
+import 'package:xceednet/theme/color_schemes.g.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -28,7 +30,7 @@ class MyApp extends StatelessWidget {
         builder: (_, ThemeMode currentMode, __) {
           return MaterialApp(
             debugShowCheckedModeBanner: false,
-            title: 'Digiopeners',
+            title: 'xceednet',
             theme: lightthemeData(context),
             darkTheme: darkThemeData(context),
             themeMode: 
@@ -38,7 +40,9 @@ class MyApp extends StatelessWidget {
             home: 
             // SplashScreen(),
             // const Dashboard(title: 'Dashboard')
-            const Profile(title: 'Profile')
+            // const Profile(title: 'Profile')
+            const SubscribersList(title: 'Subscribers List')
+            // const SubscribersAdd(title: 'Subscribers Add')
           );
         });
   }

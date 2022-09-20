@@ -1,5 +1,5 @@
 import 'dart:ui';
-import 'package:digiopeners/login/login.dart';
+import 'package:xceednet/login/login.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
@@ -71,14 +71,15 @@ late Animation<double> _animation;
                     child: Column(
                       children: [
                         Container(
+                          height: 96,
                           child: Image.asset(
                             'images/logo.png',
                             fit: BoxFit.contain,
                           ),
                         ),
-                        Text('Digi Openers'.toUpperCase(),
-                          style: Theme.of(context).textTheme.displaySmall
-                        ),
+                        // Text('Xceednet'.toUpperCase(),
+                        //   style: Theme.of(context).textTheme.displaySmall
+                        // ),
                       ],
                     ),
                   ),

@@ -1,8 +1,9 @@
-import 'package:digiopeners/dashboard.dart';
-import 'package:digiopeners/main.dart';
-import 'package:digiopeners/profile/profile.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:xceednet/dashboard.dart';
+import 'package:xceednet/main.dart';
+import 'package:xceednet/profile/profile.dart';
+import 'package:xceednet/subscribers/subscribers_list.dart';
 
 class MenuDrawer extends StatefulWidget {
   @override
@@ -330,7 +331,16 @@ class _MenuDrawerState extends State<MenuDrawer> {
                         pageBuilder: (context, animation, secondaryAnimation) =>
                           FadeTransition(
                           opacity: animation,
-                          child: Dashboard(title: 'Dashboard'),
+                          child:
+                          
+                          item["id"] == "001" ?
+                          Dashboard(title: 'Dashboard')
+                          :
+                          item["id"] == "002" ?
+                          SubscribersList(title: 'Subscribers List')
+                          : 
+                          null,
+
                         ),
                       ),
                     );

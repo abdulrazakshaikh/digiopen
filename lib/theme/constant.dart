@@ -16,10 +16,14 @@ const arssecondarycontainer = Color(0x406c757d);
 const arstertiarycontainer = Color(0x4091552C);
 
 const arsbackgroundLight = Color(0xFFFFFFFF);
-const arssurfaceLight = Color(0xFFE7E7E7);
-
 const arsbackgroundDark = Color(0xFF323232);
-const arssurfaceDark = Color(0xFF383838);
+
+const arssurfaceLight = Color(0xFFf2f2f2);
+const arssurfaceDark = Color(0xFF424242);
+
+
+const arscardLight = Color(0xFFFFFFFF);
+const arscardDark = Color(0xFF323232);
 
 const arsappbarbackgroundLight = Color(0xFFFFFFFF);
 const arsappbarbackgroundDark = Color(0xFF323232);

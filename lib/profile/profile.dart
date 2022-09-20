@@ -1,9 +1,9 @@
-import 'package:digiopeners/common_widgets/menuDrawer.dart';
-import 'package:digiopeners/profile/changepassword_bottomsheet.dart';
-import 'package:digiopeners/profile/confirmation.dart';
-import 'package:digiopeners/profile/editaddress_bottomsheet.dart';
-import 'package:digiopeners/profile/editemail_bottomsheet.dart';
-import 'package:digiopeners/profile/editphone_bottomsheet.dart';
+import 'package:xceednet/common_widgets/menuDrawer.dart';
+import 'package:xceednet/profile/changepassword_bottomsheet.dart';
+import 'package:xceednet/profile/confirmation.dart';
+import 'package:xceednet/profile/editaddress_bottomsheet.dart';
+import 'package:xceednet/profile/editemail_bottomsheet.dart';
+import 'package:xceednet/profile/editphone_bottomsheet.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';

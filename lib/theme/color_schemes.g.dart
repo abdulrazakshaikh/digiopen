@@ -370,7 +370,41 @@ NavigationRailThemeData lightNavigationRailTheme = NavigationRailThemeData(
 NavigationRailThemeData darkNavigationRailTheme = NavigationRailThemeData(
   backgroundColor: arsnavigationrailbackgroundDark,
   elevation: 4,
-  
+  indicatorColor: arsprimary,
+  // useIndicator: false,
+  unselectedIconTheme: IconThemeData(
+    size: 24,
+  ),
+  selectedIconTheme: IconThemeData(
+    size: 24,
+    color: arsonprimary,
+  ),
+  unselectedLabelTextStyle: GoogleFonts.robotoCondensed(
+    textStyle: TextStyle(letterSpacing: 1,fontWeight: FontWeight.w500)
+  ),
+  selectedLabelTextStyle: GoogleFonts.robotoCondensed(
+    textStyle: TextStyle(letterSpacing: 1,fontWeight: FontWeight.bold, color: arsprimary,)
+  ),
+);
+
+// ------CARD THEME--------//
+CardTheme lightCardTheme = CardTheme(
+  elevation: 0,
+  color: arscardLight,
+  surfaceTintColor: arscardLight,
+  shape: RoundedRectangleBorder(
+    borderRadius: BorderRadius.circular(4),
+    side: BorderSide(width: 1, color: arsoutline.withOpacity(0.1)),
+  ),
+);
+CardTheme darkCardTheme = CardTheme(
+  elevation: 0,
+  color: arscardDark,
+  surfaceTintColor: arscardDark,
+  shape: RoundedRectangleBorder(
+    borderRadius: BorderRadius.circular(4),
+    side: BorderSide(width: 1, color: arsoutline.withOpacity(0.1)),
+  ),
 );
 
 
@@ -384,6 +418,7 @@ ThemeData lightthemeData(BuildContext context) {
 
     appBarTheme: lightAppbarTheme,
     drawerTheme: lightDrawerTheme,
+    cardTheme: lightCardTheme,
 
     iconTheme: lightIconTheme,    
 
@@ -409,9 +444,10 @@ ThemeData darkThemeData(BuildContext context) {
 
     appBarTheme: darkAppbarTheme,
     drawerTheme: darkDrawerTheme,
+    cardTheme: darkCardTheme,
     
     iconTheme: darkIconTheme,
-
+    
     textButtonTheme: darkTextButtonTheme,
     buttonTheme: darkButtonTheme,
     elevatedButtonTheme: darkElevatedButtonTheme,

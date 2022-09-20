@@ -1,7 +1,7 @@
-import 'package:digiopeners/login/forgot_password.dart';
-import 'package:digiopeners/login/login_success.dart';
-import 'package:digiopeners/login/resend_confirmation.dart';
-import 'package:digiopeners/login/signup.dart';
+import 'package:xceednet/login/forgot_password.dart';
+import 'package:xceednet/login/login_success.dart';
+import 'package:xceednet/login/resend_confirmation.dart';
+import 'package:xceednet/login/signup.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
