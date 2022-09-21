@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:xceednet/accessrequest_log/accessrequest_list.dart';
 import 'package:xceednet/dashboard.dart';
 import 'package:xceednet/main.dart';
+import 'package:xceednet/online_subscribers/onlinesubscribers_list.dart';
 import 'package:xceednet/profile/profile.dart';
+import 'package:xceednet/reports/reports.dart';
 import 'package:xceednet/subscribers/subscribers_list.dart';
 
 class MenuDrawer extends StatefulWidget {
@@ -338,6 +341,15 @@ class _MenuDrawerState extends State<MenuDrawer> {
                           :
                           item["id"] == "002" ?
                           SubscribersList(title: 'Subscribers List')
+                          :
+                          item["id"] == "003" ?
+                          OnlineSubscribersList(title: 'Online Subscribers List')
+                          : 
+                          item["id"] == "004" ?
+                          AccessRequestList(title: 'Access Request Log')
+                          : 
+                          item["id"] == "005" ?
+                          Reports(title: 'Reports')
                           : 
                           null,
 

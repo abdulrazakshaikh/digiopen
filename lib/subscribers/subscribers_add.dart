@@ -78,7 +78,7 @@ class _SubscribersAddState extends State<SubscribersAdd> {
                   padding: EdgeInsets.symmetric(horizontal: 15, vertical: 20),
                   alignment: Alignment.center,
                 ),
-                child: Text('Login'),
+                child: Text('Create'),
               ),
             )
           ],

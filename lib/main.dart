@@ -1,5 +1,6 @@
 import 'package:xceednet/dashboard.dart';
 import 'package:xceednet/profile/profile.dart';
+import 'package:xceednet/reports/reports.dart';
 import 'package:xceednet/splashscreen.dart';
 import 'package:xceednet/subscribers/subscribers_add.dart';
 import 'package:xceednet/subscribers/subscribers_list.dart';
@@ -41,8 +42,9 @@ class MyApp extends StatelessWidget {
             // SplashScreen(),
             // const Dashboard(title: 'Dashboard')
             // const Profile(title: 'Profile')
-            const SubscribersList(title: 'Subscribers List')
+            // const SubscribersList(title: 'Subscribers List')
             // const SubscribersAdd(title: 'Subscribers Add')
+            const Reports(title: 'Reports')
           );
         });
   }
