@@ -181,7 +181,7 @@ AppBarTheme darkAppbarTheme = AppBarTheme(
   elevation: 4,
   shadowColor: arsshadow,
   titleTextStyle: GoogleFonts.robotoCondensed(
-      textStyle: const TextStyle(fontSize: 15, color: Colors.white, letterSpacing: 1.2,fontWeight: FontWeight.w600)),
+    textStyle: const TextStyle(fontSize: 15, color: Colors.white, letterSpacing: 1.2,fontWeight: FontWeight.w600)),
   titleSpacing: 0,
 );
 

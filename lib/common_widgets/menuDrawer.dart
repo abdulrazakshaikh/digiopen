@@ -7,6 +7,7 @@ import 'package:xceednet/online_subscribers/onlinesubscribers_list.dart';
 import 'package:xceednet/profile/profile.dart';
 import 'package:xceednet/reports/reports.dart';
 import 'package:xceednet/subscribers/subscribers_list.dart';
+import 'package:xceednet/tickets/tickets_list.dart';
 
 class MenuDrawer extends StatefulWidget {
   @override
@@ -152,11 +153,6 @@ class _MenuDrawerState extends State<MenuDrawer> {
     },
     {
       "id": "017",
-      "title": "API Documentation",
-      "submenu" : "",
-    },
-    {
-      "id": "018",
       "title": "New Updates",
       "submenu" : "",
     },
@@ -349,7 +345,10 @@ class _MenuDrawerState extends State<MenuDrawer> {
                           AccessRequestList(title: 'Access Request Log')
                           : 
                           item["id"] == "005" ?
-                          Reports(title: 'Reports')
+                          Reports(title: 'Report')
+                          : 
+                          item["id"] == "006" ?
+                          TicketsList(title: 'Tickets List')
                           : 
                           null,
 

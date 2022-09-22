@@ -1,3 +1,4 @@
+import 'package:xceednet/accessrequest_log/accessrequest_list.dart';
 import 'package:xceednet/dashboard.dart';
 import 'package:xceednet/profile/profile.dart';
 import 'package:xceednet/reports/reports.dart';
@@ -7,6 +8,7 @@ import 'package:xceednet/subscribers/subscribers_list.dart';
 import 'package:xceednet/theme/color_schemes.g.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:xceednet/tickets/tickets_list.dart';
 
 void main() {
   runApp(MyApp());
@@ -44,7 +46,8 @@ class MyApp extends StatelessWidget {
             // const Profile(title: 'Profile')
             // const SubscribersList(title: 'Subscribers List')
             // const SubscribersAdd(title: 'Subscribers Add')
-            const Reports(title: 'Reports')
+            // const Reports(title: 'Reports')
+            const TicketsList(title: 'Ticket List')
           );
         });
   }
