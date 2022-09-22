@@ -31,7 +31,7 @@ class MyApp extends StatelessWidget {
         builder: (_, ThemeMode currentMode, __) {
           return MaterialApp(
             debugShowCheckedModeBanner: false,
-            title: 'xceednet',
+            title: 'Xceednet',
             theme: lightthemeData(context),
             darkTheme: darkThemeData(context),
             themeMode: 
