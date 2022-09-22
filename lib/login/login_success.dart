@@ -41,7 +41,7 @@ class _LoginSuccessState extends State<LoginSuccess> with TickerProviderStateMix
             Container(
               margin: EdgeInsets.only(bottom: 10),
               height: 300, width: 300,
-              child: Image.asset('images/success.png', fit: BoxFit.contain),
+              child: Image.asset('assets/images/success.png', fit: BoxFit.contain),
             ),
 
             Container(

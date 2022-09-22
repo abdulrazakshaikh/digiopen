@@ -35,7 +35,7 @@ class _SignupState extends State<Signup> with TickerProviderStateMixin {
                     margin: EdgeInsets.only(bottom: 10),
                     height: 220,
                     width: 220,
-                    child: Image.asset('images/signin_bg.png',
+                    child: Image.asset('assets/images/signin_bg.png',
                         fit: BoxFit.contain),
                   ),
 

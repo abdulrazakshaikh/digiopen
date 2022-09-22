@@ -38,7 +38,7 @@ class _ProfileState extends State<Profile> {
                 children: [
                   Stack(children: [
                     CircleAvatar(
-                      backgroundImage: AssetImage('images/default.jpg'),
+                      backgroundImage: AssetImage('assets/images/default.jpg'),
                       radius: 60,
                     ),
                     Positioned(

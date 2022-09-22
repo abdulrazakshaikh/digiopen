@@ -189,7 +189,7 @@ class _MenuDrawerState extends State<MenuDrawer> {
                       Container(
                         width: 54, height: 54,
                         child: CircleAvatar(
-                          backgroundImage: AssetImage('images/default.jpg'),
+                          backgroundImage: AssetImage('assets/images/default.jpg'),
                           radius: 60,
                         ),
                       ),
