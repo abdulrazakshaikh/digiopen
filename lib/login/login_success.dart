@@ -30,41 +30,43 @@ class _LoginSuccessState extends State<LoginSuccess> with TickerProviderStateMix
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.background,
-        ),
-        width: double.infinity,
-        padding: EdgeInsets.symmetric(vertical: 0, horizontal: 10),
-        child: Column(
-          children: [
-            Container(
-              margin: EdgeInsets.only(bottom: 10),
-              height: 300, width: 300,
-              child: Image.asset('assets/images/success.png', fit: BoxFit.contain),
-            ),
-
-            Container(
-              margin: EdgeInsets.only(bottom: 10),
-              child: Column(
-                children: [
-                  Text('Congratulations',
-                    style: GoogleFonts.roboto(
-                      textStyle: Theme.of(context).textTheme.headlineLarge,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                  Text('you have logged in to your account successfully', textAlign: TextAlign.center,
-                    style: GoogleFonts.roboto(
-                      textStyle: Theme.of(context).textTheme.bodyMedium,
-                      letterSpacing: 1.5
-                    ),
-
-                  ),
-                ],
+      body: SafeArea(
+        child: Container(
+          decoration: BoxDecoration(
+            color: Theme.of(context).colorScheme.background,
+          ),
+          width: double.infinity,
+          padding: EdgeInsets.symmetric(vertical: 0, horizontal: 10),
+          child: Column(
+            children: [
+              Container(
+                margin: EdgeInsets.only(bottom: 10),
+                height: 300, width: 300,
+                child: Image.asset('assets/images/success.png', fit: BoxFit.contain),
               ),
-            ),
-          ],
+
+              Container(
+                margin: EdgeInsets.only(bottom: 10),
+                child: Column(
+                  children: [
+                    Text('Congratulations',
+                      style: GoogleFonts.roboto(
+                        textStyle: Theme.of(context).textTheme.headlineLarge,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                    Text('you have logged in to your account successfully', textAlign: TextAlign.center,
+                      style: GoogleFonts.roboto(
+                        textStyle: Theme.of(context).textTheme.bodyMedium,
+                        letterSpacing: 1.5
+                      ),
+
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

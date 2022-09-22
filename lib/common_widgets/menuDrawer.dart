@@ -170,278 +170,280 @@ class _MenuDrawerState extends State<MenuDrawer> {
 
   @override
   Widget build(BuildContext context) {
-    return Drawer(
-      child: Column(
-        children: [
-          Container(
-            width: double.infinity,
-            padding: EdgeInsets.fromLTRB(10, 15, 5, 15),
-            decoration: BoxDecoration(
-              color: Theme.of(context).colorScheme.primary,
-            ),
-              
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Row(
-                    children: [
-                      Container(
-                        width: 54, height: 54,
-                        child: CircleAvatar(
-                          backgroundImage: AssetImage('assets/images/default.jpg'),
-                          radius: 60,
+    return SafeArea(
+      child: Drawer(
+        child: Column(
+          children: [
+            Container(
+              width: double.infinity,
+              padding: EdgeInsets.fromLTRB(10, 15, 5, 15),
+              decoration: BoxDecoration(
+                color: Theme.of(context).colorScheme.primary,
+              ),
+
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Row(
+                      children: [
+                        Container(
+                          width: 54, height: 54,
+                          child: CircleAvatar(
+                            backgroundImage: AssetImage('assets/images/default.jpg'),
+                            radius: 60,
+                          ),
                         ),
-                      ),
-                      SizedBox(width: 10),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text('Augustus Harrell',
-                            style: GoogleFonts.roboto(
-                              textStyle: Theme.of(context).textTheme.titleLarge,
-                              color: Colors.white,
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                              letterSpacing: 1,
-                            ),
-                            ),
-                            SizedBox(height: 5),
-                            OutlinedButton(
-                              onPressed: (){
-                                Navigator.pushReplacement(context, 
-                                  MaterialPageRoute(
-                                    builder: (BuildContext context) => Profile(title: 'Profile')
-                                  ),
-                                );
-                              },
-                              style: OutlinedButton.styleFrom(
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10)
-                                ),                 
-                                padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                                alignment: Alignment.center,
-                                side: BorderSide(width: 1, color: Colors.white),
+                        SizedBox(width: 10),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text('Augustus Harrell',
+                              style: GoogleFonts.roboto(
+                                textStyle: Theme.of(context).textTheme.titleLarge,
+                                color: Colors.white,
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                                letterSpacing: 1,
                               ),
-                              child: Text('View Profile',
-                                style: GoogleFonts.roboto(
-                                  textStyle: Theme.of(context).textTheme.labelSmall,
-                                  color: Theme.of(context).colorScheme.onPrimary,
-                                  letterSpacing: 1.2,
+                              ),
+                              SizedBox(height: 5),
+                              OutlinedButton(
+                                onPressed: (){
+                                  Navigator.pushReplacement(context,
+                                    MaterialPageRoute(
+                                      builder: (BuildContext context) => Profile(title: 'Profile')
+                                    ),
+                                  );
+                                },
+                                style: OutlinedButton.styleFrom(
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10)
+                                  ),
+                                  padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                                  alignment: Alignment.center,
+                                  side: BorderSide(width: 1, color: Colors.white),
+                                ),
+                                child: Text('View Profile',
+                                  style: GoogleFonts.roboto(
+                                    textStyle: Theme.of(context).textTheme.labelSmall,
+                                    color: Theme.of(context).colorScheme.onPrimary,
+                                    letterSpacing: 1.2,
+                                  ),
                                 ),
                               ),
-                            ),
 
-                          ],
+                            ],
+                          ),
                         ),
-                      ),
-                      IconButton(
-                        onPressed: (){
-                          Navigator.pop(context);
-                        },
-                        icon: Icon(Icons.close, color: Colors.white,)
-                      ),
-                    ],
-                  ),
-                ],
-              )
-          ),
-          Container(
-              child: ExpansionTile(
-              collapsedBackgroundColor: Theme.of(context).colorScheme.surface,
-              backgroundColor: Theme.of(context).colorScheme.surface,
-              leading: Icon(Icons.admin_panel_settings_outlined),               
-              title: Text('Admin',
-                style: GoogleFonts.robotoCondensed(
-                  textStyle: Theme.of(context).textTheme.titleSmall,
-                  letterSpacing: 1.5,
-                ),
-              ),
-              children: [
-                Container(
-                  decoration: BoxDecoration(
-                    border: Border(
-                      top: BorderSide(width: 1, color: Theme.of(context).dividerColor),
-                      // bottom: BorderSide(width: 1, color: Theme.of(context).dividerColor),
-                    )
-                  ),
-                  child: ListView.builder(
-                  primary: false,
-                  physics: AlwaysScrollableScrollPhysics(),
-                  shrinkWrap: true,
-                  itemCount: adminmenuList == null ? 0 : adminmenuList.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    Map item = adminmenuList[index];
-                    return ListTile(
-                      trailing: Icon(Icons.chevron_right_outlined),
-                      title: Text(
-                        '${item["title"]}',
-                        style: GoogleFonts.robotoCondensed(
-                          textStyle: Theme.of(context).textTheme.titleSmall,
-                          letterSpacing: 1.5,
+                        IconButton(
+                          onPressed: (){
+                            Navigator.pop(context);
+                          },
+                          icon: Icon(Icons.close, color: Colors.white,)
                         ),
-                      ),
-                      onTap: () {},
-                    );
-                  },
-                ),
+                      ],
+                    ),
+                  ],
                 )
-              ],
             ),
-          ),
-
-          SizedBox(height: 10),
-
-          Container(
-            width: double.infinity,
-            padding: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
-            child: Text('Navigation'.toUpperCase(),
-            style: GoogleFonts.robotoCondensed(
-              textStyle: Theme.of(context).textTheme.labelMedium,
-              color: Theme.of(context).colorScheme.secondary,
-              fontWeight: FontWeight.w500,
-              letterSpacing: 2.5,
-            ),
-            ),
-          ),
-          
-          Expanded(
-            child: ListView.separated(
-              primary: false,
-              physics: AlwaysScrollableScrollPhysics(),
-              shrinkWrap: true,
-              itemCount: menuList == null ? 0 : menuList.length,
-              separatorBuilder: (BuildContext context, int index) {
-                return Divider(height: 1);
-              },
-              itemBuilder: (BuildContext context, int index) {
-                Map item = menuList[index];
-                return 
-                item["submenu"] == "" ? 
-                ListTile(
-                  trailing: Icon(Icons.chevron_right_outlined),
-                  title: Text(
-                    '${item["title"]}',
-                    style: GoogleFonts.robotoCondensed(
-                      textStyle: Theme.of(context).textTheme.titleSmall,
-                      letterSpacing: 1.5,
-                    ),
+            Container(
+                child: ExpansionTile(
+                collapsedBackgroundColor: Theme.of(context).colorScheme.surface,
+                backgroundColor: Theme.of(context).colorScheme.surface,
+                leading: Icon(Icons.admin_panel_settings_outlined),
+                title: Text('Admin',
+                  style: GoogleFonts.robotoCondensed(
+                    textStyle: Theme.of(context).textTheme.titleSmall,
+                    letterSpacing: 1.5,
                   ),
-                  onTap: () {
-                    Navigator.of(context).push(
-                      PageRouteBuilder(
-                        pageBuilder: (context, animation, secondaryAnimation) =>
-                          FadeTransition(
-                          opacity: animation,
-                          child:
-                          
-                          item["id"] == "001" ?
-                          Dashboard(title: 'Dashboard')
-                          :
-                          item["id"] == "002" ?
-                          SubscribersList(title: 'Subscribers List')
-                          :
-                          item["id"] == "003" ?
-                          OnlineSubscribersList(title: 'Online Subscribers List')
-                          : 
-                          item["id"] == "004" ?
-                          AccessRequestList(title: 'Access Request Log')
-                          : 
-                          item["id"] == "005" ?
-                          Reports(title: 'Reports')
-                          : 
-                          null,
-
+                ),
+                children: [
+                  Container(
+                    decoration: BoxDecoration(
+                      border: Border(
+                        top: BorderSide(width: 1, color: Theme.of(context).dividerColor),
+                        // bottom: BorderSide(width: 1, color: Theme.of(context).dividerColor),
+                      )
+                    ),
+                    child: ListView.builder(
+                    primary: false,
+                    physics: AlwaysScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                    itemCount: adminmenuList == null ? 0 : adminmenuList.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      Map item = adminmenuList[index];
+                      return ListTile(
+                        trailing: Icon(Icons.chevron_right_outlined),
+                        title: Text(
+                          '${item["title"]}',
+                          style: GoogleFonts.robotoCondensed(
+                            textStyle: Theme.of(context).textTheme.titleSmall,
+                            letterSpacing: 1.5,
+                          ),
                         ),
-                      ),
-                    );
-                  },
-                ) 
-                :
-                ExpansionTile(
-                  childrenPadding: EdgeInsets.only(left: 15),
-                  title: Text(
-                    '${item["title"]}',
-                    style: GoogleFonts.robotoCondensed(
-                      textStyle: Theme.of(context).textTheme.titleSmall,
-                      fontSize: 14, 
-                      fontWeight: FontWeight.w500,
-                      letterSpacing: 1.5,
-                    ),
+                        onTap: () {},
+                      );
+                    },
                   ),
-                  children: 
-                  item["submenu"].map((subitem) => 
-                    ListTile(
-                      trailing: Icon(Icons.chevron_right_outlined),
-                      title: Text('${subitem["title"]}',
+                  )
+                ],
+              ),
+            ),
+
+            SizedBox(height: 10),
+
+            Container(
+              width: double.infinity,
+              padding: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+              child: Text('Navigation'.toUpperCase(),
+              style: GoogleFonts.robotoCondensed(
+                textStyle: Theme.of(context).textTheme.labelMedium,
+                color: Theme.of(context).colorScheme.secondary,
+                fontWeight: FontWeight.w500,
+                letterSpacing: 2.5,
+              ),
+              ),
+            ),
+
+            Expanded(
+              child: ListView.separated(
+                primary: false,
+                physics: AlwaysScrollableScrollPhysics(),
+                shrinkWrap: true,
+                itemCount: menuList == null ? 0 : menuList.length,
+                separatorBuilder: (BuildContext context, int index) {
+                  return Divider(height: 1);
+                },
+                itemBuilder: (BuildContext context, int index) {
+                  Map item = menuList[index];
+                  return
+                  item["submenu"] == "" ?
+                  ListTile(
+                    trailing: Icon(Icons.chevron_right_outlined),
+                    title: Text(
+                      '${item["title"]}',
                       style: GoogleFonts.robotoCondensed(
                         textStyle: Theme.of(context).textTheme.titleSmall,
                         letterSpacing: 1.5,
                       ),
-                      ),
-                      onTap: (){
-                        Navigator.of(context).push(
-                          PageRouteBuilder(
-                            pageBuilder: (context, animation, secondaryAnimation) =>
-                              FadeTransition(
-                              opacity: animation,
-                              child: Dashboard(title: 'Dashboard'),
-                            ),
-                          ),
-                        );
-                      },
                     ),
-                  ).toList().cast<Widget>(),
-                )
-                ;
-                // return ListTile(
-                //   trailing: Icon(Icons.chevron_right_outlined),
-                //   title: Text(
-                //     '${item["title"]}',
-                //     style: GoogleFonts.robotoCondensed(
-                //       textStyle: Theme.of(context).textTheme.titleSmall,
-                //       letterSpacing: 1.5,
-                //     ),
-                //   ),
-                //   onTap: () {
-                //     Navigator.of(context).push(
-                //       PageRouteBuilder(
-                //         pageBuilder: (context, animation, secondaryAnimation) =>
-                //           FadeTransition(
-                //           opacity: animation,
-                //           child: Dashboard(title: 'Dashboard'),
-                //         ),
-                //       ),
-                //     );
-                //   },
-                // );
-              },
-            ),
-          ),
-          Container(
-            decoration: BoxDecoration(
-              border: Border(top: BorderSide(width: 1, color: Color.fromRGBO(255, 255, 255, 0.2)))
-            ),
-            child: ListTile(
-              tileColor: Theme.of(context).colorScheme.surface,
-              horizontalTitleGap: 0,
-              trailing: Icon(MyApp.themeNotifier.value == ThemeMode.light
-                  ? Icons.dark_mode
-                  : Icons.light_mode),
-              title: Text(
-                MyApp.themeNotifier.value == ThemeMode.light
-                    ? 'Dark Mode'
-                    : 'Light Mode',
-                style: GoogleFonts.robotoCondensed(
-                    textStyle: Theme.of(context).textTheme.titleSmall,
-                    letterSpacing: 1.2,
-                    fontWeight: FontWeight.bold),
+                    onTap: () {
+                      Navigator.of(context).push(
+                        PageRouteBuilder(
+                          pageBuilder: (context, animation, secondaryAnimation) =>
+                            FadeTransition(
+                            opacity: animation,
+                            child:
+
+                            item["id"] == "001" ?
+                            Dashboard(title: 'Dashboard')
+                            :
+                            item["id"] == "002" ?
+                            SubscribersList(title: 'Subscribers List')
+                            :
+                            item["id"] == "003" ?
+                            OnlineSubscribersList(title: 'Online Subscribers List')
+                            :
+                            item["id"] == "004" ?
+                            AccessRequestList(title: 'Access Request Log')
+                            :
+                            item["id"] == "005" ?
+                            Reports(title: 'Reports')
+                            :
+                            null,
+
+                          ),
+                        ),
+                      );
+                    },
+                  )
+                  :
+                  ExpansionTile(
+                    childrenPadding: EdgeInsets.only(left: 15),
+                    title: Text(
+                      '${item["title"]}',
+                      style: GoogleFonts.robotoCondensed(
+                        textStyle: Theme.of(context).textTheme.titleSmall,
+                        fontSize: 14,
+                        fontWeight: FontWeight.w500,
+                        letterSpacing: 1.5,
+                      ),
+                    ),
+                    children:
+                    item["submenu"].map((subitem) =>
+                      ListTile(
+                        trailing: Icon(Icons.chevron_right_outlined),
+                        title: Text('${subitem["title"]}',
+                        style: GoogleFonts.robotoCondensed(
+                          textStyle: Theme.of(context).textTheme.titleSmall,
+                          letterSpacing: 1.5,
+                        ),
+                        ),
+                        onTap: (){
+                          Navigator.of(context).push(
+                            PageRouteBuilder(
+                              pageBuilder: (context, animation, secondaryAnimation) =>
+                                FadeTransition(
+                                opacity: animation,
+                                child: Dashboard(title: 'Dashboard'),
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                    ).toList().cast<Widget>(),
+                  )
+                  ;
+                  // return ListTile(
+                  //   trailing: Icon(Icons.chevron_right_outlined),
+                  //   title: Text(
+                  //     '${item["title"]}',
+                  //     style: GoogleFonts.robotoCondensed(
+                  //       textStyle: Theme.of(context).textTheme.titleSmall,
+                  //       letterSpacing: 1.5,
+                  //     ),
+                  //   ),
+                  //   onTap: () {
+                  //     Navigator.of(context).push(
+                  //       PageRouteBuilder(
+                  //         pageBuilder: (context, animation, secondaryAnimation) =>
+                  //           FadeTransition(
+                  //           opacity: animation,
+                  //           child: Dashboard(title: 'Dashboard'),
+                  //         ),
+                  //       ),
+                  //     );
+                  //   },
+                  // );
+                },
               ),
-              onTap: _themeChange,
             ),
-          )
-        ],
+            Container(
+              decoration: BoxDecoration(
+                border: Border(top: BorderSide(width: 1, color: Color.fromRGBO(255, 255, 255, 0.2)))
+              ),
+              child: ListTile(
+                tileColor: Theme.of(context).colorScheme.surface,
+                horizontalTitleGap: 0,
+                trailing: Icon(MyApp.themeNotifier.value == ThemeMode.light
+                    ? Icons.dark_mode
+                    : Icons.light_mode),
+                title: Text(
+                  MyApp.themeNotifier.value == ThemeMode.light
+                      ? 'Dark Mode'
+                      : 'Light Mode',
+                  style: GoogleFonts.robotoCondensed(
+                      textStyle: Theme.of(context).textTheme.titleSmall,
+                      letterSpacing: 1.2,
+                      fontWeight: FontWeight.bold),
+                ),
+                onTap: _themeChange,
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
