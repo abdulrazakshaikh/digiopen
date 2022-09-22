@@ -17,7 +17,30 @@ class _SubscribersDetailsState extends State<SubscribersDetails> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title.toUpperCase()),
+        // title: Text(widget.title.toUpperCase()),
+        title: Container(
+          child: Row(
+            children: [
+              Container(
+                width: 42, height: 42,
+                child: CircleAvatar(
+                  backgroundImage: AssetImage('assets/images/default.jpg'),
+                  radius: 60,
+                ),
+              ),
+              SizedBox(width: 10),
+              Text('Augustus Harrell',
+              style: GoogleFonts.roboto(
+                textStyle: Theme.of(context).textTheme.titleLarge,
+                color: Colors.white,
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                letterSpacing: 1,
+              ),
+              ),
+            ],
+          ),
+        ),
         actions: [],
       ),
       body: Center(
