@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:xceednet/common_widgets/headToolbar.dart';
 import 'package:xceednet/common_widgets/menuDrawer.dart';
 import 'package:xceednet/subscribers/subscribers_add.dart';
+import 'package:xceednet/subscribers/subscribers_details.dart';
 
 class SubscribersList extends StatefulWidget {
   const SubscribersList({Key? key, required this.title}) : super(key: key);
@@ -65,6 +66,7 @@ List subscribersList = [
       backgroundColor: Theme.of(context).colorScheme.surface,
       drawer: MenuDrawer(),
       appBar: AppBar(
+        
         title: Text(widget.title.toUpperCase()),       
         actions: [
           IconButton(
@@ -108,7 +110,19 @@ List subscribersList = [
               },
               itemBuilder: (BuildContext context, int index) {
                 Map item = subscribersList[index];
-                return Card(
+                return InkWell(
+                onTap: (){
+                  Navigator.of(context).push(
+                    PageRouteBuilder(
+                      pageBuilder: (context, animation, secondaryAnimation) =>
+                        FadeTransition(
+                        opacity: animation,
+                        child: SubscribersDetails(title: 'Subscriber Details')
+                      ),
+                    ),
+                  );
+                },
+                child: Card(
                   margin: EdgeInsets.zero,
                   shape: RoundedRectangleBorder(
                     side: BorderSide(width: 1, color: Theme.of(context).dividerColor)
@@ -439,6 +453,7 @@ List subscribersList = [
                       
                     ],
                   ),
+                ),
                 );
               }
             ),
