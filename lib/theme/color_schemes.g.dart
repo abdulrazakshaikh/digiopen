@@ -1,4 +1,3 @@
-import 'dart:js';
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -172,7 +171,7 @@ AppBarTheme lightAppbarTheme = AppBarTheme(
   surfaceTintColor: arsappbarbackgroundLight,
   elevation: 4,
   shadowColor: arsshadow,
-  titleTextStyle: GoogleFonts.robotoCondensed(textStyle: const TextStyle(fontSize: 15, letterSpacing: 1.2, fontWeight: FontWeight.bold)),
+  titleTextStyle: GoogleFonts.robotoCondensed(textStyle: const TextStyle(fontSize: 15, color: arstextColorLight, letterSpacing: 1.2, fontWeight: FontWeight.bold)),
   titleSpacing: 0,
 );
 AppBarTheme darkAppbarTheme = AppBarTheme(
@@ -181,7 +180,7 @@ AppBarTheme darkAppbarTheme = AppBarTheme(
   elevation: 4,
   shadowColor: arsshadow,
   titleTextStyle: GoogleFonts.robotoCondensed(
-      textStyle: const TextStyle(fontSize: 15, color: Colors.white, letterSpacing: 1.2,fontWeight: FontWeight.w600)),
+    textStyle: const TextStyle(fontSize: 15, color: Colors.white, letterSpacing: 1.2,fontWeight: FontWeight.w600)),
   titleSpacing: 0,
 );
 

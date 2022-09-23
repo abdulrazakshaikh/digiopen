@@ -13,16 +13,23 @@ class FilterBottomSheet extends StatefulWidget {
 
 class _FilterBottomSheetState extends State<FilterBottomSheet> with TickerProviderStateMixin{
 
-  var _financialyear = [
-    "2019-2020",
-    "2020-2021",
-    "2021-2022",
-    "2022-2023",
+  var _status = [
+    "Open",
+    "Closed",
+    "Assigned",
+    "Re Assigned",
+    "Rejected",
+    "Pending",
+    "In Process",
+    "Cancelled",
+    "Resolved",
+    "Re Open",
+
   ];
 
-  var selectedFinancialValue = '2021-2022';
+  var selectedStatus = '';
 
-  var _segment = [
+  var _zone = [
     "ABC",
     "DEF",
     "GHI",
@@ -30,7 +37,7 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> with TickerProvid
     "MNO",
   ];
 
-  var selectedSegmentValue = 'DEF';
+  var selectedZone = '';
 
 
 @override
@@ -81,167 +88,167 @@ Widget build(BuildContext context) {
                 child: Column(
                   children: [                  
                   
-                    // Container(
-                    //   child: Column(
-                    //     children: [
-                    //       Container(
-                    //         alignment: Alignment.topLeft,
-                    //         padding: EdgeInsets.symmetric(vertical: 5),
-                    //         child: Text('Date Range',
-                    //         style: GoogleFonts.robotoCondensed(
-                    //           textStyle: Theme.of(context).textTheme.labelLarge,
-                    //           letterSpacing: 1.75,
-                    //           fontWeight: FontWeight.w400,
-                    //         ),
-                    //         ),
-                    //       ),
-                    //       TextField(
-                    //         style: GoogleFonts.roboto(
-                    //           textStyle: Theme.of(context).textTheme.bodyMedium,
-                    //           fontWeight: FontWeight.w600,
-                    //           letterSpacing: 1.2,
-                    //         ),
-                    //         autofocus: false,
-                    //         decoration: InputDecoration(
-                    //           contentPadding: EdgeInsets.symmetric(vertical: 15, horizontal: 15),
-                    //           floatingLabelBehavior: FloatingLabelBehavior.never,
-                    //           hintText: 'Date Range'.toLowerCase(),
-                    //           hintStyle: GoogleFonts.roboto(
-                    //             textStyle: Theme.of(context).textTheme.bodyMedium,
-                    //             letterSpacing: 1.8,
-                    //             fontWeight: FontWeight.w300),
+                    Container(
+                      child: Column(
+                        children: [
+                          Container(
+                            alignment: Alignment.topLeft,
+                            padding: EdgeInsets.symmetric(vertical: 5),
+                            child: Text('Date Range',
+                            style: GoogleFonts.robotoCondensed(
+                              textStyle: Theme.of(context).textTheme.labelLarge,
+                              letterSpacing: 1.75,
+                              fontWeight: FontWeight.w400,
+                            ),
+                            ),
+                          ),
+                          TextField(
+                            style: GoogleFonts.roboto(
+                              textStyle: Theme.of(context).textTheme.bodyMedium,
+                              fontWeight: FontWeight.w600,
+                              letterSpacing: 1.2,
+                            ),
+                            autofocus: false,
+                            decoration: InputDecoration(
+                              contentPadding: EdgeInsets.symmetric(vertical: 15, horizontal: 15),
+                              floatingLabelBehavior: FloatingLabelBehavior.never,
+                              hintText: 'Date Range'.toLowerCase(),
+                              hintStyle: GoogleFonts.roboto(
+                                textStyle: Theme.of(context).textTheme.bodyMedium,
+                                letterSpacing: 1.8,
+                                fontWeight: FontWeight.w300),
 
-                    //           suffixIcon: Icon(Icons.calendar_month_outlined),
+                              suffixIcon: Icon(Icons.calendar_month_outlined),
                               
-                    //           enabledBorder: OutlineInputBorder(
-                    //             borderSide: BorderSide(color: Theme.of(context).colorScheme.outline),
-                    //           ),
-                    //           focusedBorder: OutlineInputBorder(
-                    //             borderSide: BorderSide(color: Theme.of(context).colorScheme.primary, width: 1),
-                    //           ),
-                    //         ),
-                    //       ),
-                    //     ],
-                    //   )
-                    // ),
-                    // SizedBox(height: 10),
-                    // Container(
-                    //   child: Column(
-                    //     children: [
-                    //       Container(
-                    //         alignment: Alignment.topLeft,
-                    //         padding: EdgeInsets.symmetric(vertical: 5),
-                    //         child: Text('Financial Year',
-                    //         style: GoogleFonts.robotoCondensed(
-                    //           textStyle: Theme.of(context).textTheme.labelLarge,
-                    //           letterSpacing: 1.75,
-                    //           fontWeight: FontWeight.w400,
-                    //         ),
-                    //         ),
-                    //       ),
-                    //       DropdownButtonFormField(
-                    //         style: GoogleFonts.roboto(
-                    //           textStyle: Theme.of(context).textTheme.bodyMedium,
-                    //           fontWeight: FontWeight.w600,
-                    //           letterSpacing: 1.2,
-                    //         ),
-                    //         decoration: InputDecoration(
-                    //           contentPadding: EdgeInsets.all(10),
-                    //           floatingLabelBehavior: FloatingLabelBehavior.auto,
-                    //           hintText: 'Financial Year'.toLowerCase(),
-                    //           hintStyle: GoogleFonts.roboto(
-                    //             textStyle: Theme.of(context).textTheme.bodyMedium,
-                    //             letterSpacing: 1.8,
-                    //             fontWeight: FontWeight.w300),
+                              enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(color: Theme.of(context).colorScheme.outline),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(color: Theme.of(context).colorScheme.primary, width: 1),
+                              ),
+                            ),
+                          ),
+                        ],
+                      )
+                    ),
+                    SizedBox(height: 10),
+                    Container(
+                      child: Column(
+                        children: [
+                          Container(
+                            alignment: Alignment.topLeft,
+                            padding: EdgeInsets.symmetric(vertical: 5),
+                            child: Text('Status',
+                            style: GoogleFonts.robotoCondensed(
+                              textStyle: Theme.of(context).textTheme.labelLarge,
+                              letterSpacing: 1.75,
+                              fontWeight: FontWeight.w400,
+                            ),
+                            ),
+                          ),
+                          DropdownButtonFormField(
+                            style: GoogleFonts.roboto(
+                              textStyle: Theme.of(context).textTheme.bodyMedium,
+                              fontWeight: FontWeight.w600,
+                              letterSpacing: 1.2,
+                            ),
+                            decoration: InputDecoration(
+                              contentPadding: EdgeInsets.all(10),
+                              floatingLabelBehavior: FloatingLabelBehavior.auto,
+                              hintText: 'Status'.toLowerCase(),
+                              hintStyle: GoogleFonts.roboto(
+                                textStyle: Theme.of(context).textTheme.bodyMedium,
+                                letterSpacing: 1.8,
+                                fontWeight: FontWeight.w300),
                               
-                    //           enabledBorder: OutlineInputBorder(
-                    //             borderSide: BorderSide(color: Theme.of(context).colorScheme.outline),
-                    //           ),
-                    //           focusedBorder: OutlineInputBorder(
-                    //             borderSide: BorderSide(color: Theme.of(context).colorScheme.primary, width: 1),
-                    //           ),
-                    //         ),
-                    //         items: _financialyear.map((String value) {
-                    //           return DropdownMenuItem<String>(
-                    //             value: value,
-                    //             child: Text(value,
-                    //             style: GoogleFonts.roboto(
-                    //               textStyle: Theme.of(context).textTheme.bodyMedium,
-                    //               fontWeight: FontWeight.w600,
-                    //               letterSpacing: 1.2,
-                    //             ),
-                    //             ),
-                    //           );
-                    //         }).toList(), 
-                    //         focusColor: Colors.white,
-                    //         onChanged: (String? newValue){
-                    //           setState(() {
-                    //             selectedFinancialValue = newValue!;
-                    //           });
-                    //         },
-                    //       ),
-                    //     ],
-                    //   ),
-                    // ),
-                    // SizedBox(height: 10),
-                    // Container(
-                    //   child: Column(
-                    //     children: [
-                    //       Container(
-                    //         alignment: Alignment.topLeft,
-                    //         padding: EdgeInsets.symmetric(vertical: 5),
-                    //         child: Text('Segment',
-                    //         style: GoogleFonts.robotoCondensed(
-                    //           textStyle: Theme.of(context).textTheme.labelLarge,
-                    //           letterSpacing: 1.75,
-                    //           fontWeight: FontWeight.w400,
-                    //         ),
-                    //         ),
-                    //       ),
-                    //       DropdownButtonFormField(
-                    //         style: GoogleFonts.roboto(
-                    //           textStyle: Theme.of(context).textTheme.bodyMedium,
-                    //           fontWeight: FontWeight.w600,
-                    //           letterSpacing: 1.2,
-                    //         ),
-                    //         decoration: InputDecoration(
-                    //           contentPadding: EdgeInsets.all(10),
-                    //           floatingLabelBehavior: FloatingLabelBehavior.auto,
-                    //           hintText: 'Segment'.toLowerCase(),
-                    //           hintStyle: GoogleFonts.roboto(
-                    //             textStyle: Theme.of(context).textTheme.bodyMedium,
-                    //             letterSpacing: 1.8,
-                    //             fontWeight: FontWeight.w300),
-                    //           enabledBorder: OutlineInputBorder(
-                    //             borderSide: BorderSide(color: Theme.of(context).colorScheme.outline),
-                    //           ),
-                    //           focusedBorder: OutlineInputBorder(
-                    //             borderSide: BorderSide(color: Theme.of(context).colorScheme.primary, width: 1),
-                    //           ),
-                    //         ),
-                    //         items: _segment.map((String value) {
-                    //           return DropdownMenuItem<String>(
-                    //             value: value,
-                    //             child: Text(value,
-                    //             style: GoogleFonts.roboto(
-                    //               textStyle: Theme.of(context).textTheme.bodyMedium,
-                    //               fontWeight: FontWeight.w600,
-                    //               letterSpacing: 1.2,
-                    //             ),
-                    //             ),
-                    //           );
-                    //         }).toList(), 
-                    //         focusColor: Colors.white,
-                    //         onChanged: (String? newValue){
-                    //           setState(() {
-                    //             selectedSegmentValue = newValue!;
-                    //           });
-                    //         },
-                    //       ),
+                              enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(color: Theme.of(context).colorScheme.outline),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(color: Theme.of(context).colorScheme.primary, width: 1),
+                              ),
+                            ),
+                            items: _status.map((String value) {
+                              return DropdownMenuItem<String>(
+                                value: value,
+                                child: Text(value,
+                                style: GoogleFonts.roboto(
+                                  textStyle: Theme.of(context).textTheme.bodyMedium,
+                                  fontWeight: FontWeight.w600,
+                                  letterSpacing: 1.2,
+                                ),
+                                ),
+                              );
+                            }).toList(), 
+                            focusColor: Colors.white,
+                            onChanged: (String? newValue){
+                              setState(() {
+                                selectedStatus = newValue!;
+                              });
+                            },
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(height: 10),
+                    Container(
+                      child: Column(
+                        children: [
+                          Container(
+                            alignment: Alignment.topLeft,
+                            padding: EdgeInsets.symmetric(vertical: 5),
+                            child: Text('Segment',
+                            style: GoogleFonts.robotoCondensed(
+                              textStyle: Theme.of(context).textTheme.labelLarge,
+                              letterSpacing: 1.75,
+                              fontWeight: FontWeight.w400,
+                            ),
+                            ),
+                          ),
+                          DropdownButtonFormField(
+                            style: GoogleFonts.roboto(
+                              textStyle: Theme.of(context).textTheme.bodyMedium,
+                              fontWeight: FontWeight.w600,
+                              letterSpacing: 1.2,
+                            ),
+                            decoration: InputDecoration(
+                              contentPadding: EdgeInsets.all(10),
+                              floatingLabelBehavior: FloatingLabelBehavior.auto,
+                              hintText: 'Segment'.toLowerCase(),
+                              hintStyle: GoogleFonts.roboto(
+                                textStyle: Theme.of(context).textTheme.bodyMedium,
+                                letterSpacing: 1.8,
+                                fontWeight: FontWeight.w300),
+                              enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(color: Theme.of(context).colorScheme.outline),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(color: Theme.of(context).colorScheme.primary, width: 1),
+                              ),
+                            ),
+                            items: _zone.map((String value) {
+                              return DropdownMenuItem<String>(
+                                value: value,
+                                child: Text(value,
+                                style: GoogleFonts.roboto(
+                                  textStyle: Theme.of(context).textTheme.bodyMedium,
+                                  fontWeight: FontWeight.w600,
+                                  letterSpacing: 1.2,
+                                ),
+                                ),
+                              );
+                            }).toList(), 
+                            focusColor: Colors.white,
+                            onChanged: (String? newValue){
+                              setState(() {
+                                selectedZone = newValue!;
+                              });
+                            },
+                          ),
 
-                    //     ],
-                    //   ),
-                    // ),
+                        ],
+                      ),
+                    ),
 
                   ],
                 ),
