@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class ReportThree extends StatefulWidget {
+class AlertsReports extends StatefulWidget {
   @override
-  _ReportThreeState createState() => new _ReportThreeState();
+  _AlertsReportsState createState() => new _AlertsReportsState();
 }
 
-class _ReportThreeState extends State<ReportThree> {
+class _AlertsReportsState extends State<AlertsReports> {
 
   var _options = [
     "1 Times",
@@ -46,7 +46,7 @@ class _ReportThreeState extends State<ReportThree> {
             // childrenPadding: EdgeInsets.all(15),
             title: Container(
               margin: EdgeInsets.only(bottom: 5),
-              child: Text('Package Sales',
+              child: Text('SMS Alerts',
                 style: GoogleFonts.roboto(
                   textStyle: Theme.of(context).textTheme.titleMedium,
                   letterSpacing: 1.2,
@@ -55,7 +55,7 @@ class _ReportThreeState extends State<ReportThree> {
                 ),
               ),
             ),
-            subtitle: Text('Generate report for the list of all packages sold',
+            subtitle: Text("Generate report for the list of all sms's sent",
               style: GoogleFonts.roboto(
                 textStyle: Theme.of(context).textTheme.labelMedium,
                 letterSpacing: 1.2,
@@ -84,48 +84,7 @@ class _ReportThreeState extends State<ReportThree> {
                                 Container(
                                   alignment: Alignment.topLeft,
                                   padding: EdgeInsets.symmetric(vertical: 5),
-                                  child: Text('Subscribers',
-                                  style: GoogleFonts.robotoCondensed(
-                                    textStyle: Theme.of(context).textTheme.labelLarge,
-                                    letterSpacing: 1.75,
-                                    fontWeight: FontWeight.w400,
-                                  ),
-                                  ),
-                                ),
-                                TextField(
-                                  style: GoogleFonts.roboto(
-                                    textStyle: Theme.of(context).textTheme.bodyMedium,
-                                    fontWeight: FontWeight.w600,
-                                    letterSpacing: 1.2,
-                                  ),
-                                  decoration: InputDecoration(
-                                    floatingLabelBehavior: FloatingLabelBehavior.never,
-                                    hintText: 'Search Subscribers Name'.toLowerCase(),
-                                    hintStyle: GoogleFonts.roboto(
-                                      textStyle: Theme.of(context).textTheme.bodyMedium,
-                                      letterSpacing: 1.8,
-                                      fontWeight: FontWeight.w300),
-                                    enabledBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(color: Theme.of(context).colorScheme.outline),
-                                    ),
-                                    focusedBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(color: Theme.of(context).colorScheme.primary, width: 1),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            )
-                          ),
-
-
-                          Container(
-                            margin: EdgeInsets.only(bottom: 10),
-                            child: Column(
-                              children: [
-                                Container(
-                                  alignment: Alignment.topLeft,
-                                  padding: EdgeInsets.symmetric(vertical: 5),
-                                  child: Text('Package Sale Period',
+                                  child: Text('SMS Alert Period',
                                   style: GoogleFonts.robotoCondensed(
                                     textStyle: Theme.of(context).textTheme.labelLarge,
                                     letterSpacing: 1.75,
@@ -208,7 +167,7 @@ class _ReportThreeState extends State<ReportThree> {
             // childrenPadding: EdgeInsets.all(15),
             title: Container(
               margin: EdgeInsets.only(bottom: 5),
-              child: Text('Balance Refills',
+              child: Text('Whatsapp Alerts',
                 style: GoogleFonts.roboto(
                   textStyle: Theme.of(context).textTheme.titleMedium,
                   letterSpacing: 1.2,
@@ -217,7 +176,7 @@ class _ReportThreeState extends State<ReportThree> {
                 ),
               ),
             ),
-            subtitle: Text('Generate report for the list of all balance refills done for the location',
+            subtitle: Text("Generate report for the list of all whatsapp's sent",
               style: GoogleFonts.roboto(
                 textStyle: Theme.of(context).textTheme.labelMedium,
                 letterSpacing: 1.2,
@@ -246,7 +205,7 @@ class _ReportThreeState extends State<ReportThree> {
                                 Container(
                                   alignment: Alignment.topLeft,
                                   padding: EdgeInsets.symmetric(vertical: 5),
-                                  child: Text('Balnce Refills Period',
+                                  child: Text('Whatsapp Alert Period',
                                   style: GoogleFonts.robotoCondensed(
                                     textStyle: Theme.of(context).textTheme.labelLarge,
                                     letterSpacing: 1.75,
@@ -262,7 +221,7 @@ class _ReportThreeState extends State<ReportThree> {
                                   ),
                                   decoration: InputDecoration(
                                     floatingLabelBehavior: FloatingLabelBehavior.never,
-                                    hintText: 'Select Balance Refills Period'.toLowerCase(),
+                                    hintText: 'Select Period'.toLowerCase(),
                                     hintStyle: GoogleFonts.roboto(
                                       textStyle: Theme.of(context).textTheme.bodyMedium,
                                       letterSpacing: 1.8,
@@ -279,6 +238,131 @@ class _ReportThreeState extends State<ReportThree> {
                               ],
                             )
                           ),
+
+                        ],
+                      ),
+                    ),
+
+                    Container(
+                      padding: EdgeInsets.all(10),  
+                      decoration: BoxDecoration(
+                        border: Border(
+                          top: BorderSide(width: 1, color: Theme.of(context).dividerColor)
+                        ),
+                      ),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: ElevatedButton(
+                              onPressed: () {},
+                              style: ElevatedButton.styleFrom(
+                                padding: EdgeInsets.symmetric(horizontal: 15, vertical: 20),
+                                alignment: Alignment.center,
+                              ),
+                              child: Text('Generate Report'),
+                            ),
+                          ),
+
+                        ],
+                      ),
+                    )
+
+                  ],
+                )
+              ),
+
+            ],
+          ),
+        ),
+        
+        Card(
+          color: Theme.of(context).colorScheme.background,
+          margin: EdgeInsets.only(bottom: 15),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(4),
+            side: BorderSide(width: 1, color: Theme.of(context).dividerColor)
+          ),
+          child: ExpansionTile(
+            backgroundColor: Theme.of(context).colorScheme.background,
+            collapsedBackgroundColor: Theme.of(context).colorScheme.background, 
+            tilePadding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+            // childrenPadding: EdgeInsets.all(15),
+            title: Container(
+              margin: EdgeInsets.only(bottom: 5),
+              child: Text('Audit Trail',
+                style: GoogleFonts.roboto(
+                  textStyle: Theme.of(context).textTheme.titleMedium,
+                  letterSpacing: 1.2,
+                  fontSize: 15,
+                  fontWeight: FontWeight.bold
+                ),
+              ),
+            ),
+            subtitle: Text('Generate report for all the user activity for the particular day',
+              style: GoogleFonts.roboto(
+                textStyle: Theme.of(context).textTheme.labelMedium,
+                letterSpacing: 1.2,
+                fontWeight: FontWeight.w500
+              ),
+            ),
+            children: [
+              Container(
+                decoration: BoxDecoration(
+                  border: Border(
+                    top: BorderSide(width: 1, color: Theme.of(context).dividerColor)
+                  ),
+                ),
+                child: Column(
+                  children: [
+
+                    Container(
+                      padding: EdgeInsets.all(10),
+                      child: Column(
+                        children: [
+
+                          Container(
+                            margin: EdgeInsets.only(bottom: 10),
+                            child: Column(
+                              children: [
+                                Container(
+                                  alignment: Alignment.topLeft,
+                                  padding: EdgeInsets.symmetric(vertical: 5),
+                                  child: Text('Audit Trail Period',
+                                  style: GoogleFonts.robotoCondensed(
+                                    textStyle: Theme.of(context).textTheme.labelLarge,
+                                    letterSpacing: 1.75,
+                                    fontWeight: FontWeight.w400,
+                                  ),
+                                  ),
+                                ),
+                                TextField(
+                                  style: GoogleFonts.roboto(
+                                    textStyle: Theme.of(context).textTheme.bodyMedium,
+                                    fontWeight: FontWeight.w600,
+                                    letterSpacing: 1.2,
+                                  ),
+                                  decoration: InputDecoration(
+                                    floatingLabelBehavior: FloatingLabelBehavior.never,
+                                    hintText: 'Select Date'.toLowerCase(),
+                                    hintStyle: GoogleFonts.roboto(
+                                      textStyle: Theme.of(context).textTheme.bodyMedium,
+                                      letterSpacing: 1.8,
+                                      fontWeight: FontWeight.w300),
+                                    suffixIcon: Icon(Icons.date_range_outlined),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(color: Theme.of(context).colorScheme.outline),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(color: Theme.of(context).colorScheme.primary, width: 1),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            )
+                          ),
+
+                          
+                          
 
                         ],
                       ),

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class ReportFour extends StatefulWidget {
+class SubscribersReports extends StatefulWidget {
   @override
-  _ReportFourState createState() => new _ReportFourState();
+  _SubscribersReportsState createState() => new _SubscribersReportsState();
 }
 
-class _ReportFourState extends State<ReportFour> {
+class _SubscribersReportsState extends State<SubscribersReports> {
 
   var _options = [
     "1 Times",
@@ -42,11 +42,11 @@ class _ReportFourState extends State<ReportFour> {
           child: ExpansionTile(
             backgroundColor: Theme.of(context).colorScheme.background,
             collapsedBackgroundColor: Theme.of(context).colorScheme.background, 
-            tilePadding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+            tilePadding: EdgeInsets.symmetric(horizontal: 10, vertical: 0),
             // childrenPadding: EdgeInsets.all(15),
             title: Container(
               margin: EdgeInsets.only(bottom: 5),
-              child: Text('SMS Alerts',
+              child: Text('Subscribers',
                 style: GoogleFonts.roboto(
                   textStyle: Theme.of(context).textTheme.titleMedium,
                   letterSpacing: 1.2,
@@ -55,7 +55,7 @@ class _ReportFourState extends State<ReportFour> {
                 ),
               ),
             ),
-            subtitle: Text("Generate report for the list of all sms's sent",
+            subtitle: Text('Generate report for the list of all subscribers',
               style: GoogleFonts.roboto(
                 textStyle: Theme.of(context).textTheme.labelMedium,
                 letterSpacing: 1.2,
@@ -76,6 +76,7 @@ class _ReportFourState extends State<ReportFour> {
                       padding: EdgeInsets.all(10),
                       child: Column(
                         children: [
+
                           
                           Container(
                             margin: EdgeInsets.only(bottom: 10),
@@ -83,8 +84,188 @@ class _ReportFourState extends State<ReportFour> {
                               children: [
                                 Container(
                                   alignment: Alignment.topLeft,
+                                  padding: EdgeInsets.only(bottom: 5),
+                                  child: Text('Zone',
+                                  style: GoogleFonts.robotoCondensed(
+                                    textStyle: Theme.of(context).textTheme.labelLarge,
+                                    letterSpacing: 1.75,
+                                    fontWeight: FontWeight.w400,
+                                  ),
+                                  ),
+                                ),
+                                DropdownButtonFormField(
+                                  style: GoogleFonts.roboto(
+                                    textStyle: Theme.of(context).textTheme.bodyMedium,
+                                    fontWeight: FontWeight.w600,
+                                    letterSpacing: 1.2,
+                                  ),
+                                  decoration: InputDecoration(
+                                    contentPadding: EdgeInsets.all(10),
+                                    floatingLabelBehavior: FloatingLabelBehavior.auto,
+                                    hintText: 'Select an Options'.toLowerCase(),
+                                    hintStyle: GoogleFonts.roboto(
+                                      textStyle: Theme.of(context).textTheme.bodyMedium,
+                                      letterSpacing: 1.8,
+                                      fontWeight: FontWeight.w300),
+                                    
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(color: Theme.of(context).colorScheme.outline),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(color: Theme.of(context).colorScheme.primary, width: 1),
+                                    ),
+                                  ),
+                                  items: _options.map((String value) {
+                                    return DropdownMenuItem<String>(
+                                      value: value,
+                                      child: Text(value,
+                                      style: GoogleFonts.roboto(
+                                        textStyle: Theme.of(context).textTheme.bodyMedium,
+                                        fontWeight: FontWeight.w600,
+                                        letterSpacing: 1.2,
+                                      ),
+                                      ),
+                                    );
+                                  }).toList(), 
+                                  focusColor: Colors.white,
+                                  onChanged: (String? newValue){
+                                    setState(() {
+                                      selectOptions = newValue!;
+                                    });
+                                  },
+                                ),
+                              ],
+                            ),
+                          ),
+
+                          Container(
+                            margin: EdgeInsets.only(bottom: 10),
+                            child: Column(
+                              children: [
+                                Container(
+                                  alignment: Alignment.topLeft,
+                                  padding: EdgeInsets.only(bottom: 5),
+                                  child: Text('Node',
+                                  style: GoogleFonts.robotoCondensed(
+                                    textStyle: Theme.of(context).textTheme.labelLarge,
+                                    letterSpacing: 1.75,
+                                    fontWeight: FontWeight.w400,
+                                  ),
+                                  ),
+                                ),
+                                DropdownButtonFormField(
+                                  style: GoogleFonts.roboto(
+                                    textStyle: Theme.of(context).textTheme.bodyMedium,
+                                    fontWeight: FontWeight.w600,
+                                    letterSpacing: 1.2,
+                                  ),
+                                  decoration: InputDecoration(
+                                    contentPadding: EdgeInsets.all(10),
+                                    floatingLabelBehavior: FloatingLabelBehavior.auto,
+                                    hintText: 'Select an Options'.toLowerCase(),
+                                    hintStyle: GoogleFonts.roboto(
+                                      textStyle: Theme.of(context).textTheme.bodyMedium,
+                                      letterSpacing: 1.8,
+                                      fontWeight: FontWeight.w300),
+                                    
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(color: Theme.of(context).colorScheme.outline),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(color: Theme.of(context).colorScheme.primary, width: 1),
+                                    ),
+                                  ),
+                                  items: _options.map((String value) {
+                                    return DropdownMenuItem<String>(
+                                      value: value,
+                                      child: Text(value,
+                                      style: GoogleFonts.roboto(
+                                        textStyle: Theme.of(context).textTheme.bodyMedium,
+                                        fontWeight: FontWeight.w600,
+                                        letterSpacing: 1.2,
+                                      ),
+                                      ),
+                                    );
+                                  }).toList(), 
+                                  focusColor: Colors.white,
+                                  onChanged: (String? newValue){
+                                    setState(() {
+                                      selectOptions = newValue!;
+                                    });
+                                  },
+                                ),
+                              ],
+                            ),
+                          ),
+                          
+                          Container(
+                            margin: EdgeInsets.only(bottom: 10),
+                            child: Column(
+                              children: [
+                                Container(
+                                  alignment: Alignment.topLeft,
+                                  padding: EdgeInsets.only(bottom: 5),
+                                  child: Text('Status',
+                                  style: GoogleFonts.robotoCondensed(
+                                    textStyle: Theme.of(context).textTheme.labelLarge,
+                                    letterSpacing: 1.75,
+                                    fontWeight: FontWeight.w400,
+                                  ),
+                                  ),
+                                ),
+                                DropdownButtonFormField(
+                                  style: GoogleFonts.roboto(
+                                    textStyle: Theme.of(context).textTheme.bodyMedium,
+                                    fontWeight: FontWeight.w600,
+                                    letterSpacing: 1.2,
+                                  ),
+                                  decoration: InputDecoration(
+                                    contentPadding: EdgeInsets.all(10),
+                                    floatingLabelBehavior: FloatingLabelBehavior.auto,
+                                    hintText: 'Select an Options'.toLowerCase(),
+                                    hintStyle: GoogleFonts.roboto(
+                                      textStyle: Theme.of(context).textTheme.bodyMedium,
+                                      letterSpacing: 1.8,
+                                      fontWeight: FontWeight.w300),
+                                    
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(color: Theme.of(context).colorScheme.outline),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(color: Theme.of(context).colorScheme.primary, width: 1),
+                                    ),
+                                  ),
+                                  items: _options.map((String value) {
+                                    return DropdownMenuItem<String>(
+                                      value: value,
+                                      child: Text(value,
+                                      style: GoogleFonts.roboto(
+                                        textStyle: Theme.of(context).textTheme.bodyMedium,
+                                        fontWeight: FontWeight.w600,
+                                        letterSpacing: 1.2,
+                                      ),
+                                      ),
+                                    );
+                                  }).toList(), 
+                                  focusColor: Colors.white,
+                                  onChanged: (String? newValue){
+                                    setState(() {
+                                      selectOptions = newValue!;
+                                    });
+                                  },
+                                ),
+                              ],
+                            ),
+                          ),
+
+                          Container(
+                            margin: EdgeInsets.only(bottom: 10),
+                            child: Column(
+                              children: [
+                                Container(
+                                  alignment: Alignment.topLeft,
                                   padding: EdgeInsets.symmetric(vertical: 5),
-                                  child: Text('SMS Alert Period',
+                                  child: Text('Created Date Period',
                                   style: GoogleFonts.robotoCondensed(
                                     textStyle: Theme.of(context).textTheme.labelLarge,
                                     letterSpacing: 1.75,
@@ -118,126 +299,31 @@ class _ReportFourState extends State<ReportFour> {
                             )
                           ),
 
-                        ],
-                      ),
-                    ),
-
-                    Container(
-                      padding: EdgeInsets.all(10),  
-                      decoration: BoxDecoration(
-                        border: Border(
-                          top: BorderSide(width: 1, color: Theme.of(context).dividerColor)
-                        ),
-                      ),
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: ElevatedButton(
-                              onPressed: () {},
-                              style: ElevatedButton.styleFrom(
-                                padding: EdgeInsets.symmetric(horizontal: 15, vertical: 20),
-                                alignment: Alignment.center,
-                              ),
-                              child: Text('Generate Report'),
-                            ),
-                          ),
-                        ],
-                      ),
-                    )
-
-                  ],
-                )
-              ),
-
-            ],
-          ),
-        ),
-
-        Card(
-          color: Theme.of(context).colorScheme.background,
-          margin: EdgeInsets.only(bottom: 15),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(4),
-            side: BorderSide(width: 1, color: Theme.of(context).dividerColor)
-          ),
-          child: ExpansionTile(
-            backgroundColor: Theme.of(context).colorScheme.background,
-            collapsedBackgroundColor: Theme.of(context).colorScheme.background, 
-            tilePadding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-            // childrenPadding: EdgeInsets.all(15),
-            title: Container(
-              margin: EdgeInsets.only(bottom: 5),
-              child: Text('Whatsapp Alerts',
-                style: GoogleFonts.roboto(
-                  textStyle: Theme.of(context).textTheme.titleMedium,
-                  letterSpacing: 1.2,
-                  fontSize: 15,
-                  fontWeight: FontWeight.bold
-                ),
-              ),
-            ),
-            subtitle: Text("Generate report for the list of all whatsapp's sent",
-              style: GoogleFonts.roboto(
-                textStyle: Theme.of(context).textTheme.labelMedium,
-                letterSpacing: 1.2,
-                fontWeight: FontWeight.w500
-              ),
-            ),
-            children: [
-              Container(
-                decoration: BoxDecoration(
-                  border: Border(
-                    top: BorderSide(width: 1, color: Theme.of(context).dividerColor)
-                  ),
-                ),
-                child: Column(
-                  children: [
-
-                    Container(
-                      padding: EdgeInsets.all(10),
-                      child: Column(
-                        children: [
-                          
                           Container(
-                            margin: EdgeInsets.only(bottom: 10),
-                            child: Column(
-                              children: [
-                                Container(
-                                  alignment: Alignment.topLeft,
-                                  padding: EdgeInsets.symmetric(vertical: 5),
-                                  child: Text('Whatsapp Alert Period',
-                                  style: GoogleFonts.robotoCondensed(
-                                    textStyle: Theme.of(context).textTheme.labelLarge,
-                                    letterSpacing: 1.75,
-                                    fontWeight: FontWeight.w400,
-                                  ),
-                                  ),
+                            child: CheckboxListTile(
+                              title: Text('Add Column for Balance Due',
+                                style: GoogleFonts.roboto(
+                                  textStyle: Theme.of(context).textTheme.bodyMedium,
+                                  fontWeight: FontWeight.w600,
+                                  letterSpacing: 1.2,
                                 ),
-                                TextField(
-                                  style: GoogleFonts.roboto(
-                                    textStyle: Theme.of(context).textTheme.bodyMedium,
-                                    fontWeight: FontWeight.w600,
-                                    letterSpacing: 1.2,
-                                  ),
-                                  decoration: InputDecoration(
-                                    floatingLabelBehavior: FloatingLabelBehavior.never,
-                                    hintText: 'Select Period'.toLowerCase(),
-                                    hintStyle: GoogleFonts.roboto(
-                                      textStyle: Theme.of(context).textTheme.bodyMedium,
-                                      letterSpacing: 1.8,
-                                      fontWeight: FontWeight.w300),
-                                    suffixIcon: Icon(Icons.date_range_outlined),
-                                    enabledBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(color: Theme.of(context).colorScheme.outline),
-                                    ),
-                                    focusedBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(color: Theme.of(context).colorScheme.primary, width: 1),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            )
+                              ),
+                              checkboxShape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(4)
+                              ),
+                              dense: true,
+                              contentPadding: EdgeInsets.zero,
+                              activeColor: Theme.of(context).colorScheme.primary, 
+                              value: isChecked,
+                              controlAffinity: ListTileControlAffinity.leading,
+                              onChanged: (bool? value) {
+                                setState(() {
+                                  isChecked = value!;
+                                });
+                              },
+                            ),
                           ),
+                          
 
                         ],
                       ),
@@ -274,6 +360,7 @@ class _ReportFourState extends State<ReportFour> {
             ],
           ),
         ),
+
         
         Card(
           color: Theme.of(context).colorScheme.background,
@@ -289,7 +376,7 @@ class _ReportFourState extends State<ReportFour> {
             // childrenPadding: EdgeInsets.all(15),
             title: Container(
               margin: EdgeInsets.only(bottom: 5),
-              child: Text('Audit Trail',
+              child: Text('Online Subscribers',
                 style: GoogleFonts.roboto(
                   textStyle: Theme.of(context).textTheme.titleMedium,
                   letterSpacing: 1.2,
@@ -298,7 +385,7 @@ class _ReportFourState extends State<ReportFour> {
                 ),
               ),
             ),
-            subtitle: Text('Generate report for all the user activity for the particular day',
+            subtitle: Text('Generate report for the list of all subscribers, who were online on a particular date & time',
               style: GoogleFonts.roboto(
                 textStyle: Theme.of(context).textTheme.labelMedium,
                 letterSpacing: 1.2,
@@ -327,7 +414,7 @@ class _ReportFourState extends State<ReportFour> {
                                 Container(
                                   alignment: Alignment.topLeft,
                                   padding: EdgeInsets.symmetric(vertical: 5),
-                                  child: Text('Audit Trail Period',
+                                  child: Text('Online at',
                                   style: GoogleFonts.robotoCondensed(
                                     textStyle: Theme.of(context).textTheme.labelLarge,
                                     letterSpacing: 1.75,
@@ -400,6 +487,79 @@ class _ReportFourState extends State<ReportFour> {
           ),
         ),
         
+        Card(
+          color: Theme.of(context).colorScheme.background,
+          margin: EdgeInsets.only(bottom: 15),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(4),
+            side: BorderSide(width: 1, color: Theme.of(context).dividerColor)
+          ),
+          child: ExpansionTile(
+            backgroundColor: Theme.of(context).colorScheme.background,
+            collapsedBackgroundColor: Theme.of(context).colorScheme.background, 
+            tilePadding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+            // childrenPadding: EdgeInsets.all(15),
+            title: Container(
+              margin: EdgeInsets.only(bottom: 5),
+              child: Text('Static IP Address',
+                style: GoogleFonts.roboto(
+                  textStyle: Theme.of(context).textTheme.titleMedium,
+                  letterSpacing: 1.2,
+                  fontSize: 15,
+                  fontWeight: FontWeight.bold
+                ),
+              ),
+            ),
+            subtitle: Text('Generate report for the list of all subscribers with static IP',
+              style: GoogleFonts.roboto(
+                textStyle: Theme.of(context).textTheme.labelMedium,
+                letterSpacing: 1.2,
+                fontWeight: FontWeight.w500
+              ),
+            ),
+            children: [
+              Container(
+                decoration: BoxDecoration(
+                  border: Border(
+                    top: BorderSide(width: 1, color: Theme.of(context).dividerColor)
+                  ),
+                ),
+                child: Column(
+                  children: [
+
+                    Container(
+                      padding: EdgeInsets.all(10),  
+                      decoration: BoxDecoration(
+                        border: Border(
+                          top: BorderSide(width: 1, color: Theme.of(context).dividerColor)
+                        ),
+                      ),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: ElevatedButton(
+                              onPressed: () {},
+                              style: ElevatedButton.styleFrom(
+                                padding: EdgeInsets.symmetric(horizontal: 15, vertical: 20),
+                                alignment: Alignment.center,
+                              ),
+                              child: Text('Generate Report'),
+                            ),
+                          ),
+
+                        ],
+                      ),
+                    )
+
+                  ],
+                )
+              ),
+
+            ],
+          ),
+        ),
+        
+      
       ],
       ),
     );

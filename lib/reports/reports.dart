@@ -2,10 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:xceednet/common_widgets/menuDrawer.dart';
-import 'package:xceednet/reports/report_four.dart';
-import 'package:xceednet/reports/report_one.dart';
-import 'package:xceednet/reports/report_three.dart';
-import 'package:xceednet/reports/report_two.dart';
+import 'package:xceednet/reports/alerts_reports.dart';
+import 'package:xceednet/reports/package_reports.dart';
+import 'package:xceednet/reports/subscribers_reports.dart';
+import 'package:xceednet/reports/usage_reports.dart';
 
 class Reports extends StatefulWidget {
   const Reports({Key? key, required this.title}) : super(key: key);
@@ -59,10 +59,10 @@ class _ReportsState extends State<Reports> with TickerProviderStateMixin{
             });
           },
           tabs: [
-            Tab(text: 'Lorem One'),
-            Tab(text: 'Lorem Two'),
-            Tab(text: 'Lorem Three'),
-            Tab(text: 'Lorem Four'),
+            Tab(text: 'Subscribers Reports'),
+            Tab(text: 'Package Reports'),
+            Tab(text: 'Usage Reports'),
+            Tab(text: 'Alerts Reports'),
           ]
         ),
       ),
@@ -71,10 +71,10 @@ class _ReportsState extends State<Reports> with TickerProviderStateMixin{
         controller: _tabController,
         children: [
           
-          ReportOne(),
-          ReportTwo(),
-          ReportThree(),
-          ReportFour(),
+          SubscribersReports(),
+          PackageReports(),
+          UsageReports(),
+          AlertsReports(),
           
           
         ],
