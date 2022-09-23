@@ -5,45 +5,16 @@ import 'package:xceednet/common_widgets/headToolbar.dart';
 import 'package:xceednet/common_widgets/menuDrawer.dart';
 import 'package:xceednet/subscribers/subscribers_list.dart';
 
-class SubscribersAdd extends StatefulWidget {
-  const SubscribersAdd({Key? key, required this.title}) : super(key: key);
+class LeadsAdd extends StatefulWidget {
+  const LeadsAdd({Key? key, required this.title}) : super(key: key);
 
   final String title;
   
   @override
-  State<SubscribersAdd> createState() => _SubscribersAddState();
+  State<LeadsAdd> createState() => _LeadsAddState();
 }
 
-class _SubscribersAddState extends State<SubscribersAdd> {
-
-  var _subscriberstype = [
-    "Commercial",
-    "Residential",
-    "Fiber",
-    "Wireless",
-  ];
-
-  var subscribersType = '';
-
-  var _autorenewfor = [
-    "Indefinately",
-    "1 Times",
-    "2 Times",
-    "3 Times",
-    "4 Times",
-    "5 Times",
-    "6 Times",
-    "7 Times",
-    "8 Times",
-    "9 Times",
-    "10 Times",
-  ];
-
-  var autoRenewFor = '';
-
-
-  bool isCheckedStickyPassword = false;
-  bool isCheckedAutoRenew = false;
+class _LeadsAddState extends State<LeadsAdd> {
 
   @override
   Widget build(BuildContext context) {
@@ -87,289 +58,7 @@ class _SubscribersAddState extends State<SubscribersAdd> {
       body: ListView(
         padding: EdgeInsets.all(15),
         children: [
-
-          Container(
-            margin: EdgeInsets.only(bottom: 10),
-            child: Column(
-              children: [
-                Container(
-                  alignment: Alignment.topLeft,
-                  padding: EdgeInsets.symmetric(vertical: 5),
-                  child: Text('Account Number',
-                  style: GoogleFonts.robotoCondensed(
-                    textStyle: Theme.of(context).textTheme.labelLarge,
-                    letterSpacing: 1.75,
-                    fontWeight: FontWeight.w400,
-                  ),
-                  ),
-                ),
-                TextField(
-                  style: GoogleFonts.roboto(
-                    textStyle: Theme.of(context).textTheme.bodyMedium,
-                    fontWeight: FontWeight.w600,
-                    letterSpacing: 1.2,
-                  ),
-                  decoration: InputDecoration(
-                    floatingLabelBehavior: FloatingLabelBehavior.never,
-                    hintText: 'Enter Account No.'.toLowerCase(),
-                    hintStyle: GoogleFonts.roboto(
-                      textStyle: Theme.of(context).textTheme.bodyMedium,
-                      letterSpacing: 1.8,
-                      fontWeight: FontWeight.w300),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Theme.of(context).colorScheme.outline),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Theme.of(context).colorScheme.primary, width: 1),
-                    ),
-                  ),
-                ),
-              ],
-            )
-          ),
-
           
-
-          Container(
-            margin: EdgeInsets.only(bottom: 10),
-            child: Column(
-              children: [
-                Container(
-                  alignment: Alignment.topLeft,
-                  padding: EdgeInsets.symmetric(vertical: 5),
-                  child: Text('Username',
-                  style: GoogleFonts.robotoCondensed(
-                    textStyle: Theme.of(context).textTheme.labelLarge,
-                    letterSpacing: 1.75,
-                    fontWeight: FontWeight.w400,
-                  ),
-                  ),
-                ),
-                TextField(
-                  style: GoogleFonts.roboto(
-                    textStyle: Theme.of(context).textTheme.bodyMedium,
-                    fontWeight: FontWeight.w600,
-                    letterSpacing: 1.2,
-                  ),
-                  decoration: InputDecoration(
-                    floatingLabelBehavior: FloatingLabelBehavior.never,
-                    hintText: 'Enter Username'.toLowerCase(),
-                    hintStyle: GoogleFonts.roboto(
-                      textStyle: Theme.of(context).textTheme.bodyMedium,
-                      letterSpacing: 1.8,
-                      fontWeight: FontWeight.w300),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Theme.of(context).colorScheme.outline),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Theme.of(context).colorScheme.primary, width: 1),
-                    ),
-                  ),
-                ),
-              ],
-            )
-          ),
-
-          Container(
-            margin: EdgeInsets.only(bottom: 10),
-            child: Column(
-              children: [
-                Container(
-                  alignment: Alignment.topLeft,
-                  padding: EdgeInsets.symmetric(vertical: 5),
-                  child: Text('Password',
-                  style: GoogleFonts.robotoCondensed(
-                    textStyle: Theme.of(context).textTheme.labelLarge,
-                    letterSpacing: 1.75,
-                    fontWeight: FontWeight.w400,
-                  ),
-                  ),
-                ),
-                TextField(
-                  style: GoogleFonts.roboto(
-                    textStyle: Theme.of(context).textTheme.bodyMedium,
-                    fontWeight: FontWeight.w600,
-                    letterSpacing: 1.2,
-                  ),
-                  obscureText: true,
-                  decoration: InputDecoration(
-                    floatingLabelBehavior: FloatingLabelBehavior.never,
-                    hintText: 'Enter Password'.toLowerCase(),
-                    hintStyle: GoogleFonts.roboto(
-                      textStyle: Theme.of(context).textTheme.bodyMedium,
-                      letterSpacing: 1.8,
-                      fontWeight: FontWeight.w300),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Theme.of(context).colorScheme.outline),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Theme.of(context).colorScheme.primary, width: 1),
-                    ),
-                  ),
-                ),
-              ],
-            )
-          ),
-
-          Container(
-            margin: EdgeInsets.only(bottom: 10),
-            child: Column(
-              children: [
-                Container(
-                  alignment: Alignment.topLeft,
-                  padding: EdgeInsets.symmetric(vertical: 5),
-                  child: Text('Confirm Password',
-                  style: GoogleFonts.robotoCondensed(
-                    textStyle: Theme.of(context).textTheme.labelLarge,
-                    letterSpacing: 1.75,
-                    fontWeight: FontWeight.w400,
-                  ),
-                  ),
-                ),
-                TextField(
-                  style: GoogleFonts.roboto(
-                    textStyle: Theme.of(context).textTheme.bodyMedium,
-                    fontWeight: FontWeight.w600,
-                    letterSpacing: 1.2,
-                  ),
-                  obscureText: true,
-                  decoration: InputDecoration(
-                    floatingLabelBehavior: FloatingLabelBehavior.never,
-                    hintText: 'Enter Password'.toLowerCase(),
-                    hintStyle: GoogleFonts.roboto(
-                      textStyle: Theme.of(context).textTheme.bodyMedium,
-                      letterSpacing: 1.8,
-                      fontWeight: FontWeight.w300),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Theme.of(context).colorScheme.outline),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Theme.of(context).colorScheme.primary, width: 1),
-                    ),
-                  ),
-                ),
-              ],
-            )
-          ),
-
-
-          Container(
-            child: CheckboxListTile(
-              title: Text('Sticky Password',
-                style: GoogleFonts.roboto(
-                  textStyle: Theme.of(context).textTheme.bodyMedium,
-                  fontWeight: FontWeight.w600,
-                  letterSpacing: 1.2,
-                ),
-              ),
-              checkboxShape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(4)
-              ),
-              dense: true,
-              contentPadding: EdgeInsets.zero,
-              activeColor: Theme.of(context).colorScheme.primary, 
-              value: isCheckedStickyPassword,
-              controlAffinity: ListTileControlAffinity.leading,
-              onChanged: (bool? value) {
-                setState(() {
-                  isCheckedStickyPassword = value!;
-                });
-              },
-            ),
-          ),
-
-          Container(
-            margin: EdgeInsets.only(bottom: 10),
-            child: CheckboxListTile(
-              title: Text('Auto Renew',
-                style: GoogleFonts.roboto(
-                  textStyle: Theme.of(context).textTheme.bodyMedium,
-                  fontWeight: FontWeight.w600,
-                  letterSpacing: 1.2,
-                ),
-              ),
-              checkboxShape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(4)
-              ),
-              dense: true,
-              contentPadding: EdgeInsets.zero,
-              activeColor: Theme.of(context).colorScheme.primary, 
-              value: isCheckedAutoRenew,
-              controlAffinity: ListTileControlAffinity.leading,
-              onChanged: (bool? value) {
-                setState(() {
-                  isCheckedAutoRenew = value!;
-                });
-              },
-            ),
-          ),
-
-          isCheckedAutoRenew ==  true ?
-          Container(
-            margin: EdgeInsets.only(bottom: 10),
-            child: Column(
-              children: [
-                Container(
-                  alignment: Alignment.topLeft,
-                  padding: EdgeInsets.symmetric(vertical: 5),
-                  child: Text('Auto Renew For',
-                  style: GoogleFonts.robotoCondensed(
-                    textStyle: Theme.of(context).textTheme.labelLarge,
-                    letterSpacing: 1.75,
-                    fontWeight: FontWeight.w400,
-                  ),
-                  ),
-                ),
-                DropdownButtonFormField(
-                  style: GoogleFonts.roboto(
-                    textStyle: Theme.of(context).textTheme.bodyMedium,
-                    fontWeight: FontWeight.w600,
-                    letterSpacing: 1.2,
-                  ),
-                  decoration: InputDecoration(
-                    contentPadding: EdgeInsets.all(10),
-                    floatingLabelBehavior: FloatingLabelBehavior.auto,
-                    hintText: 'Select Auto Renew For'.toLowerCase(),
-                    hintStyle: GoogleFonts.roboto(
-                      textStyle: Theme.of(context).textTheme.bodyMedium,
-                      letterSpacing: 1.8,
-                      fontWeight: FontWeight.w300),
-                    
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Theme.of(context).colorScheme.outline),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Theme.of(context).colorScheme.primary, width: 1),
-                    ),
-                  ),
-                  items: _autorenewfor.map((String value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(value,
-                      style: GoogleFonts.roboto(
-                        textStyle: Theme.of(context).textTheme.bodyMedium,
-                        fontWeight: FontWeight.w600,
-                        letterSpacing: 1.2,
-                      ),
-                      ),
-                    );
-                  }).toList(), 
-                  focusColor: Colors.white,
-                  onChanged: (String? newValue){
-                    setState(() {
-                      autoRenewFor = newValue!;
-                    });
-                  },
-                ),
-              ],
-            ),
-          )
-          : Container(),
-
-
-          Divider(height: 30),
-
-
           Container(
             margin: EdgeInsets.only(bottom: 10),
             child: Column(
@@ -654,8 +343,6 @@ class _SubscribersAddState extends State<SubscribersAdd> {
             )
           ),
 
-          
-
           Container(
             margin: EdgeInsets.only(bottom: 10),
             child: Column(
@@ -745,148 +432,7 @@ class _SubscribersAddState extends State<SubscribersAdd> {
                 Container(
                   alignment: Alignment.topLeft,
                   padding: EdgeInsets.symmetric(vertical: 5),
-                  child: Text('Subscribers Type',
-                  style: GoogleFonts.robotoCondensed(
-                    textStyle: Theme.of(context).textTheme.labelLarge,
-                    letterSpacing: 1.75,
-                    fontWeight: FontWeight.w400,
-                  ),
-                  ),
-                ),
-                DropdownButtonFormField(
-                  style: GoogleFonts.roboto(
-                    textStyle: Theme.of(context).textTheme.bodyMedium,
-                    fontWeight: FontWeight.w600,
-                    letterSpacing: 1.2,
-                  ),
-                  decoration: InputDecoration(
-                    contentPadding: EdgeInsets.all(10),
-                    floatingLabelBehavior: FloatingLabelBehavior.auto,
-                    hintText: 'Select Subscribers Type'.toLowerCase(),
-                    hintStyle: GoogleFonts.roboto(
-                      textStyle: Theme.of(context).textTheme.bodyMedium,
-                      letterSpacing: 1.8,
-                      fontWeight: FontWeight.w300),
-                    
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Theme.of(context).colorScheme.outline),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Theme.of(context).colorScheme.primary, width: 1),
-                    ),
-                  ),
-                  items: _subscriberstype.map((String value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(value,
-                      style: GoogleFonts.roboto(
-                        textStyle: Theme.of(context).textTheme.bodyMedium,
-                        fontWeight: FontWeight.w600,
-                        letterSpacing: 1.2,
-                      ),
-                      ),
-                    );
-                  }).toList(), 
-                  focusColor: Colors.white,
-                  onChanged: (String? newValue){
-                    setState(() {
-                      subscribersType = newValue!;
-                    });
-                  },
-                ),
-              ],
-            ),
-          ),
-
-          Container(
-            margin: EdgeInsets.only(bottom: 10),
-            child: Column(
-              children: [
-                Container(
-                  alignment: Alignment.topLeft,
-                  padding: EdgeInsets.symmetric(vertical: 5),
-                  child: Text('Discount',
-                  style: GoogleFonts.robotoCondensed(
-                    textStyle: Theme.of(context).textTheme.labelLarge,
-                    letterSpacing: 1.75,
-                    fontWeight: FontWeight.w400,
-                  ),
-                  ),
-                ),
-                TextField(
-                  style: GoogleFonts.roboto(
-                    textStyle: Theme.of(context).textTheme.bodyMedium,
-                    fontWeight: FontWeight.w600,
-                    letterSpacing: 1.2,
-                  ),
-                  decoration: InputDecoration(
-                    floatingLabelBehavior: FloatingLabelBehavior.never,
-                    hintText: 'Enter Discount'.toLowerCase(),
-                    hintStyle: GoogleFonts.roboto(
-                      textStyle: Theme.of(context).textTheme.bodyMedium,
-                      letterSpacing: 1.8,
-                      fontWeight: FontWeight.w300),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Theme.of(context).colorScheme.outline),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Theme.of(context).colorScheme.primary, width: 1),
-                    ),
-                  ),
-                ),
-              ],
-            )
-          ),
-
-          Container(
-            margin: EdgeInsets.only(bottom: 10),
-            child: Column(
-              children: [
-                Container(
-                  alignment: Alignment.topLeft,
-                  padding: EdgeInsets.symmetric(vertical: 5),
-                  child: Text('GST Number',
-                  style: GoogleFonts.robotoCondensed(
-                    textStyle: Theme.of(context).textTheme.labelLarge,
-                    letterSpacing: 1.75,
-                    fontWeight: FontWeight.w400,
-                  ),
-                  ),
-                ),
-                TextField(
-                  style: GoogleFonts.roboto(
-                    textStyle: Theme.of(context).textTheme.bodyMedium,
-                    fontWeight: FontWeight.w600,
-                    letterSpacing: 1.2,
-                  ),
-                  decoration: InputDecoration(
-                    floatingLabelBehavior: FloatingLabelBehavior.never,
-                    hintText: 'Enter GST Number'.toLowerCase(),
-                    hintStyle: GoogleFonts.roboto(
-                      textStyle: Theme.of(context).textTheme.bodyMedium,
-                      letterSpacing: 1.8,
-                      fontWeight: FontWeight.w300),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Theme.of(context).colorScheme.outline),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Theme.of(context).colorScheme.primary, width: 1),
-                    ),
-                  ),
-                ),
-              ],
-            )
-          ),
-
-
-          Container(
-            margin: EdgeInsets.only(bottom: 10),
-            child: Column(
-              children: [
-                Container(
-                  alignment: Alignment.topLeft,
-                  padding: EdgeInsets.symmetric(vertical: 5),
-                  child: Text('Note',
+                  child: Text('Comment',
                   style: GoogleFonts.robotoCondensed(
                     textStyle: Theme.of(context).textTheme.labelLarge,
                     letterSpacing: 1.75,
@@ -903,7 +449,7 @@ class _SubscribersAddState extends State<SubscribersAdd> {
                   maxLines: 4,
                   decoration: InputDecoration(
                     floatingLabelBehavior: FloatingLabelBehavior.never,
-                    hintText: 'Enter Notes'.toLowerCase(),
+                    hintText: 'Enter Comment'.toLowerCase(),
                     hintStyle: GoogleFonts.roboto(
                       textStyle: Theme.of(context).textTheme.bodyMedium,
                       letterSpacing: 1.8,
@@ -921,6 +467,12 @@ class _SubscribersAddState extends State<SubscribersAdd> {
           ),
 
           
+
+
+
+
+
+
 
 
         ],

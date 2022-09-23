@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:xceednet/accessrequest_log/accessrequest_list.dart';
 import 'package:xceednet/dashboard.dart';
+import 'package:xceednet/leads/leads_list.dart';
 import 'package:xceednet/main.dart';
 import 'package:xceednet/online_subscribers/onlinesubscribers_list.dart';
 import 'package:xceednet/profile/profile.dart';
@@ -350,6 +351,9 @@ class _MenuDrawerState extends State<MenuDrawer> {
                             :
                             item["id"] == "006" ?
                             TicketsList(title: 'Tickets List')
+                            :
+                            item["id"] == "007" ?
+                            LeadsList(title: 'Leads List')
                             :
                             Dashboard(title: "Dashboard"),
 

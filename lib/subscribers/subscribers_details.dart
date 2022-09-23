@@ -83,7 +83,7 @@ class _SubscribersDetailsState extends State<SubscribersDetails> with TickerProv
               color: Colors.blueGrey,
               height: 150,
               child: Text(
-                'TOP AREA', textAlign: TextAlign.center,
+                'TICKETS DETAILS', textAlign: TextAlign.center,
                 style: Theme.of(context).textTheme.displayMedium,
               ),
             ),

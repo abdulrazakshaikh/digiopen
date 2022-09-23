@@ -58,7 +58,7 @@ class _TicketAddState extends State<TicketAdd> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.surface,
+      backgroundColor: Theme.of(context).colorScheme.background,
       appBar: AppBar(
         automaticallyImplyLeading: true,
         title: Text(widget.title.toUpperCase()),       
