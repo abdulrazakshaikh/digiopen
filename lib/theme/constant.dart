@@ -11,7 +11,7 @@ const arsonsecondary = Color(0xFFFFFFFF);
 const arsontertiary = Color(0xFFFFFFFF);
 
 
-const arsprimarycontainer = Color(0x403c5bcd);
+const arsprimarycontainer = Color(0x4000a4ef);
 const arssecondarycontainer = Color(0x406c757d);
 const arstertiarycontainer = Color(0x4091552C);
 

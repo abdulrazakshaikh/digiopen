@@ -5,6 +5,7 @@ import 'package:xceednet/profile/profile.dart';
 import 'package:xceednet/reports/reports.dart';
 import 'package:xceednet/splashscreen.dart';
 import 'package:xceednet/subscribers/subscribers_add.dart';
+import 'package:xceednet/subscribers/subscribers_details.dart';
 import 'package:xceednet/subscribers/subscribers_list.dart';
 import 'package:xceednet/theme/color_schemes.g.dart';
 import 'package:flutter/material.dart';
@@ -46,10 +47,11 @@ class MyApp extends StatelessWidget {
             // const Dashboard(title: 'Dashboard')
             // const Profile(title: 'Profile')
             // const SubscribersList(title: 'Subscribers List')
+            const SubscribersDetails(title: 'Subscribers Details')
             // const SubscribersAdd(title: 'Subscribers Add')
             // const Reports(title: 'Reports')
             //const TicketsList(title: 'Ticket List')
-            const LeadsList(title: 'Leads List')
+            // const LeadsList(title: 'Leads List')
           );
         });
   }
