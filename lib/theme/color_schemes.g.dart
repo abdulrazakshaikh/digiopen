@@ -205,12 +205,14 @@ DrawerThemeData darkDrawerTheme = const DrawerThemeData(
 // ------ICON THEME--------//
 IconThemeData lightIconTheme = IconThemeData(
   size: 20,
-  color: const Color(0xFF31313d),
+  // color: const Color(0xFF31313d),
+  color: arstextColorLight,
 );
 
 IconThemeData darkIconTheme = IconThemeData(
   size: 20,
-  color: const Color(0xFFffffff),
+  // color: const Color(0xFFffffff),
+  color: arstextColorDark,
 );
 
 // ------ELEVATED BUTTON THEME--------//

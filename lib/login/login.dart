@@ -1,6 +1,7 @@
 import 'package:xceednet/login/forgot_password.dart';
 import 'package:xceednet/login/login_success.dart';
 import 'package:xceednet/login/resend_confirmation.dart';
+import 'package:xceednet/login/select_location.dart';
 import 'package:xceednet/login/signup.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -205,7 +206,7 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
                                   onPressed: () {
                                     Navigator.pushReplacement<void, void>(
                                       context, MaterialPageRoute(
-                                        builder: (BuildContext context) => LoginSuccess()
+                                        builder: (BuildContext context) => SelectLocation(title : 'Select Location')
                                       )
                                     );
                                   },
@@ -219,43 +220,42 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
                             ],
                           ),
                         ),
-                        Container(
-                          // padding: EdgeInsets.symmetric(vertical: 5),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                'Not Registered Yet ?'.toLowerCase(),
-                                style: GoogleFonts.roboto(
-                                    textStyle: Theme.of(context).textTheme.labelLarge,
-                                    letterSpacing: 1.2,
-                                    fontWeight: FontWeight.w500),
-                              ),
-                              TextButton(
-                                style: TextButton.styleFrom(
-                                  padding: EdgeInsets.fromLTRB(15, 15, 15, 15),
-                                  foregroundColor: Theme.of(context).colorScheme.primary,
-                                ),
-                                onPressed: () {
-                                  Navigator.pushReplacement<void, void>(
-                                    context, MaterialPageRoute(
-                                      builder: (BuildContext context) => Signup()
-                                    )
-                                  );
-                                },
-                                child: Text(
-                                  'Signup',
-                                  style: GoogleFonts.roboto(
-                                  textStyle: Theme.of(context).textTheme.titleSmall,
-                                    color: Theme.of(context).colorScheme.primary,
-                                    letterSpacing: 1,
-                                    fontWeight: FontWeight.bold
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        )
+                        // Container(
+                        //   child: Row(
+                        //     mainAxisAlignment: MainAxisAlignment.center,
+                        //     children: [
+                        //       Text(
+                        //         'Not Registered Yet ?'.toLowerCase(),
+                        //         style: GoogleFonts.roboto(
+                        //             textStyle: Theme.of(context).textTheme.labelLarge,
+                        //             letterSpacing: 1.2,
+                        //             fontWeight: FontWeight.w500),
+                        //       ),
+                        //       TextButton(
+                        //         style: TextButton.styleFrom(
+                        //           padding: EdgeInsets.fromLTRB(15, 15, 15, 15),
+                        //           foregroundColor: Theme.of(context).colorScheme.primary,
+                        //         ),
+                        //         onPressed: () {
+                        //           Navigator.pushReplacement<void, void>(
+                        //             context, MaterialPageRoute(
+                        //               builder: (BuildContext context) => Signup()
+                        //             )
+                        //           );
+                        //         },
+                        //         child: Text(
+                        //           'Signup',
+                        //           style: GoogleFonts.roboto(
+                        //           textStyle: Theme.of(context).textTheme.titleSmall,
+                        //             color: Theme.of(context).colorScheme.primary,
+                        //             letterSpacing: 1,
+                        //             fontWeight: FontWeight.bold
+                        //           ),
+                        //         ),
+                        //       ),
+                        //     ],
+                        //   ),
+                        // )
                       ],
                     ),
                   ),

@@ -31,7 +31,6 @@ class _SubscribersDetailsState extends State<SubscribersDetails> with TickerProv
  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: MenuDrawer(),
       backgroundColor: Theme.of(context).colorScheme.background,
       appBar: AppBar(
         // title: Text(widget.title.toUpperCase()), 

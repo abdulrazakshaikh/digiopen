@@ -53,56 +53,67 @@ class _MenuDrawerState extends State<MenuDrawer> {
   List menuList = [
     {
       "id": "001",
+      "icon" : Icons.dashboard_outlined,
       "title": "Dashboard",
       "submenu" : "",
     },
     {
       "id": "002",
+      "icon" : Icons.person_outlined,
       "title": "Subcribers",
       "submenu" : "",
     },
     {
       "id": "003",
+      "icon" : Icons.account_circle_outlined,
       "title": "Online Subcribers",
       "submenu" : "",
     },
     {
       "id": "004",
+      "icon" : Icons.login_outlined,
       "title": "Access Request Log",
       "submenu" : "",
     },
     {
       "id": "005",
+      "icon" : Icons.article_outlined,
       "title": "Reports",
       "submenu" : "",
     },
     {
       "id": "006",
+      "icon" : Icons.confirmation_number_outlined,
       "title": "Tickets",
       "submenu" : "",
     },
     {
       "id": "007",
+      "icon" : Icons.portrait_outlined,
       "title": "Leads",
       "submenu" : "",
     },
     {
       "id": "008",
+      "icon" : Icons.shopping_basket_outlined,
       "title": "Package Sales",
       "submenu" : "",
     },
     {
       "id": "009",
+      "icon" : Icons.receipt_outlined,
       "title": "Invoices",
       "submenu" : "",
     },
     {
       "id": "010",
+      "icon" : Icons.payments_outlined,
       "title": "Payments",
       "submenu" : "",
     },
     {
       "id": "011",
+      "icon" : Icons.inventory_2_outlined,
       "title": "Inventory",
       "submenu" : [
         {
@@ -129,31 +140,37 @@ class _MenuDrawerState extends State<MenuDrawer> {
     },
     {
       "id": "012",
+      "icon" : Icons.lan_outlined,
       "title": "Zones",
       "submenu" : "",
     },
     {
       "id": "013",
+      "icon" : Icons.location_on_outlined,
       "title": "Nodes",
       "submenu" : "",
     },
     {
       "id": "014",
+      "icon" : Icons.inventory_outlined,
       "title": "Packages",
       "submenu" : "",
     },
     {
       "id": "015",
+      "icon" : Icons.percent_outlined,
       "title": "Vouchers",
       "submenu" : "",
     },
     {
       "id": "016",
+      "icon" : Icons.local_activity_outlined,
       "title": "Voucher Batches",
       "submenu" : "",
     },
     {
       "id": "017",
+      "icon" : Icons.campaign_outlined,
       "title": "New Updates",
       "submenu" : "",
     },
@@ -318,6 +335,8 @@ class _MenuDrawerState extends State<MenuDrawer> {
                   return
                   item["submenu"] == "" ?
                   ListTile(
+                    leading: Icon(item["icon"], size: 24, color: Theme.of(context).iconTheme.color!.withOpacity(0.75)),
+                    horizontalTitleGap: 0,
                     trailing: Icon(Icons.chevron_right_outlined),
                     title: Text(
                       '${item["title"]}',
@@ -364,8 +383,11 @@ class _MenuDrawerState extends State<MenuDrawer> {
                   )
                   :
                   ExpansionTile(
-                    childrenPadding: EdgeInsets.only(left: 15),
-                    title: Text(
+                    // childrenPadding: EdgeInsets.only(left: 15),
+                    leading: Icon(item["icon"], size: 24, color: Theme.of(context).iconTheme.color!.withOpacity(0.75)),
+                    title: Align(
+                    alignment: Alignment(-1.25, 0),
+                    child: Text(
                       '${item["title"]}',
                       style: GoogleFonts.robotoCondensed(
                         textStyle: Theme.of(context).textTheme.titleSmall,
@@ -374,10 +396,13 @@ class _MenuDrawerState extends State<MenuDrawer> {
                         letterSpacing: 1.5,
                       ),
                     ),
+                    ),
                     children:
                     item["submenu"].map((subitem) =>
                       ListTile(
-                        trailing: Icon(Icons.chevron_right_outlined),
+                        trailing: Icon(Icons.chevron_right_outlined,),
+                        horizontalTitleGap: 0,
+                        contentPadding: EdgeInsets.only(left: 55, right: 15),
                         title: Text('${subitem["title"]}',
                         style: GoogleFonts.robotoCondensed(
                           textStyle: Theme.of(context).textTheme.titleSmall,
