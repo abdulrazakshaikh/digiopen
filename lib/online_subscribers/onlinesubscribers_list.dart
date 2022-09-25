@@ -5,9 +5,7 @@ import 'package:xceednet/common_widgets/headToolbar.dart';
 import 'package:xceednet/common_widgets/menuDrawer.dart';
 
 class OnlineSubscribersList extends StatefulWidget {
-  const OnlineSubscribersList({Key? key, required this.title}) : super(key: key);
 
-  final String title;
   
   @override
   State<OnlineSubscribersList> createState() => _OnlineSubscribersListState();
@@ -85,7 +83,7 @@ List onlinesubscribersList = [
       backgroundColor: Theme.of(context).colorScheme.surface,
       drawer: MenuDrawer(),
       appBar: AppBar(
-        title: Text(widget.title.toUpperCase()),       
+        title: Text("Online Subscribers List"),
         actions: [],
       ),
       body: ListView(

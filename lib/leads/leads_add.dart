@@ -41,7 +41,7 @@ class _LeadsAddState extends State<LeadsAdd> {
                 onPressed: () {
                   Navigator.pushReplacement<void, void>(
                     context, MaterialPageRoute(
-                      builder: (BuildContext context) => SubscribersList(title: 'Subscribers List')
+                      builder: (BuildContext context) => SubscribersList()
                     )
                   );
                 },

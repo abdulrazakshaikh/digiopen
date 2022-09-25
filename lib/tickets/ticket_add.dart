@@ -80,7 +80,7 @@ class _TicketAddState extends State<TicketAdd> {
                 onPressed: () {
                   Navigator.pushReplacement<void, void>(
                     context, MaterialPageRoute(
-                      builder: (BuildContext context) => TicketsList(title: 'Tickets List')
+                      builder: (BuildContext context) => TicketsList()
                     )
                   );
                 },

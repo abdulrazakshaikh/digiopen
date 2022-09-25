@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'common_widgets/menuDrawer.dart';
 
 class Dashboard extends StatefulWidget {
-  const Dashboard({Key? key, required this.title}) : super(key: key);
 
-  final String title;
+
+
   
   @override
   State<Dashboard> createState() => _DashboardState();
@@ -27,7 +27,7 @@ class _DashboardState extends State<Dashboard> {
     return Scaffold(
       drawer: MenuDrawer(),
       appBar: AppBar(
-        title: Text(widget.title.toUpperCase()),
+        title: Text("Dashboard"),
         actions: [],
       ),
       body: Center(

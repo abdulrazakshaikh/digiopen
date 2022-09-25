@@ -21,7 +21,7 @@ class _LoginSuccessState extends State<LoginSuccess> with TickerProviderStateMix
     Future.delayed(Duration(seconds: 1), () {
       Navigator.pushReplacement<void, void>(context, 
         MaterialPageRoute(
-          builder: (BuildContext context) => Dashboard(title: 'Dashboard')
+          builder: (BuildContext context) => Dashboard()
         )
       );
     });

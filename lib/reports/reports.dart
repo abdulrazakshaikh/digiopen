@@ -8,9 +8,7 @@ import 'package:xceednet/reports/subscribers_reports.dart';
 import 'package:xceednet/reports/usage_reports.dart';
 
 class Reports extends StatefulWidget {
-  const Reports({Key? key, required this.title}) : super(key: key);
 
-  final String title;
   
   @override
   State<Reports> createState() => _ReportsState();
@@ -35,7 +33,7 @@ class _ReportsState extends State<Reports> with TickerProviderStateMixin{
       backgroundColor: Theme.of(context).colorScheme.surface,
       drawer: MenuDrawer(),
       appBar: AppBar(
-        title: Text(widget.title.toUpperCase()),       
+        title: Text("Reports"),
         actions: [],
         bottom: TabBar(
           indicatorColor: Theme.of(context).colorScheme.primary,

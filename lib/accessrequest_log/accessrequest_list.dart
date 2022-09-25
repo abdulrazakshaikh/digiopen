@@ -6,9 +6,7 @@ import 'package:xceednet/common_widgets/menuDrawer.dart';
 import 'package:xceednet/profile/confirmation.dart';
 
 class AccessRequestList extends StatefulWidget {
-  const AccessRequestList({Key? key, required this.title}) : super(key: key);
 
-  final String title;
   
   @override
   State<AccessRequestList> createState() => _AccessRequestListState();
@@ -87,7 +85,7 @@ List accessLogList = [
       backgroundColor: Theme.of(context).colorScheme.surface,
       drawer: MenuDrawer(),
       appBar: AppBar(
-        title: Text(widget.title.toUpperCase()),       
+        title: Text("Access Request Log"),
         actions: [
           IconButton(
             onPressed: (){}, 
