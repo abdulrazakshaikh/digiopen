@@ -9,10 +9,7 @@ import 'package:xceednet/subscribers/subscribers_add.dart';
 import 'package:xceednet/subscribers/subscribers_details.dart';
 
 class LeadsList extends StatefulWidget {
-  const LeadsList({Key? key, required this.title}) : super(key: key);
 
-  final String title;
-  
   @override
   State<LeadsList> createState() => _LeadsListState();
 }
@@ -61,7 +58,7 @@ List subscribersList = [
       drawer: MenuDrawer(),
       appBar: AppBar(
         
-        title: Text(widget.title.toUpperCase()),       
+        title: Text("Leads List"),
         actions: [
           IconButton(
             onPressed: (){

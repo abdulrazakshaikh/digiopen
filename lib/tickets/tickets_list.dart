@@ -7,10 +7,7 @@ import 'package:xceednet/subscribers/subscribers_add.dart';
 import 'package:xceednet/tickets/ticket_add.dart';
 
 class TicketsList extends StatefulWidget {
-  const TicketsList({Key? key, required this.title}) : super(key: key);
 
-  final String title;
-  
   @override
   State<TicketsList> createState() => _TicketsListState();
 }
@@ -146,7 +143,7 @@ List ticketsList = [
       backgroundColor: Theme.of(context).colorScheme.surface,
       drawer: MenuDrawer(),
       appBar: AppBar(
-        title: Text(widget.title.toUpperCase()),       
+        title: Text("Tickets List"),
         actions: [
           IconButton(
             onPressed: (){

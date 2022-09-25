@@ -2,13 +2,26 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:xceednet/accessrequest_log/accessrequest_list.dart';
 import 'package:xceednet/dashboard.dart';
+import 'package:xceednet/inventory/logs/log_list.dart';
+import 'package:xceednet/inventory/products/product_list.dart';
+import 'package:xceednet/inventory/purchase/purchase_list.dart';
+import 'package:xceednet/inventory/sales/sales_list.dart';
+import 'package:xceednet/inventory/suppliers/supplier_list.dart';
+import 'package:xceednet/invoice/invoices_list.dart';
 import 'package:xceednet/leads/leads_list.dart';
 import 'package:xceednet/main.dart';
+import 'package:xceednet/nodes/nodes_list.dart';
 import 'package:xceednet/online_subscribers/onlinesubscribers_list.dart';
+import 'package:xceednet/package/package_list.dart';
+import 'package:xceednet/package/package_sales_list.dart';
+import 'package:xceednet/payment/payments_list.dart';
 import 'package:xceednet/profile/profile.dart';
 import 'package:xceednet/reports/reports.dart';
 import 'package:xceednet/subscribers/subscribers_list.dart';
 import 'package:xceednet/tickets/tickets_list.dart';
+import 'package:xceednet/vouchers/vouchers_batches_list.dart';
+import 'package:xceednet/vouchers/vouchers_list.dart';
+import 'package:xceednet/zones/zones_list.dart';
 
 class MenuDrawer extends StatefulWidget {
   @override
@@ -354,27 +367,55 @@ class _MenuDrawerState extends State<MenuDrawer> {
                             child:
 
                             item["id"] == "001" ?
-                            Dashboard(title: 'Dashboard')
+                            Dashboard()
                             :
                             item["id"] == "002" ?
-                            SubscribersList(title: 'Subscribers List')
+                            SubscribersList()
                             :
                             item["id"] == "003" ?
-                            OnlineSubscribersList(title: 'Online Subscribers List')
+                            OnlineSubscribersList()
                             :
                             item["id"] == "004" ?
-                            AccessRequestList(title: 'Access Request Log')
+                            AccessRequestList()
                             :
                             item["id"] == "005" ?
-                            Reports(title: 'Report')
+                            Reports()
                             :
                             item["id"] == "006" ?
-                            TicketsList(title: 'Tickets List')
+                            TicketsList()
                             :
                             item["id"] == "007" ?
-                            LeadsList(title: 'Leads List')
+                            LeadsList()
+                            :item["id"] == "008" ?
+                            PackageSalesList()
+                            :item["id"] == "009" ?
+                            InvoicesList()
+                            :item["id"] == "010" ?
+                            PaymentList()
+                            :item["id"] == "011-1" ?
+                            SalesList()
+                            :item["id"] == "011-2" ?
+                            PurchaseList()
+                            :item["id"] == "011-3" ?
+                            ProductList()
+                            :item["id"] == "011-4" ?
+                            SupplierList()
+                            :item["id"] == "011-5" ?
+                            LogList()
+                            :item["id"] == "012" ?
+                            ZonesList()
+                            :item["id"] == "013" ?
+                            NodesList()
+                            :item["id"] == "014" ?
+                            PackageList()
+                            :item["id"] == "015" ?
+                            VouchersList()
+                            :item["id"] == "016" ?
+                            VouchersBatchesList()
+                            :item["id"] == "017" ?
+                            Dashboard()
                             :
-                            Dashboard(title: "Dashboard"),
+                            Dashboard(),
 
                           ),
                         ),
@@ -415,7 +456,7 @@ class _MenuDrawerState extends State<MenuDrawer> {
                               pageBuilder: (context, animation, secondaryAnimation) =>
                                 FadeTransition(
                                 opacity: animation,
-                                child: Dashboard(title: 'Dashboard'),
+                                child: Dashboard(),
                               ),
                             ),
                           );

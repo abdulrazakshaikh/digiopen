@@ -200,7 +200,7 @@ List locationList = [
                               pageBuilder: (context, animation, secondaryAnimation) =>
                                 FadeTransition(
                                 opacity: animation,
-                                child: Dashboard(title: 'Dashboard')
+                                child: Dashboard()
                               ),
                             ),
                           );

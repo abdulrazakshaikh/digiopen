@@ -3,57 +3,53 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:xceednet/common_widgets/headToolbar.dart';
 import 'package:xceednet/common_widgets/menuDrawer.dart';
+import 'package:xceednet/leads/leads_add.dart';
+import 'package:xceednet/leads/leads_details.dart';
 import 'package:xceednet/subscribers/subscribers_add.dart';
 import 'package:xceednet/subscribers/subscribers_details.dart';
 
-class SubscribersList extends StatefulWidget {
+class LogList extends StatefulWidget {
+
+
 
   
   @override
-  State<SubscribersList> createState() => _SubscribersListState();
+  State<LogList> createState() => _LogListState();
 }
 
-class _SubscribersListState extends State<SubscribersList> {
+class _LogListState extends State<LogList> {
 
 List subscribersList = [
   {
-    "id": "ABC0001",
-    "username" : "john310",
+    "id": "101",
+    "status" : "Assigned",
+
     "name" : "John Doe",
     "mobile" : "9876543210",
-    "zone" : "Sanpada",
-    "node" : "Sector - 88",
-    "package" : "350MBPS",
-    "online" : "yes",
-    "renewedat" : "01 Sep, 2022",
-    "expiredat" : "30 Sep, 2022",
-    "status" : "Active",
+
+    "createdon" : "01 Sep, 2022",
+    "assignedto" : "Johnson Doe",
+    
+    "ticket" : "-",
+
   },
   {
-    "id": "ABC0001",
-    "username" : "john310",
+    "id": "102",
     "name" : "John Doe",
     "mobile" : "9876543210",
-    "zone" : "Sanpada",
-    "node" : "Sector - 88",
-    "package" : "350MBPS",
-    "online" : "yes",
-    "renewedat" : "01 Sep, 2022",
-    "expiredat" : "30 Sep, 2022",
-    "status" : "Active",
+    "createdon" : "01 Sep, 2022",
+    "assignedto" : "Johnson Doe",
+    "ticket" : "-",
+    "status" : "Assigned",
   },
   {
-    "id": "ABC0001",
-    "username" : "john310",
+    "id": "103",
     "name" : "John Doe",
     "mobile" : "9876543210",
-    "zone" : "Sanpada",
-    "node" : "Sector - 88",
-    "package" : "350MBPS",
-    "online" : "yes",
-    "renewedat" : "01 Sep, 2022",
-    "expiredat" : "30 Sep, 2022",
-    "status" : "Active",
+    "createdon" : "01 Sep, 2022",
+    "assignedto" : "Johnson Doe",
+    "ticket" : "-",
+    "status" : "Assigned",
   },
 
 ];
@@ -65,8 +61,8 @@ List subscribersList = [
       drawer: MenuDrawer(),
       appBar: AppBar(
         
-        title: Text("Subscribers List"),
-        actions: [
+        title: Text("Logs"),
+        /*actions: [
           IconButton(
             onPressed: (){
               Navigator.of(context).push(
@@ -74,7 +70,7 @@ List subscribersList = [
                   pageBuilder: (context, animation, secondaryAnimation) =>
                     FadeTransition(
                     opacity: animation,
-                    child: SubscribersAdd(title: 'Subscriber Add')
+                    child: LeadsAdd(title: 'Add Leads')
                   ),
                 ),
               );
@@ -82,14 +78,12 @@ List subscribersList = [
             icon: Icon(Icons.add), 
             style: IconButton.styleFrom(
               shape: RoundedRectangleBorder(),
-              // backgroundColor: Theme.of(context).colorScheme.tertiary.withOpacity(0.1),
               foregroundColor: Theme.of(context).colorScheme.primary,
               minimumSize: Size(54, 54),
               fixedSize: Size(54, 54),
-
             ),
           ),
-        ],
+        ],*/
       ),
       body: ListView(
         children: [
@@ -115,7 +109,7 @@ List subscribersList = [
                       pageBuilder: (context, animation, secondaryAnimation) =>
                         FadeTransition(
                         opacity: animation,
-                        child: SubscribersDetails(title: 'Subscriber Details')
+                        child: LeadsDetails(title: 'Leads Details')
                       ),
                     ),
                   );
@@ -166,14 +160,14 @@ List subscribersList = [
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text('Username : '.toLowerCase(),
+                                  Text('Status : '.toLowerCase(),
                                   style: GoogleFonts.roboto(
                                     textStyle: Theme.of(context).textTheme.labelMedium,
                                     letterSpacing: 1.5
                                   ),
                                   ),
                                   SizedBox(height: 3),
-                                  Text('${item["username"]}',
+                                  Text('${item["status"]}',
                                   style: GoogleFonts.roboto(
                                     textStyle: Theme.of(context).textTheme.bodyMedium,
                                     fontSize: 13,
@@ -253,14 +247,14 @@ List subscribersList = [
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text('Zone : '.toLowerCase(),
+                                  Text('Created on : '.toLowerCase(),
                                   style: GoogleFonts.roboto(
                                     textStyle: Theme.of(context).textTheme.labelMedium,
                                     letterSpacing: 1.5
                                   ),
                                   ),
                                   SizedBox(height: 3),
-                                  Text('${item["zone"]}',
+                                  Text('${item["createdon"]}',
                                   style: GoogleFonts.roboto(
                                     textStyle: Theme.of(context).textTheme.bodyMedium,
                                     fontSize: 13,
@@ -276,14 +270,14 @@ List subscribersList = [
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text('Node : '.toLowerCase(),
+                                  Text('Assigned To : '.toLowerCase(),
                                   style: GoogleFonts.roboto(
                                     textStyle: Theme.of(context).textTheme.labelMedium,
                                     letterSpacing: 1.5
                                   ),
                                   ),
                                   SizedBox(height: 3),
-                                  Text('${item["node"]}',
+                                  Text('${item["assignedto"]}',
                                   style: GoogleFonts.roboto(
                                     textStyle: Theme.of(context).textTheme.bodyMedium,
                                     fontSize: 13,
@@ -297,7 +291,7 @@ List subscribersList = [
                           ],
                         ),
                       ),
-                      
+                     
                       Container(
                         padding: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
                         child: Row(
@@ -308,37 +302,14 @@ List subscribersList = [
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text('Package : '.toLowerCase(),
+                                  Text('Ticket : '.toLowerCase(),
                                   style: GoogleFonts.roboto(
                                     textStyle: Theme.of(context).textTheme.labelMedium,
                                     letterSpacing: 1.5
                                   ),
                                   ),
                                   SizedBox(height: 3),
-                                  Text('${item["package"]}',
-                                  style: GoogleFonts.roboto(
-                                    textStyle: Theme.of(context).textTheme.bodyMedium,
-                                    fontSize: 13,
-                                    fontWeight: FontWeight.w500,
-                                    letterSpacing: 1.2
-                                  ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Expanded(
-                              flex: 5,
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text('Online : '.toLowerCase(),
-                                  style: GoogleFonts.roboto(
-                                    textStyle: Theme.of(context).textTheme.labelMedium,
-                                    letterSpacing: 1.5
-                                  ),
-                                  ),
-                                  SizedBox(height: 3),
-                                  Text('${item["online"]}',
+                                  Text('${item["ticket"]}',
                                   style: GoogleFonts.roboto(
                                     textStyle: Theme.of(context).textTheme.bodyMedium,
                                     fontSize: 13,
@@ -353,102 +324,6 @@ List subscribersList = [
                         ),
                       ),
 
-                      Container(
-                        padding: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Expanded(
-                              flex: 5,
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text('Status : '.toLowerCase(),
-                                  style: GoogleFonts.roboto(
-                                    textStyle: Theme.of(context).textTheme.labelMedium,
-                                    letterSpacing: 1.5
-                                  ),
-                                  ),
-                                  SizedBox(height: 3),
-                                  Text('${item["status"]}',
-                                  style: GoogleFonts.roboto(
-                                    textStyle: Theme.of(context).textTheme.bodyMedium,
-                                    fontSize: 13,
-                                    fontWeight: FontWeight.w500,
-                                    letterSpacing: 1.2
-                                  ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-
-                      Container(
-                        padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                        decoration: BoxDecoration(
-                          border: Border(
-                            top: BorderSide(width: 1, color: Theme.of(context).dividerColor)
-                          )
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Expanded(
-                              flex: 5,
-                              child: Wrap(
-                                crossAxisAlignment: WrapCrossAlignment.start,
-                                runSpacing: 3,
-                                spacing: 5,
-                                children: [
-                                  Text('Renewed at : '.toLowerCase(),
-                                  style: GoogleFonts.roboto(
-                                    textStyle: Theme.of(context).textTheme.labelMedium,
-                                    letterSpacing: 1.5
-                                  ),
-                                  ),
-                                  SizedBox(height: 3),
-                                  Text('${item["renewedat"]}',
-                                  style: GoogleFonts.roboto(
-                                    textStyle: Theme.of(context).textTheme.bodyMedium,
-                                    fontSize: 13,
-                                    fontWeight: FontWeight.w500,
-                                    letterSpacing: 1.2
-                                  ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Expanded(
-                              flex: 5,
-                              child: Wrap(
-                                crossAxisAlignment: WrapCrossAlignment.start,
-                                runSpacing: 3,
-                                spacing: 5,
-                                children: [
-                                  Text('Expired at : '.toLowerCase(),
-                                  style: GoogleFonts.roboto(
-                                    textStyle: Theme.of(context).textTheme.labelMedium,
-                                    letterSpacing: 1.5
-                                  ),
-                                  ),
-                                  SizedBox(height: 3),
-                                  Text('${item["expiredat"]}',
-                                  style: GoogleFonts.roboto(
-                                    textStyle: Theme.of(context).textTheme.bodyMedium,
-                                    fontSize: 13,
-                                    fontWeight: FontWeight.w500,
-                                    letterSpacing: 1.2
-                                  ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      
                     ],
                   ),
                 ),
