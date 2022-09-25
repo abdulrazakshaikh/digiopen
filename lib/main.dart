@@ -44,11 +44,11 @@ class MyApp extends StatelessWidget {
             // ThemeMode.dark,
             // ThemeMode.light,
             home: 
-            SplashScreen(),
+            // SplashScreen(),
             // const Dashboard(title: 'Dashboard')
             // const Profile(title: 'Profile')
             // const SubscribersList(title: 'Subscribers List')
-            // const SubscribersDetails(title: 'Subscribers Details')
+            const SubscribersDetails(title: 'Subscribers Details')
             // const SubscribersAdd(title: 'Subscribers Add')
             // const Reports(title: 'Reports')
             //const TicketsList(title: 'Ticket List')
