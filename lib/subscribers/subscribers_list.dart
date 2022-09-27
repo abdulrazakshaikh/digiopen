@@ -7,8 +7,6 @@ import 'package:xceednet/subscribers/subscribers_add.dart';
 import 'package:xceednet/subscribers/subscribers_details.dart';
 
 class SubscribersList extends StatefulWidget {
-
-  
   @override
   State<SubscribersList> createState() => _SubscribersListState();
 }
@@ -115,7 +113,7 @@ List subscribersList = [
                       pageBuilder: (context, animation, secondaryAnimation) =>
                         FadeTransition(
                         opacity: animation,
-                        child: SubscribersDetails(title: 'Subscriber Details')
+                        child: SubscribersDetails()
                       ),
                     ),
                   );

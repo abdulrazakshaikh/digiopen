@@ -1,16 +1,19 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:xceednet/common_widgets/filter_bottomsheet.dart';
 import 'package:xceednet/common_widgets/menuDrawer.dart';
+import 'package:xceednet/profile/changepassword_bottomsheet.dart';
+import 'package:xceednet/subscribers/datausage.dart';
+import 'package:xceednet/subscribers/disablesubscriber_bottomsheet.dart';
+import 'package:xceednet/subscribers/instantsms_bottomsheet.dart';
+import 'package:xceednet/subscribers/resetmacaddress_bottomsheet.dart';
 import 'package:xceednet/subscribers/subscribers_details_card.dart';
 import 'package:xceednet/subscribers/tab_audittrail.dart';
 import 'package:xceednet/subscribers/tab_connection.dart';
 import 'package:xceednet/subscribers/tab_details.dart';
 
 class SubscribersDetails extends StatefulWidget {
-  const SubscribersDetails({Key? key, required this.title}) : super(key: key);
-
-  final String title;
   
   @override
   State<SubscribersDetails> createState() => _SubscribersDetailsState();
@@ -31,11 +34,46 @@ class _SubscribersDetailsState extends State<SubscribersDetails> with TickerProv
 
   bool _isPlanActive = true;
 
+void _onChoiceSelected(String choice) {
+  choice == 'Data Usage' ?
+  Navigator.pushReplacement<void, void>(
+    context, MaterialPageRoute(
+      builder: (BuildContext context) => DataUsage()
+    )
+  )
+  :
+  showModalBottomSheet(    
+    elevation: 2,
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.only(
+        topLeft: Radius.circular(20),
+        topRight: Radius.circular(20),
+      ),
+    ),
+    context: context, builder: (BuildContext context) { 
+      return 
+      choice == 'Reset Mac Address' ?
+      ResetMacAddressBottomSheet()
+      :
+      choice == 'Disable Subscriber' ?
+      DisableSubscriberBottomSheet()
+      :
+      choice == 'Change Password' ?
+      ChangePasswordBottomSheet()
+      :
+      Container();
+    }, 
+  );
+}
+
  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
-      floatingActionButton: FloatingActionButton(
+      floatingActionButton: 
+      _tabController.index == 2 ?
+      null :
+      FloatingActionButton(
         isExtended: true,
         mini: true,        
         onPressed: (){},
@@ -78,7 +116,20 @@ class _SubscribersDetailsState extends State<SubscribersDetails> with TickerProv
         actions: [
           IconButton(
             tooltip: 'Instant SMS',
-            onPressed: (){}, 
+            onPressed: (){
+              showModalBottomSheet(
+                elevation: 2,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(20),
+                    topRight: Radius.circular(20),
+                  ),
+                ),
+                context: context, builder: (BuildContext context) { 
+                  return InstantSmsBottomSheet();
+                }, 
+              );
+            }, 
             icon: Icon(Icons.sms_outlined), 
             style: IconButton.styleFrom(
               shape: RoundedRectangleBorder(),
@@ -94,7 +145,7 @@ class _SubscribersDetailsState extends State<SubscribersDetails> with TickerProv
             child: PopupMenuButton<String>(
               shape: RoundedRectangleBorder(),
               icon: Icon(Icons.more_vert_outlined),
-              onSelected: (choice) {},
+              onSelected: _onChoiceSelected,
               color: Theme.of(context).colorScheme.surface,
               position: PopupMenuPosition.under,
               tooltip: 'Options',
@@ -102,9 +153,21 @@ class _SubscribersDetailsState extends State<SubscribersDetails> with TickerProv
                 return Constants.choices.map((String choice) {
                   return PopupMenuItem<String>(
                     value: choice,
-                    child: Text(choice,
-                    style: Theme.of(context).textTheme.bodyMedium,
-                    ),
+                    child: Text(choice, style: Theme.of(context).textTheme.bodyMedium),
+                    // onTap: (){
+                    //   showModalBottomSheet(
+                    //     elevation: 2,
+                    //     shape: RoundedRectangleBorder(
+                    //       borderRadius: BorderRadius.only(
+                    //         topLeft: Radius.circular(20),
+                    //         topRight: Radius.circular(20),
+                    //       ),
+                    //     ),
+                    //     context: context, builder: (BuildContext context) { 
+                    //       return FilterBottomSheet();
+                    //     }, 
+                    //   );
+                    // },
                   );
                 }).toList();
               },
@@ -144,7 +207,7 @@ class _SubscribersDetailsState extends State<SubscribersDetails> with TickerProv
                   fontWeight: FontWeight.w600
                 ),
                 controller: _tabController,
-                // isScrollable: true,
+                // isScrollable: true,r
                 onTap: (int value) {
                   setState(() {
                     _tabController.index = value;
@@ -233,7 +296,7 @@ class _SubscribersDetailsState extends State<SubscribersDetails> with TickerProv
 
 class Constants {
   static const String FirstItem = 'Reset Mac Address';
-  static const String SecondItem = 'Disable Subscribers';
+  static const String SecondItem = 'Disable Subscriber';
   static const String ThirdItem = 'Change Password';
   static const String FourthItem = 'Data Usage';
   static const List<String> choices = <String>[FirstItem, SecondItem, ThirdItem, FourthItem];

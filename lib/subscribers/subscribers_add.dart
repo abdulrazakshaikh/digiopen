@@ -70,7 +70,7 @@ class _SubscribersAddState extends State<SubscribersAdd> {
                 onPressed: () {
                   Navigator.pushReplacement<void, void>(
                     context, MaterialPageRoute(
-                      builder: (BuildContext context) => SubscribersList()
+                      builder: (BuildContext context) => SubscribersList(),
                     )
                   );
                 },

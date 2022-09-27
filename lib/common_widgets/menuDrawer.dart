@@ -84,7 +84,7 @@ class _MenuDrawerState extends State<MenuDrawer> {
     },
     {
       "id": "004",
-      "icon" : Icons.login_outlined,
+      "icon" : Icons.description_outlined,
       "title": "Access Request Log",
       "submenu" : "",
     },

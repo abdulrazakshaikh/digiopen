@@ -5,6 +5,7 @@ import 'package:xceednet/login/select_location.dart';
 import 'package:xceednet/profile/profile.dart';
 import 'package:xceednet/reports/reports.dart';
 import 'package:xceednet/splashscreen.dart';
+import 'package:xceednet/subscribers/datausage.dart';
 import 'package:xceednet/subscribers/subscribers_add.dart';
 import 'package:xceednet/subscribers/subscribers_details.dart';
 import 'package:xceednet/subscribers/subscribers_list.dart';
@@ -47,8 +48,9 @@ class MyApp extends StatelessWidget {
             // SplashScreen(),
             // const Dashboard(title: 'Dashboard')
             // const Profile(title: 'Profile')
-            // const SubscribersList(title: 'Subscribers List')
-            const SubscribersDetails(title: 'Subscribers Details')
+            SubscribersList()
+            // SubscribersDetails()
+            // DataUsage()
             // const SubscribersAdd(title: 'Subscribers Add')
             // const Reports(title: 'Reports')
             //const TicketsList(title: 'Ticket List')
