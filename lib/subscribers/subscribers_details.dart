@@ -35,6 +35,15 @@ class _SubscribersDetailsState extends State<SubscribersDetails> with TickerProv
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
+      floatingActionButton: FloatingActionButton(
+        isExtended: true,
+        mini: true,        
+        onPressed: (){},
+        tooltip: 'Edit',
+        backgroundColor: Theme.of(context).colorScheme.primary,
+        foregroundColor: Theme.of(context).colorScheme.onPrimary,
+        child: Icon(Icons.create_outlined),
+      ),
       appBar: AppBar(
         // title: Text(widget.title.toUpperCase()), 
         scrolledUnderElevation: 0,
@@ -121,6 +130,7 @@ class _SubscribersDetailsState extends State<SubscribersDetails> with TickerProv
               toolbarHeight: 0,
               bottom: TabBar(
                 indicatorColor: Theme.of(context).colorScheme.primary,
+                indicatorWeight: 3,
                 unselectedLabelColor: Theme.of(context).colorScheme.secondary,
                 unselectedLabelStyle: GoogleFonts.robotoCondensed(
                   textStyle: Theme.of(context).textTheme.bodyMedium,
