@@ -45,10 +45,10 @@ class MyApp extends StatelessWidget {
             // ThemeMode.dark,
             // ThemeMode.light,
             home: 
-            // SplashScreen(),
+             SplashScreen(),
             // const Dashboard(title: 'Dashboard')
             // const Profile(title: 'Profile')
-            SubscribersList()
+            //SubscribersList()
             // SubscribersDetails()
             // DataUsage()
             // const SubscribersAdd(title: 'Subscribers Add')

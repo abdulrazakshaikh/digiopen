@@ -5,14 +5,13 @@ import 'package:xceednet/common_widgets/headToolbar.dart';
 import 'package:xceednet/common_widgets/menuDrawer.dart';
 import 'package:xceednet/subscribers/subscribers_list.dart';
 
-class LeadsAdd extends StatefulWidget {
+class PaymentAdd extends StatefulWidget {
 
-  
   @override
-  State<LeadsAdd> createState() => _LeadsAddState();
+  State<PaymentAdd> createState() => _PaymentAddState();
 }
 
-class _LeadsAddState extends State<LeadsAdd> {
+class _PaymentAddState extends State<PaymentAdd> {
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +19,7 @@ class _LeadsAddState extends State<LeadsAdd> {
       backgroundColor: Theme.of(context).colorScheme.background,
       appBar: AppBar(
         automaticallyImplyLeading: true,
-        title: Text("Add Lead".toUpperCase()),
+        title: Text("Add Payment"),
         actions: [],
       ),
       bottomNavigationBar: Container(

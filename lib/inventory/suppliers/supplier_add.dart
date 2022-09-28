@@ -5,14 +5,13 @@ import 'package:xceednet/common_widgets/headToolbar.dart';
 import 'package:xceednet/common_widgets/menuDrawer.dart';
 import 'package:xceednet/subscribers/subscribers_list.dart';
 
-class LeadsAdd extends StatefulWidget {
+class SupplierAdd extends StatefulWidget {
 
-  
   @override
-  State<LeadsAdd> createState() => _LeadsAddState();
+  State<SupplierAdd> createState() => _SupplierAddState();
 }
 
-class _LeadsAddState extends State<LeadsAdd> {
+class _SupplierAddState extends State<SupplierAdd> {
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +19,7 @@ class _LeadsAddState extends State<LeadsAdd> {
       backgroundColor: Theme.of(context).colorScheme.background,
       appBar: AppBar(
         automaticallyImplyLeading: true,
-        title: Text("Add Lead".toUpperCase()),
+        title: Text("Add Supplier"),
         actions: [],
       ),
       bottomNavigationBar: Container(
@@ -37,11 +36,7 @@ class _LeadsAddState extends State<LeadsAdd> {
             Expanded(
               child: ElevatedButton(
                 onPressed: () {
-                  Navigator.pushReplacement<void, void>(
-                    context, MaterialPageRoute(
-                      builder: (BuildContext context) => SubscribersList()
-                    )
-                  );
+                  Navigator.pop(context);
                 },
                 style: ElevatedButton.styleFrom(
                   padding: EdgeInsets.symmetric(horizontal: 15, vertical: 20),

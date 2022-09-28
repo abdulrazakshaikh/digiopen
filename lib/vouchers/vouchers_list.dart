@@ -137,7 +137,7 @@ List subscribersList = [
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text('Customer ID : '.toLowerCase(),
+                                  Text('Voucher ID : '.toLowerCase(),
                                   style: GoogleFonts.roboto(
                                     textStyle: Theme.of(context).textTheme.labelMedium,
                                     letterSpacing: 1.5
@@ -160,14 +160,69 @@ List subscribersList = [
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text('Status : '.toLowerCase(),
+                                  Text('Pin : '.toLowerCase(),
+                                    style: GoogleFonts.roboto(
+                                        textStyle: Theme.of(context).textTheme.labelMedium,
+                                        letterSpacing: 1.5
+                                    ),
+                                  ),
+                                  SizedBox(height: 3),
+                                  Text('PIN PIN',
+                                    style: GoogleFonts.roboto(
+                                        textStyle: Theme.of(context).textTheme.bodyMedium,
+                                        fontSize: 13,
+                                        fontWeight: FontWeight.w500,
+                                        letterSpacing: 1.2
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+
+                      Container(
+                        padding: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Expanded(
+                              flex: 5,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text('Batch id : '.toLowerCase(),
                                   style: GoogleFonts.roboto(
                                     textStyle: Theme.of(context).textTheme.labelMedium,
                                     letterSpacing: 1.5
                                   ),
                                   ),
                                   SizedBox(height: 3),
-                                  Text('${item["status"]}',
+                                  Text('121',
+                                  style: GoogleFonts.roboto(
+                                    textStyle: Theme.of(context).textTheme.bodyMedium,
+                                    fontSize: 13,
+                                    fontWeight: FontWeight.w500,
+                                    letterSpacing: 1.2
+                                  ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Expanded(
+                              flex: 5,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text('Voucher id : '.toLowerCase(),
+                                  style: GoogleFonts.roboto(
+                                    textStyle: Theme.of(context).textTheme.labelMedium,
+                                    letterSpacing: 1.5
+                                  ),
+                                  ),
+                                  SizedBox(height: 3),
+                                  Text('3933',
                                   style: GoogleFonts.roboto(
                                     textStyle: Theme.of(context).textTheme.bodyMedium,
                                     fontSize: 13,
@@ -192,14 +247,14 @@ List subscribersList = [
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text('Name : '.toLowerCase(),
+                                  Text('Package : '.toLowerCase(),
                                   style: GoogleFonts.roboto(
                                     textStyle: Theme.of(context).textTheme.labelMedium,
                                     letterSpacing: 1.5
                                   ),
                                   ),
                                   SizedBox(height: 3),
-                                  Text('${item["name"]}',
+                                  Text('Package Name',
                                   style: GoogleFonts.roboto(
                                     textStyle: Theme.of(context).textTheme.bodyMedium,
                                     fontSize: 13,
@@ -215,69 +270,14 @@ List subscribersList = [
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text('Mobile : '.toLowerCase(),
+                                  Text('Price : '.toLowerCase(),
                                   style: GoogleFonts.roboto(
                                     textStyle: Theme.of(context).textTheme.labelMedium,
                                     letterSpacing: 1.5
                                   ),
                                   ),
                                   SizedBox(height: 3),
-                                  Text('${item["mobile"]}',
-                                  style: GoogleFonts.roboto(
-                                    textStyle: Theme.of(context).textTheme.bodyMedium,
-                                    fontSize: 13,
-                                    fontWeight: FontWeight.w500,
-                                    letterSpacing: 1.2
-                                  ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-
-                      Container(
-                        padding: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Expanded(
-                              flex: 5,
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text('Created on : '.toLowerCase(),
-                                  style: GoogleFonts.roboto(
-                                    textStyle: Theme.of(context).textTheme.labelMedium,
-                                    letterSpacing: 1.5
-                                  ),
-                                  ),
-                                  SizedBox(height: 3),
-                                  Text('${item["createdon"]}',
-                                  style: GoogleFonts.roboto(
-                                    textStyle: Theme.of(context).textTheme.bodyMedium,
-                                    fontSize: 13,
-                                    fontWeight: FontWeight.w500,
-                                    letterSpacing: 1.2
-                                  ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Expanded(
-                              flex: 5,
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text('Assigned To : '.toLowerCase(),
-                                  style: GoogleFonts.roboto(
-                                    textStyle: Theme.of(context).textTheme.labelMedium,
-                                    letterSpacing: 1.5
-                                  ),
-                                  ),
-                                  SizedBox(height: 3),
-                                  Text('${item["assignedto"]}',
+                                  Text('2,222',
                                   style: GoogleFonts.roboto(
                                     textStyle: Theme.of(context).textTheme.bodyMedium,
                                     fontSize: 13,
@@ -302,14 +302,91 @@ List subscribersList = [
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text('Ticket : '.toLowerCase(),
+                                  Text('Username : '.toLowerCase(),
                                   style: GoogleFonts.roboto(
                                     textStyle: Theme.of(context).textTheme.labelMedium,
                                     letterSpacing: 1.5
                                   ),
                                   ),
                                   SizedBox(height: 3),
-                                  Text('${item["ticket"]}',
+                                  Text('dipeshjain',
+                                  style: GoogleFonts.roboto(
+                                    textStyle: Theme.of(context).textTheme.bodyMedium,
+                                    fontSize: 13,
+                                    fontWeight: FontWeight.w500,
+                                    letterSpacing: 1.2
+                                  ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Expanded(
+                              flex: 5,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text('Password : '.toLowerCase(),
+                                  style: GoogleFonts.roboto(
+                                    textStyle: Theme.of(context).textTheme.labelMedium,
+                                    letterSpacing: 1.5
+                                  ),
+                                  ),
+                                  SizedBox(height: 3),
+                                  Text('*******',
+                                  style: GoogleFonts.roboto(
+                                    textStyle: Theme.of(context).textTheme.bodyMedium,
+                                    fontSize: 13,
+                                    fontWeight: FontWeight.w500,
+                                    letterSpacing: 1.2
+                                  ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Container(
+                        padding: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Expanded(
+                              flex: 5,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text('Used By : '.toLowerCase(),
+                                  style: GoogleFonts.roboto(
+                                    textStyle: Theme.of(context).textTheme.labelMedium,
+                                    letterSpacing: 1.5
+                                  ),
+                                  ),
+                                  SizedBox(height: 3),
+                                  Text('Dipesh Jain',
+                                  style: GoogleFonts.roboto(
+                                    textStyle: Theme.of(context).textTheme.bodyMedium,
+                                    fontSize: 13,
+                                    fontWeight: FontWeight.w500,
+                                    letterSpacing: 1.2
+                                  ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Expanded(
+                              flex: 5,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text('Used At : '.toLowerCase(),
+                                  style: GoogleFonts.roboto(
+                                    textStyle: Theme.of(context).textTheme.labelMedium,
+                                    letterSpacing: 1.5
+                                  ),
+                                  ),
+                                  SizedBox(height: 3),
+                                  Text('12',
                                   style: GoogleFonts.roboto(
                                     textStyle: Theme.of(context).textTheme.bodyMedium,
                                     fontSize: 13,

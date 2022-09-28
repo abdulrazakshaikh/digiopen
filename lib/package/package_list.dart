@@ -5,6 +5,7 @@ import 'package:xceednet/common_widgets/headToolbar.dart';
 import 'package:xceednet/common_widgets/menuDrawer.dart';
 import 'package:xceednet/leads/leads_add.dart';
 import 'package:xceednet/leads/leads_details.dart';
+import 'package:xceednet/package/package_add.dart';
 import 'package:xceednet/subscribers/subscribers_add.dart';
 import 'package:xceednet/subscribers/subscribers_details.dart';
 
@@ -22,7 +23,7 @@ class _PackageListState extends State<PackageList> {
 List subscribersList = [
   {
     "id": "101",
-    "status" : "Assigned",
+    "username" : "Assigned",
 
     "name" : "John Doe",
     "mobile" : "9876543210",
@@ -62,7 +63,7 @@ List subscribersList = [
       appBar: AppBar(
         
         title: Text("Packages"),
-        /*actions: [
+        actions: [
           IconButton(
             onPressed: (){
               Navigator.of(context).push(
@@ -70,7 +71,7 @@ List subscribersList = [
                   pageBuilder: (context, animation, secondaryAnimation) =>
                     FadeTransition(
                     opacity: animation,
-                    child: LeadsAdd(title: 'Add Leads')
+                    child: PackageAdd()
                   ),
                 ),
               );
@@ -83,7 +84,7 @@ List subscribersList = [
               fixedSize: Size(54, 54),
             ),
           ),
-        ],*/
+        ],
       ),
       body: ListView(
         children: [
@@ -92,245 +93,275 @@ List subscribersList = [
           Padding(
             padding: EdgeInsets.symmetric(vertical: 5),
             child: ListView.separated(
-              
-              primary: false,
-              physics: NeverScrollableScrollPhysics(),
-              shrinkWrap: true,
-              itemCount: subscribersList == null ? 0 : subscribersList.length,
-              separatorBuilder: (BuildContext context, int index) {
-                return SizedBox(height: 5);
-              },
-              itemBuilder: (BuildContext context, int index) {
-                Map item = subscribersList[index];
-                return InkWell(
-                onTap: (){
-                  Navigator.of(context).push(
-                    PageRouteBuilder(
-                      pageBuilder: (context, animation, secondaryAnimation) =>
-                        FadeTransition(
-                        opacity: animation,
-                        child: LeadsDetails(title: 'Leads Details')
+
+                primary: false,
+                physics: NeverScrollableScrollPhysics(),
+                shrinkWrap: true,
+                itemCount: subscribersList == null ? 0 : subscribersList.length,
+                separatorBuilder: (BuildContext context, int index) {
+                  return SizedBox(height: 5);
+                },
+                itemBuilder: (BuildContext context, int index) {
+                  Map item = subscribersList[index];
+                  return InkWell(
+                    onTap: (){
+                      Navigator.of(context).push(
+                        PageRouteBuilder(
+                          pageBuilder: (context, animation, secondaryAnimation) =>
+                              FadeTransition(
+                                  opacity: animation,
+                                  child: LeadsDetails(title: 'Leads Details')
+                              ),
+                        ),
+                      );
+                    },
+                    child: Card(
+                      margin: EdgeInsets.zero,
+                      shape: RoundedRectangleBorder(
+                          side: BorderSide(width: 1, color: Theme.of(context).dividerColor)
+                      ),
+                      child: Column(
+                        children: [
+                          Container(
+                            padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                            decoration: BoxDecoration(
+                                border: Border(
+                                    bottom: BorderSide(width: 1, color: Theme.of(context).dividerColor)
+                                )
+                            ),
+
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Expanded(
+                                  flex: 5,
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text('Name : '.toLowerCase(),
+                                        style: GoogleFonts.roboto(
+                                            textStyle: Theme.of(context).textTheme.labelMedium,
+                                            letterSpacing: 1.5
+                                        ),
+                                      ),
+                                      SizedBox(height: 3),
+                                      Text('Package Name',
+                                        style: GoogleFonts.roboto(
+                                            textStyle: Theme.of(context).textTheme.bodyMedium,
+                                            fontSize: 13,
+                                            fontWeight: FontWeight.w500,
+                                            letterSpacing: 1.2
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Expanded(
+                                  flex: 5,
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text('Price for Subscriber : '.toLowerCase(),
+                                        style: GoogleFonts.roboto(
+                                            textStyle: Theme.of(context).textTheme.labelMedium,
+                                            letterSpacing: 1.5
+                                        ),
+                                      ),
+                                      SizedBox(height: 3),
+                                      Text('$index',
+                                        style: GoogleFonts.roboto(
+                                            textStyle: Theme.of(context).textTheme.bodyMedium,
+                                            fontSize: 13,
+                                            fontWeight: FontWeight.w500,
+                                            letterSpacing: 1.2
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+
+                          Container(
+                            padding: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Expanded(
+                                  flex: 5,
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text('Data Limited : '.toLowerCase(),
+                                        style: GoogleFonts.roboto(
+                                            textStyle: Theme.of(context).textTheme.labelMedium,
+                                            letterSpacing: 1.5
+                                        ),
+                                      ),
+                                      SizedBox(height: 3),
+                                      Container(
+                                        width: 40 ,
+                                        padding: EdgeInsets.all(5),
+                                        alignment: Alignment.center,
+                                        decoration: BoxDecoration(
+                                            color: Colors.red,
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(5.0)),
+                                        ),
+
+                                        child: Text("No",style: TextStyle(
+                                            color: Colors.white
+                                        ),),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                                Expanded(
+                                  flex: 5,
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text('Time Limited : '.toLowerCase(),
+                                        style: GoogleFonts.roboto(
+                                            textStyle: Theme.of(context).textTheme.labelMedium,
+                                            letterSpacing: 1.5
+                                        ),
+                                      ),
+                                      SizedBox(height: 3),
+                                      Container(
+                                        width: 40 ,
+                                        padding: EdgeInsets.all(5),
+                                        alignment: Alignment.center,
+                                        decoration: BoxDecoration(
+                                          color: Colors.red,
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(5.0)),
+                                        ),
+
+                                        child: Text("No",style: TextStyle(
+                                            color: Colors.white
+                                        ),),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+
+                          Container(
+                            padding: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Expanded(
+                                  flex: 5,
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text('Hotspot Subscriber : '.toLowerCase(),
+                                        style: GoogleFonts.roboto(
+                                            textStyle: Theme.of(context).textTheme.labelMedium,
+                                            letterSpacing: 1.5
+                                        ),
+                                      ),
+                                      SizedBox(height: 3),
+                                      Container(
+                                        width: 40 ,
+                                        padding: EdgeInsets.all(5),
+                                        alignment: Alignment.center,
+                                        decoration: BoxDecoration(
+                                          color: Colors.red,
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(5.0)),
+                                        ),
+
+                                        child: Text("No",style: TextStyle(
+                                            color: Colors.white
+                                        ),),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                                Expanded(
+                                  flex: 5,
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text('Online Payment: '.toLowerCase(),
+                                        style: GoogleFonts.roboto(
+                                            textStyle: Theme.of(context).textTheme.labelMedium,
+                                            letterSpacing: 1.5
+                                        ),
+                                      ),
+                                      SizedBox(height: 3),
+                                      Container(
+                                        width: 40 ,
+                                        padding: EdgeInsets.all(5),
+                                        alignment: Alignment.center,
+                                        decoration: BoxDecoration(
+                                          color: Colors.green,
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(5.0)),
+                                        ),
+
+                                        child: Text("Yes",style: TextStyle(
+                                            color: Colors.white
+                                        ),),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+
+                          Container(
+                            padding: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Expanded(
+                                  flex: 5,
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text('Status : '.toLowerCase(),
+                                        style: GoogleFonts.roboto(
+                                            textStyle: Theme.of(context).textTheme.labelMedium,
+                                            letterSpacing: 1.5
+                                        ),
+                                      ),
+                                      SizedBox(height: 3),
+                                      Container(
+                                        width: 100 ,
+                                        padding: EdgeInsets.all(5),
+                                        alignment: Alignment.center,
+                                        decoration: BoxDecoration(
+                                          color: Colors.green,
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(5.0)),
+                                        ),
+
+                                        child: Text("Published",style: TextStyle(
+                                          color: Colors.white
+                                        ),),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+
+                        ],
                       ),
                     ),
                   );
-                },
-                child: Card(
-                  margin: EdgeInsets.zero,
-                  shape: RoundedRectangleBorder(
-                    side: BorderSide(width: 1, color: Theme.of(context).dividerColor)
-                  ),
-                  child: Column(
-                    children: [
-                      Container(
-                        padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                        decoration: BoxDecoration(
-                          border: Border(
-                            bottom: BorderSide(width: 1, color: Theme.of(context).dividerColor)
-                          )
-                        ),
-                        
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Expanded(
-                              flex: 5,
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text('Customer ID : '.toLowerCase(),
-                                  style: GoogleFonts.roboto(
-                                    textStyle: Theme.of(context).textTheme.labelMedium,
-                                    letterSpacing: 1.5
-                                  ),
-                                  ),
-                                  SizedBox(height: 3),
-                                  Text('${item["id"]}',
-                                  style: GoogleFonts.roboto(
-                                    textStyle: Theme.of(context).textTheme.bodyMedium,
-                                    fontSize: 13,
-                                    fontWeight: FontWeight.w500,
-                                    letterSpacing: 1.2
-                                  ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Expanded(
-                              flex: 5,
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text('Status : '.toLowerCase(),
-                                  style: GoogleFonts.roboto(
-                                    textStyle: Theme.of(context).textTheme.labelMedium,
-                                    letterSpacing: 1.5
-                                  ),
-                                  ),
-                                  SizedBox(height: 3),
-                                  Text('${item["status"]}',
-                                  style: GoogleFonts.roboto(
-                                    textStyle: Theme.of(context).textTheme.bodyMedium,
-                                    fontSize: 13,
-                                    fontWeight: FontWeight.w500,
-                                    letterSpacing: 1.2
-                                  ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-
-                      Container(
-                        padding: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Expanded(
-                              flex: 5,
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text('Name : '.toLowerCase(),
-                                  style: GoogleFonts.roboto(
-                                    textStyle: Theme.of(context).textTheme.labelMedium,
-                                    letterSpacing: 1.5
-                                  ),
-                                  ),
-                                  SizedBox(height: 3),
-                                  Text('${item["name"]}',
-                                  style: GoogleFonts.roboto(
-                                    textStyle: Theme.of(context).textTheme.bodyMedium,
-                                    fontSize: 13,
-                                    fontWeight: FontWeight.w500,
-                                    letterSpacing: 1.2
-                                  ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Expanded(
-                              flex: 5,
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text('Mobile : '.toLowerCase(),
-                                  style: GoogleFonts.roboto(
-                                    textStyle: Theme.of(context).textTheme.labelMedium,
-                                    letterSpacing: 1.5
-                                  ),
-                                  ),
-                                  SizedBox(height: 3),
-                                  Text('${item["mobile"]}',
-                                  style: GoogleFonts.roboto(
-                                    textStyle: Theme.of(context).textTheme.bodyMedium,
-                                    fontSize: 13,
-                                    fontWeight: FontWeight.w500,
-                                    letterSpacing: 1.2
-                                  ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-
-                      Container(
-                        padding: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Expanded(
-                              flex: 5,
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text('Created on : '.toLowerCase(),
-                                  style: GoogleFonts.roboto(
-                                    textStyle: Theme.of(context).textTheme.labelMedium,
-                                    letterSpacing: 1.5
-                                  ),
-                                  ),
-                                  SizedBox(height: 3),
-                                  Text('${item["createdon"]}',
-                                  style: GoogleFonts.roboto(
-                                    textStyle: Theme.of(context).textTheme.bodyMedium,
-                                    fontSize: 13,
-                                    fontWeight: FontWeight.w500,
-                                    letterSpacing: 1.2
-                                  ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Expanded(
-                              flex: 5,
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text('Assigned To : '.toLowerCase(),
-                                  style: GoogleFonts.roboto(
-                                    textStyle: Theme.of(context).textTheme.labelMedium,
-                                    letterSpacing: 1.5
-                                  ),
-                                  ),
-                                  SizedBox(height: 3),
-                                  Text('${item["assignedto"]}',
-                                  style: GoogleFonts.roboto(
-                                    textStyle: Theme.of(context).textTheme.bodyMedium,
-                                    fontSize: 13,
-                                    fontWeight: FontWeight.w500,
-                                    letterSpacing: 1.2
-                                  ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                     
-                      Container(
-                        padding: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Expanded(
-                              flex: 5,
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text('Ticket : '.toLowerCase(),
-                                  style: GoogleFonts.roboto(
-                                    textStyle: Theme.of(context).textTheme.labelMedium,
-                                    letterSpacing: 1.5
-                                  ),
-                                  ),
-                                  SizedBox(height: 3),
-                                  Text('${item["ticket"]}',
-                                  style: GoogleFonts.roboto(
-                                    textStyle: Theme.of(context).textTheme.bodyMedium,
-                                    fontSize: 13,
-                                    fontWeight: FontWeight.w500,
-                                    letterSpacing: 1.2
-                                  ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-
-                    ],
-                  ),
-                ),
-                );
-              }
+                }
             ),
-            ),
+          ),
         
         ],
       ),

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:xceednet/common_widgets/headToolbar.dart';
 import 'package:xceednet/common_widgets/menuDrawer.dart';
+import 'package:xceednet/inventory/suppliers/supplier_add.dart';
 import 'package:xceednet/leads/leads_add.dart';
 import 'package:xceednet/leads/leads_details.dart';
 import 'package:xceednet/subscribers/subscribers_add.dart';
@@ -62,7 +63,7 @@ List subscribersList = [
       appBar: AppBar(
         
         title: Text("Suppliers"),
-        /*actions: [
+        actions: [
           IconButton(
             onPressed: (){
               Navigator.of(context).push(
@@ -70,7 +71,7 @@ List subscribersList = [
                   pageBuilder: (context, animation, secondaryAnimation) =>
                     FadeTransition(
                     opacity: animation,
-                    child: LeadsAdd(title: 'Add Leads')
+                    child: SupplierAdd()
                   ),
                 ),
               );
@@ -83,7 +84,7 @@ List subscribersList = [
               fixedSize: Size(54, 54),
             ),
           ),
-        ],*/
+        ],
       ),
       body: ListView(
         children: [
@@ -137,14 +138,14 @@ List subscribersList = [
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text('Customer ID : '.toLowerCase(),
+                                  Text('Name : '.toLowerCase(),
                                   style: GoogleFonts.roboto(
                                     textStyle: Theme.of(context).textTheme.labelMedium,
                                     letterSpacing: 1.5
                                   ),
                                   ),
                                   SizedBox(height: 3),
-                                  Text('${item["id"]}',
+                                  Text('Dipesh Jain',
                                   style: GoogleFonts.roboto(
                                     textStyle: Theme.of(context).textTheme.bodyMedium,
                                     fontSize: 13,
@@ -160,14 +161,14 @@ List subscribersList = [
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text('Status : '.toLowerCase(),
+                                  Text('Address : '.toLowerCase(),
                                   style: GoogleFonts.roboto(
                                     textStyle: Theme.of(context).textTheme.labelMedium,
                                     letterSpacing: 1.5
                                   ),
                                   ),
                                   SizedBox(height: 3),
-                                  Text('${item["status"]}',
+                                  Text('And dvkndkvskdv sdckmsdck',
                                   style: GoogleFonts.roboto(
                                     textStyle: Theme.of(context).textTheme.bodyMedium,
                                     fontSize: 13,
@@ -192,14 +193,14 @@ List subscribersList = [
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text('Name : '.toLowerCase(),
+                                  Text('Contact Name : '.toLowerCase(),
                                   style: GoogleFonts.roboto(
                                     textStyle: Theme.of(context).textTheme.labelMedium,
                                     letterSpacing: 1.5
                                   ),
                                   ),
                                   SizedBox(height: 3),
-                                  Text('${item["name"]}',
+                                  Text('Dipesh Jain',
                                   style: GoogleFonts.roboto(
                                     textStyle: Theme.of(context).textTheme.bodyMedium,
                                     fontSize: 13,
@@ -247,69 +248,14 @@ List subscribersList = [
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text('Created on : '.toLowerCase(),
+                                  Text('Email : '.toLowerCase(),
                                   style: GoogleFonts.roboto(
                                     textStyle: Theme.of(context).textTheme.labelMedium,
                                     letterSpacing: 1.5
                                   ),
                                   ),
                                   SizedBox(height: 3),
-                                  Text('${item["createdon"]}',
-                                  style: GoogleFonts.roboto(
-                                    textStyle: Theme.of(context).textTheme.bodyMedium,
-                                    fontSize: 13,
-                                    fontWeight: FontWeight.w500,
-                                    letterSpacing: 1.2
-                                  ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Expanded(
-                              flex: 5,
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text('Assigned To : '.toLowerCase(),
-                                  style: GoogleFonts.roboto(
-                                    textStyle: Theme.of(context).textTheme.labelMedium,
-                                    letterSpacing: 1.5
-                                  ),
-                                  ),
-                                  SizedBox(height: 3),
-                                  Text('${item["assignedto"]}',
-                                  style: GoogleFonts.roboto(
-                                    textStyle: Theme.of(context).textTheme.bodyMedium,
-                                    fontSize: 13,
-                                    fontWeight: FontWeight.w500,
-                                    letterSpacing: 1.2
-                                  ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                     
-                      Container(
-                        padding: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Expanded(
-                              flex: 5,
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text('Ticket : '.toLowerCase(),
-                                  style: GoogleFonts.roboto(
-                                    textStyle: Theme.of(context).textTheme.labelMedium,
-                                    letterSpacing: 1.5
-                                  ),
-                                  ),
-                                  SizedBox(height: 3),
-                                  Text('${item["ticket"]}',
+                                  Text('email@gmail.com',
                                   style: GoogleFonts.roboto(
                                     textStyle: Theme.of(context).textTheme.bodyMedium,
                                     fontSize: 13,

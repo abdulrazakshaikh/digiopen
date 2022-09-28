@@ -3,16 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:xceednet/common_widgets/headToolbar.dart';
 import 'package:xceednet/common_widgets/menuDrawer.dart';
+import 'package:xceednet/inventory/purchase/purchase_list.dart';
 import 'package:xceednet/subscribers/subscribers_list.dart';
 
-class LeadsAdd extends StatefulWidget {
+class PurchaseItemAdd extends StatefulWidget {
 
-  
   @override
-  State<LeadsAdd> createState() => _LeadsAddState();
+  State<PurchaseItemAdd> createState() => _PurchaseItemAddState();
 }
 
-class _LeadsAddState extends State<LeadsAdd> {
+class _PurchaseItemAddState extends State<PurchaseItemAdd> {
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +20,7 @@ class _LeadsAddState extends State<LeadsAdd> {
       backgroundColor: Theme.of(context).colorScheme.background,
       appBar: AppBar(
         automaticallyImplyLeading: true,
-        title: Text("Add Lead".toUpperCase()),
+        title: Text("Add Purchase Item"),
         actions: [],
       ),
       bottomNavigationBar: Container(
@@ -37,11 +37,7 @@ class _LeadsAddState extends State<LeadsAdd> {
             Expanded(
               child: ElevatedButton(
                 onPressed: () {
-                  Navigator.pushReplacement<void, void>(
-                    context, MaterialPageRoute(
-                      builder: (BuildContext context) => SubscribersList()
-                    )
-                  );
+                 Navigator.pop(context);
                 },
                 style: ElevatedButton.styleFrom(
                   padding: EdgeInsets.symmetric(horizontal: 15, vertical: 20),

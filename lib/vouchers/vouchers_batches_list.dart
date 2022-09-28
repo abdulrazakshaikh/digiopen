@@ -7,6 +7,7 @@ import 'package:xceednet/leads/leads_add.dart';
 import 'package:xceednet/leads/leads_details.dart';
 import 'package:xceednet/subscribers/subscribers_add.dart';
 import 'package:xceednet/subscribers/subscribers_details.dart';
+import 'package:xceednet/vouchers/voucherbatch_add.dart';
 
 class VouchersBatchesList extends StatefulWidget {
 
@@ -62,7 +63,7 @@ List subscribersList = [
       appBar: AppBar(
         
         title: Text("Voucher Batches"),
-        /*actions: [
+        actions: [
           IconButton(
             onPressed: (){
               Navigator.of(context).push(
@@ -70,7 +71,7 @@ List subscribersList = [
                   pageBuilder: (context, animation, secondaryAnimation) =>
                     FadeTransition(
                     opacity: animation,
-                    child: LeadsAdd(title: 'Add Leads')
+                    child: VoucherBatchAdd()
                   ),
                 ),
               );
@@ -83,7 +84,7 @@ List subscribersList = [
               fixedSize: Size(54, 54),
             ),
           ),
-        ],*/
+        ],
       ),
       body: ListView(
         children: [
@@ -137,7 +138,7 @@ List subscribersList = [
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text('Customer ID : '.toLowerCase(),
+                                  Text('Voucher Batch ID : '.toLowerCase(),
                                   style: GoogleFonts.roboto(
                                     textStyle: Theme.of(context).textTheme.labelMedium,
                                     letterSpacing: 1.5
@@ -160,14 +161,14 @@ List subscribersList = [
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text('Status : '.toLowerCase(),
+                                  Text('Batch id : '.toLowerCase(),
                                   style: GoogleFonts.roboto(
                                     textStyle: Theme.of(context).textTheme.labelMedium,
                                     letterSpacing: 1.5
                                   ),
                                   ),
                                   SizedBox(height: 3),
-                                  Text('${item["status"]}',
+                                  Text('121',
                                   style: GoogleFonts.roboto(
                                     textStyle: Theme.of(context).textTheme.bodyMedium,
                                     fontSize: 13,
@@ -192,7 +193,7 @@ List subscribersList = [
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text('Name : '.toLowerCase(),
+                                  Text('Package Name : '.toLowerCase(),
                                   style: GoogleFonts.roboto(
                                     textStyle: Theme.of(context).textTheme.labelMedium,
                                     letterSpacing: 1.5
@@ -215,7 +216,7 @@ List subscribersList = [
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text('Mobile : '.toLowerCase(),
+                                  Text('Total Vouchers : '.toLowerCase(),
                                   style: GoogleFonts.roboto(
                                     textStyle: Theme.of(context).textTheme.labelMedium,
                                     letterSpacing: 1.5
@@ -247,7 +248,7 @@ List subscribersList = [
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text('Created on : '.toLowerCase(),
+                                  Text('Used Vouchers : '.toLowerCase(),
                                   style: GoogleFonts.roboto(
                                     textStyle: Theme.of(context).textTheme.labelMedium,
                                     letterSpacing: 1.5
@@ -270,7 +271,7 @@ List subscribersList = [
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text('Assigned To : '.toLowerCase(),
+                                  Text('Unused Vouchers : '.toLowerCase(),
                                   style: GoogleFonts.roboto(
                                     textStyle: Theme.of(context).textTheme.labelMedium,
                                     letterSpacing: 1.5
@@ -302,14 +303,14 @@ List subscribersList = [
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text('Ticket : '.toLowerCase(),
+                                  Text('Vouchers Valid Till : '.toLowerCase(),
                                   style: GoogleFonts.roboto(
                                     textStyle: Theme.of(context).textTheme.labelMedium,
                                     letterSpacing: 1.5
                                   ),
                                   ),
                                   SizedBox(height: 3),
-                                  Text('${item["ticket"]}',
+                                  Text('01/09/2022 15:59',
                                   style: GoogleFonts.roboto(
                                     textStyle: Theme.of(context).textTheme.bodyMedium,
                                     fontSize: 13,
@@ -317,6 +318,35 @@ List subscribersList = [
                                     letterSpacing: 1.2
                                   ),
                                   ),
+                                ],
+                              ),
+                            ),
+                            Expanded(
+                              flex: 5,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text('Status : '.toLowerCase(),
+                                  style: GoogleFonts.roboto(
+                                    textStyle: Theme.of(context).textTheme.labelMedium,
+                                    letterSpacing: 1.5
+                                  ),
+                                  ),
+                                  SizedBox(height: 3),
+                                  Container(
+                                    width: 70 ,
+                                    padding: EdgeInsets.all(5),
+                                    alignment: Alignment.center,
+                                    decoration: BoxDecoration(
+                                      color: Colors.green,
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(5.0)),
+                                    ),
+
+                                    child: Text("Open",style: TextStyle(
+                                        color: Colors.white
+                                    ),),
+                                  )
                                 ],
                               ),
                             ),

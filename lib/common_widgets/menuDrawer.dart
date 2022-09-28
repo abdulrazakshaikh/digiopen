@@ -217,7 +217,7 @@ class _MenuDrawerState extends State<MenuDrawer> {
                         Container(
                           width: 54, height: 54,
                           child: CircleAvatar(
-                            backgroundImage: AssetImage('images/default.jpg'),
+                            backgroundImage: AssetImage('assets/images/default.jpg'),
                             radius: 60,
                           ),
                         ),
@@ -359,67 +359,7 @@ class _MenuDrawerState extends State<MenuDrawer> {
                       ),
                     ),
                     onTap: () {
-                      Navigator.of(context).push(
-                        PageRouteBuilder(
-                          pageBuilder: (context, animation, secondaryAnimation) =>
-                            FadeTransition(
-                            opacity: animation,
-                            child:
-
-                            item["id"] == "001" ?
-                            Dashboard()
-                            :
-                            item["id"] == "002" ?
-                            SubscribersList()
-                            :
-                            item["id"] == "003" ?
-                            OnlineSubscribersList()
-                            :
-                            item["id"] == "004" ?
-                            AccessRequestList()
-                            :
-                            item["id"] == "005" ?
-                            Reports()
-                            :
-                            item["id"] == "006" ?
-                            TicketsList()
-                            :
-                            item["id"] == "007" ?
-                            LeadsList()
-                            :item["id"] == "008" ?
-                            PackageSalesList()
-                            :item["id"] == "009" ?
-                            InvoicesList()
-                            :item["id"] == "010" ?
-                            PaymentList()
-                            :item["id"] == "011-1" ?
-                            SalesList()
-                            :item["id"] == "011-2" ?
-                            PurchaseList()
-                            :item["id"] == "011-3" ?
-                            ProductList()
-                            :item["id"] == "011-4" ?
-                            SupplierList()
-                            :item["id"] == "011-5" ?
-                            LogList()
-                            :item["id"] == "012" ?
-                            ZonesList()
-                            :item["id"] == "013" ?
-                            NodesList()
-                            :item["id"] == "014" ?
-                            PackageList()
-                            :item["id"] == "015" ?
-                            VouchersList()
-                            :item["id"] == "016" ?
-                            VouchersBatchesList()
-                            :item["id"] == "017" ?
-                            Dashboard()
-                            :
-                            Dashboard(),
-
-                          ),
-                        ),
-                      );
+                      callPage(context, item);
                     },
                   )
                   :
@@ -451,15 +391,8 @@ class _MenuDrawerState extends State<MenuDrawer> {
                         ),
                         ),
                         onTap: (){
-                          Navigator.of(context).push(
-                            PageRouteBuilder(
-                              pageBuilder: (context, animation, secondaryAnimation) =>
-                                FadeTransition(
-                                opacity: animation,
-                                child: Dashboard(),
-                              ),
-                            ),
-                          );
+                          print(subitem['title']);
+                          callPage(context, subitem);
                         },
                       ),
                     ).toList().cast<Widget>(),
@@ -512,6 +445,71 @@ class _MenuDrawerState extends State<MenuDrawer> {
               ),
             )
           ],
+        ),
+      ),
+    );
+  }
+
+  void callPage(BuildContext context, Map<dynamic, dynamic> item) {
+    print(item['id']);
+     Navigator.of(context).push(
+      PageRouteBuilder(
+        pageBuilder: (context, animation, secondaryAnimation) =>
+          FadeTransition(
+          opacity: animation,
+          child:
+
+          item["id"] == "001" ?
+          Dashboard()
+          :
+          item["id"] == "002" ?
+          SubscribersList()
+          :
+          item["id"] == "003" ?
+          OnlineSubscribersList()
+          :
+          item["id"] == "004" ?
+          AccessRequestList()
+          :
+          item["id"] == "005" ?
+          Reports()
+          :
+          item["id"] == "006" ?
+          TicketsList()
+          :
+          item["id"] == "007" ?
+          LeadsList()
+          :item["id"] == "008" ?
+          PackageSalesList()
+          :item["id"] == "009" ?
+          InvoicesList()
+          :item["id"] == "010" ?
+          PaymentList()
+          :item["id"] == "011-1" ?
+          SalesList()
+          :item["id"] == "011-2" ?
+          PurchaseList()
+          :item["id"] == "011-3" ?
+          ProductList()
+          :item["id"] == "011-4" ?
+          SupplierList()
+          :item["id"] == "011-5" ?
+          LogList()
+          :item["id"] == "012" ?
+          ZonesList()
+          :item["id"] == "013" ?
+          NodesList()
+          :item["id"] == "014" ?
+          PackageList()
+          :item["id"] == "015" ?
+          VouchersList()
+          :item["id"] == "016" ?
+          VouchersBatchesList()
+          :item["id"] == "017" ?
+          Dashboard()
+          :
+          Dashboard(),
+
         ),
       ),
     );
