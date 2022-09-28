@@ -6,51 +6,48 @@ import 'package:xceednet/common_widgets/menuDrawer.dart';
 import 'package:xceednet/leads/leads_add.dart';
 import 'package:xceednet/leads/leads_details.dart';
 import 'package:xceednet/package/package_add.dart';
+import 'package:xceednet/package/package_details.dart';
 import 'package:xceednet/subscribers/subscribers_add.dart';
 import 'package:xceednet/subscribers/subscribers_details.dart';
 
 class PackageList extends StatefulWidget {
 
-
-
-  
   @override
   State<PackageList> createState() => _PackageListState();
 }
 
 class _PackageListState extends State<PackageList> {
 
-List subscribersList = [
+List packageList = [
   {
     "id": "101",
-    "username" : "Assigned",
-
     "name" : "John Doe",
-    "mobile" : "9876543210",
-
-    "createdon" : "01 Sep, 2022",
-    "assignedto" : "Johnson Doe",
-    
-    "ticket" : "-",
-
+    "priceofsubscriber" : "100",
+    "datalimited" : false,
+    "timelimited" : false,
+    "hotspotsubscriber" : false,
+    "onlinepayment" : false,
+    "status" : "published",
   },
   {
     "id": "102",
-    "name" : "John Doe",
-    "mobile" : "9876543210",
-    "createdon" : "01 Sep, 2022",
-    "assignedto" : "Johnson Doe",
-    "ticket" : "-",
-    "status" : "Assigned",
+    "name" : "William Doe",
+    "priceofsubscriber" : "500",
+    "datalimited" : true,
+    "timelimited" : true,
+    "hotspotsubscriber" : true,
+    "onlinepayment" : true,
+    "status" : "unpublished",
   },
   {
     "id": "103",
-    "name" : "John Doe",
-    "mobile" : "9876543210",
-    "createdon" : "01 Sep, 2022",
-    "assignedto" : "Johnson Doe",
-    "ticket" : "-",
-    "status" : "Assigned",
+    "name" : "San te Doe",
+    "priceofsubscriber" : "100",
+    "datalimited" : false,
+    "timelimited" : true,
+    "hotspotsubscriber" : false,
+    "onlinepayment" : true,
+    "status" : "published",
   },
 
 ];
@@ -97,12 +94,12 @@ List subscribersList = [
                 primary: false,
                 physics: NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
-                itemCount: subscribersList == null ? 0 : subscribersList.length,
+                itemCount: packageList == null ? 0 : packageList.length,
                 separatorBuilder: (BuildContext context, int index) {
                   return SizedBox(height: 5);
                 },
                 itemBuilder: (BuildContext context, int index) {
-                  Map item = subscribersList[index];
+                  Map item = packageList[index];
                   return InkWell(
                     onTap: (){
                       Navigator.of(context).push(
@@ -110,7 +107,7 @@ List subscribersList = [
                           pageBuilder: (context, animation, secondaryAnimation) =>
                               FadeTransition(
                                   opacity: animation,
-                                  child: LeadsDetails(title: 'Leads Details')
+                                  child: PackageDetails()
                               ),
                         ),
                       );
@@ -120,7 +117,9 @@ List subscribersList = [
                       shape: RoundedRectangleBorder(
                           side: BorderSide(width: 1, color: Theme.of(context).dividerColor)
                       ),
-                      child: Column(
+                      child: Padding(
+                        padding: EdgeInsets.all(10),
+                        child: Column(
                         children: [
                           Container(
                             padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
@@ -145,7 +144,7 @@ List subscribersList = [
                                         ),
                                       ),
                                       SizedBox(height: 3),
-                                      Text('Package Name',
+                                      Text('${item["name"]}',
                                         style: GoogleFonts.roboto(
                                             textStyle: Theme.of(context).textTheme.bodyMedium,
                                             fontSize: 13,
@@ -168,7 +167,7 @@ List subscribersList = [
                                         ),
                                       ),
                                       SizedBox(height: 3),
-                                      Text('$index',
+                                      Text('${item["priceofsubscriber"]}',
                                         style: GoogleFonts.roboto(
                                             textStyle: Theme.of(context).textTheme.bodyMedium,
                                             fontSize: 13,
@@ -200,20 +199,15 @@ List subscribersList = [
                                         ),
                                       ),
                                       SizedBox(height: 3),
-                                      Container(
-                                        width: 40 ,
-                                        padding: EdgeInsets.all(5),
-                                        alignment: Alignment.center,
-                                        decoration: BoxDecoration(
-                                            color: Colors.red,
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(5.0)),
+                                      Text(
+                                        item["datalimited"] == true ? 'Yes' : 'No',
+                                        style: GoogleFonts.roboto(
+                                          textStyle: Theme.of(context).textTheme.bodyMedium,
+                                          fontSize: 13,
+                                          fontWeight: FontWeight.w500,
+                                          letterSpacing: 1.2
                                         ),
-
-                                        child: Text("No",style: TextStyle(
-                                            color: Colors.white
-                                        ),),
-                                      )
+                                      ),
                                     ],
                                   ),
                                 ),
@@ -229,20 +223,16 @@ List subscribersList = [
                                         ),
                                       ),
                                       SizedBox(height: 3),
-                                      Container(
-                                        width: 40 ,
-                                        padding: EdgeInsets.all(5),
-                                        alignment: Alignment.center,
-                                        decoration: BoxDecoration(
-                                          color: Colors.red,
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(5.0)),
+                                      Text(
+                                        item["timelimited"] == true ? 'Yes' : 'No',
+                                        style: GoogleFonts.roboto(
+                                          textStyle: Theme.of(context).textTheme.bodyMedium,
+                                          fontSize: 13,
+                                          fontWeight: FontWeight.w500,
+                                          letterSpacing: 1.2
                                         ),
-
-                                        child: Text("No",style: TextStyle(
-                                            color: Colors.white
-                                        ),),
-                                      )
+                                      ),
+                                      
                                     ],
                                   ),
                                 ),
@@ -267,20 +257,15 @@ List subscribersList = [
                                         ),
                                       ),
                                       SizedBox(height: 3),
-                                      Container(
-                                        width: 40 ,
-                                        padding: EdgeInsets.all(5),
-                                        alignment: Alignment.center,
-                                        decoration: BoxDecoration(
-                                          color: Colors.red,
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(5.0)),
+                                      Text(
+                                        item["hotspotsubscriber"] == true ? 'Yes' : 'No',
+                                        style: GoogleFonts.roboto(
+                                          textStyle: Theme.of(context).textTheme.bodyMedium,
+                                          fontSize: 13,
+                                          fontWeight: FontWeight.w500,
+                                          letterSpacing: 1.2
                                         ),
-
-                                        child: Text("No",style: TextStyle(
-                                            color: Colors.white
-                                        ),),
-                                      )
+                                      ),
                                     ],
                                   ),
                                 ),
@@ -296,20 +281,15 @@ List subscribersList = [
                                         ),
                                       ),
                                       SizedBox(height: 3),
-                                      Container(
-                                        width: 40 ,
-                                        padding: EdgeInsets.all(5),
-                                        alignment: Alignment.center,
-                                        decoration: BoxDecoration(
-                                          color: Colors.green,
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(5.0)),
+                                      Text(
+                                        item["onlinepayment"] == true ? 'Yes' : 'No',
+                                        style: GoogleFonts.roboto(
+                                          textStyle: Theme.of(context).textTheme.bodyMedium,
+                                          fontSize: 13,
+                                          fontWeight: FontWeight.w500,
+                                          letterSpacing: 1.2
                                         ),
-
-                                        child: Text("Yes",style: TextStyle(
-                                            color: Colors.white
-                                        ),),
-                                      )
+                                      ),
                                     ],
                                   ),
                                 ),
@@ -334,20 +314,18 @@ List subscribersList = [
                                         ),
                                       ),
                                       SizedBox(height: 3),
-                                      Container(
-                                        width: 100 ,
-                                        padding: EdgeInsets.all(5),
-                                        alignment: Alignment.center,
-                                        decoration: BoxDecoration(
-                                          color: Colors.green,
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(5.0)),
+                                      Text("${item['status']}",
+                                        style: GoogleFonts.roboto(
+                                          textStyle: Theme.of(context).textTheme.bodyMedium,
+                                          fontSize: 13,
+                                          fontWeight: FontWeight.w500,
+                                          letterSpacing: 1.2,
+                                          color: 
+                                          item['status'] == 'published' ? Colors.greenAccent : 
+                                          item['status'] == 'unpublished' ? Colors.redAccent : 
+                                          null,
                                         ),
-
-                                        child: Text("Published",style: TextStyle(
-                                          color: Colors.white
-                                        ),),
-                                      )
+                                      ),
                                     ],
                                   ),
                                 ),
@@ -357,6 +335,7 @@ List subscribersList = [
 
                         ],
                       ),
+                      )
                     ),
                   );
                 }

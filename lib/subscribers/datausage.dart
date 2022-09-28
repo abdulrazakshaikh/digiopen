@@ -359,9 +359,9 @@ class _DataUsageState extends State<DataUsage> with TickerProviderStateMixin {
           ),
           Container(
             padding: EdgeInsets.all(10),
-            child: Row(
+            child: Column(
               children: [
-                Expanded(
+                Container(
                   child: ElevatedButton(
                   onPressed: () {},
                     style: ElevatedButton.styleFrom(
@@ -381,8 +381,8 @@ class _DataUsageState extends State<DataUsage> with TickerProviderStateMixin {
                     
                   ),
                 ),
-                SizedBox(width: 10),
-                Expanded(
+                SizedBox(height: 10),
+                Container(
                   child: OutlinedButton(
                   onPressed: () {},
                     style: OutlinedButton.styleFrom(

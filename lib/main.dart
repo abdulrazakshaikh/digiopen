@@ -2,6 +2,7 @@ import 'package:xceednet/accessrequest_log/accessrequest_list.dart';
 import 'package:xceednet/dashboard.dart';
 import 'package:xceednet/leads/leads_list.dart';
 import 'package:xceednet/login/select_location.dart';
+import 'package:xceednet/package/package_list.dart';
 import 'package:xceednet/profile/profile.dart';
 import 'package:xceednet/reports/reports.dart';
 import 'package:xceednet/splashscreen.dart';
@@ -45,17 +46,18 @@ class MyApp extends StatelessWidget {
             // ThemeMode.dark,
             // ThemeMode.light,
             home: 
-             SplashScreen(),
+            // SplashScreen(),
             // const Dashboard(title: 'Dashboard')
             // const Profile(title: 'Profile')
-            //SubscribersList()
+            // SubscribersList()
             // SubscribersDetails()
             // DataUsage()
             // const SubscribersAdd(title: 'Subscribers Add')
             // const Reports(title: 'Reports')
-            //const TicketsList(title: 'Ticket List')
+            // const TicketsList(title: 'Ticket List')
             // const LeadsList(title: 'Leads List')
             // const SelectLocation(title: 'Select Location')
+            PackageList()
           );
         });
   }
