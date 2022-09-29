@@ -10,6 +10,7 @@ import 'package:xceednet/inventory/suppliers/supplier_list.dart';
 import 'package:xceednet/invoice/invoices_list.dart';
 import 'package:xceednet/leads/leads_list.dart';
 import 'package:xceednet/main.dart';
+import 'package:xceednet/new_update.dart';
 import 'package:xceednet/nodes/nodes_list.dart';
 import 'package:xceednet/online_subscribers/onlinesubscribers_list.dart';
 import 'package:xceednet/package/package_list.dart';
@@ -506,7 +507,7 @@ class _MenuDrawerState extends State<MenuDrawer> {
           :item["id"] == "016" ?
           VouchersBatchesList()
           :item["id"] == "017" ?
-          Dashboard()
+          NewUpdateScreen()
           :
           Dashboard(),
 

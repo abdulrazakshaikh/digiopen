@@ -63,7 +63,7 @@ class _InvoiceAddState extends State<InvoiceAdd> {
                 Container(
                   alignment: Alignment.topLeft,
                   padding: EdgeInsets.symmetric(vertical: 5),
-                  child: Text('Full Name',
+                  child: Text('Invoice#',
                   style: GoogleFonts.robotoCondensed(
                     textStyle: Theme.of(context).textTheme.labelLarge,
                     letterSpacing: 1.75,
