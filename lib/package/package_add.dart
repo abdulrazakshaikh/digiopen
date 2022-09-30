@@ -12,7 +12,27 @@ class PackageAdd extends StatefulWidget {
 }
 
 class _PackageAddState extends State<PackageAdd> {
-
+  var _validityList = [
+    "Hour/s",
+    "Day/s",
+    "Week/s",
+    "Month/s",
+    "Year/s",
+  ];
+  var _packageList = [
+    "None",
+    "Commercial",
+    "Residencial",
+    "Fiber",
+    "Wireless",
+  ];
+  var _SpeedList = [
+    "Kbps",
+    "Mbps",
+  ];
+  String? selectedPackage="None";
+  String? selectedValidity=null;
+  String? selectedSpeed="Mbps";
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -63,7 +83,7 @@ class _PackageAddState extends State<PackageAdd> {
                 Container(
                   alignment: Alignment.topLeft,
                   padding: EdgeInsets.symmetric(vertical: 5),
-                  child: Text('Full Name',
+                  child: Text(' Name',
                   style: GoogleFonts.robotoCondensed(
                     textStyle: Theme.of(context).textTheme.labelLarge,
                     letterSpacing: 1.75,
@@ -79,7 +99,7 @@ class _PackageAddState extends State<PackageAdd> {
                   ),
                   decoration: InputDecoration(
                     floatingLabelBehavior: FloatingLabelBehavior.never,
-                    hintText: 'Enter Full Name'.toLowerCase(),
+                    hintText: 'Enter Package Name'.toLowerCase(),
                     hintStyle: GoogleFonts.roboto(
                       textStyle: Theme.of(context).textTheme.bodyMedium,
                       letterSpacing: 1.8,
@@ -95,7 +115,290 @@ class _PackageAddState extends State<PackageAdd> {
               ],
             )
           ),
+          Container(
+              margin: EdgeInsets.only(bottom: 10),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Container(
+                    alignment: Alignment.topLeft,
+                    padding: EdgeInsets.symmetric(vertical: 5),
+                    child: Text('Valid for',
+                      style: GoogleFonts.robotoCondensed(
+                        textStyle: Theme.of(context).textTheme.labelLarge,
+                        letterSpacing: 1.75,
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(
+                        child: TextField(
+                          style: GoogleFonts.roboto(
+                            textStyle: Theme.of(context).textTheme.bodyMedium,
+                            fontWeight: FontWeight.w600,
+                            letterSpacing: 1.2,
+                          ),
+                          decoration: InputDecoration(
+                            floatingLabelBehavior: FloatingLabelBehavior.never,
+                            hintText: 'Enter Validity'.toLowerCase(),
+                            hintStyle: GoogleFonts.roboto(
+                                textStyle: Theme.of(context).textTheme.bodyMedium,
+                                letterSpacing: 1.8,
+                                fontWeight: FontWeight.w300),
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: Theme.of(context).colorScheme.outline),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: Theme.of(context).colorScheme.primary, width: 1),
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(width: 10,),
+                      Expanded(
+                        child: Container(
+                          margin: EdgeInsets.only(bottom: 4),
+                          child: DropdownButtonFormField(
+                            style: GoogleFonts.roboto(
+                              textStyle: Theme.of(context).textTheme.bodyMedium,
+                              fontWeight: FontWeight.w600,
+                              letterSpacing: 1.2,
+                            ),
+                            decoration: InputDecoration(
+                              contentPadding: EdgeInsets.all(10),
+                              floatingLabelBehavior: FloatingLabelBehavior.auto,
+                              hintText: 'Validity Type'.toLowerCase(),
+                              hintStyle: GoogleFonts.roboto(
+                                  textStyle: Theme.of(context).textTheme.bodyMedium,
+                                  letterSpacing: 1.8,
+                                  fontWeight: FontWeight.w300),
 
+                              enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(color: Theme.of(context).colorScheme.outline),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(color: Theme.of(context).colorScheme.primary, width: 1),
+                              ),
+                            ),
+                            items: _validityList.map((String value) {
+                              return DropdownMenuItem<String>(
+                                value: value,
+                                child: Text(value,
+                                  style: GoogleFonts.roboto(
+                                    textStyle: Theme.of(context).textTheme.bodyMedium,
+                                    fontWeight: FontWeight.w600,
+                                    letterSpacing: 1.2,
+                                  ),
+                                ),
+                              );
+                            }).toList(),
+                            focusColor: Colors.white,
+                            onChanged: (String? newValue){
+                              setState(() {
+                                selectedValidity = newValue!;
+                              });
+                            },
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              )
+          ),
+          Container(
+              margin: EdgeInsets.only(bottom: 10),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Container(
+                    alignment: Alignment.topLeft,
+                    padding: EdgeInsets.symmetric(vertical: 5),
+                    child: Text('Bandwidth (Upload)',
+                      style: GoogleFonts.robotoCondensed(
+                        textStyle: Theme.of(context).textTheme.labelLarge,
+                        letterSpacing: 1.75,
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(
+                        child: TextField(
+                          style: GoogleFonts.roboto(
+                            textStyle: Theme.of(context).textTheme.bodyMedium,
+                            fontWeight: FontWeight.w600,
+                            letterSpacing: 1.2,
+                          ),
+                          decoration: InputDecoration(
+                            floatingLabelBehavior: FloatingLabelBehavior.never,
+                            hintText: 'Enter Speed'.toLowerCase(),
+                            hintStyle: GoogleFonts.roboto(
+                                textStyle: Theme.of(context).textTheme.bodyMedium,
+                                letterSpacing: 1.8,
+                                fontWeight: FontWeight.w300),
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: Theme.of(context).colorScheme.outline),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: Theme.of(context).colorScheme.primary, width: 1),
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(width: 10,),
+                      Expanded(
+                        child: Container(
+                          margin: EdgeInsets.only(bottom: 4),
+                          child: DropdownButtonFormField(
+                            value: selectedSpeed,
+                            style: GoogleFonts.roboto(
+                              textStyle: Theme.of(context).textTheme.bodyMedium,
+                              fontWeight: FontWeight.w600,
+                              letterSpacing: 1.2,
+                            ),
+                            decoration: InputDecoration(
+                              contentPadding: EdgeInsets.all(10),
+                              floatingLabelBehavior: FloatingLabelBehavior.auto,
+                              hintText: 'Speed Type'.toLowerCase(),
+                              hintStyle: GoogleFonts.roboto(
+                                  textStyle: Theme.of(context).textTheme.bodyMedium,
+                                  letterSpacing: 1.8,
+                                  fontWeight: FontWeight.w300),
+
+                              enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(color: Theme.of(context).colorScheme.outline),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(color: Theme.of(context).colorScheme.primary, width: 1),
+                              ),
+                            ),
+                            items: _SpeedList.map((String value) {
+                              return DropdownMenuItem<String>(
+                                value: value,
+                                child: Text(value,
+                                  style: GoogleFonts.roboto(
+                                    textStyle: Theme.of(context).textTheme.bodyMedium,
+                                    fontWeight: FontWeight.w600,
+                                    letterSpacing: 1.2,
+                                  ),
+                                ),
+                              );
+                            }).toList(),
+                            focusColor: Colors.white,
+                            onChanged: (String? newValue){
+                              setState(() {
+                                selectedSpeed = newValue!;
+                              });
+                            },
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              )
+          ),
+          Container(
+              margin: EdgeInsets.only(bottom: 10),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Container(
+                    alignment: Alignment.topLeft,
+                    padding: EdgeInsets.symmetric(vertical: 5),
+                    child: Text('Bandwidth (Download)',
+                      style: GoogleFonts.robotoCondensed(
+                        textStyle: Theme.of(context).textTheme.labelLarge,
+                        letterSpacing: 1.75,
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(
+                        child: TextField(
+                          style: GoogleFonts.roboto(
+                            textStyle: Theme.of(context).textTheme.bodyMedium,
+                            fontWeight: FontWeight.w600,
+                            letterSpacing: 1.2,
+                          ),
+                          decoration: InputDecoration(
+                            floatingLabelBehavior: FloatingLabelBehavior.never,
+                            hintText: 'Enter Speed'.toLowerCase(),
+                            hintStyle: GoogleFonts.roboto(
+                                textStyle: Theme.of(context).textTheme.bodyMedium,
+                                letterSpacing: 1.8,
+                                fontWeight: FontWeight.w300),
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: Theme.of(context).colorScheme.outline),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: Theme.of(context).colorScheme.primary, width: 1),
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(width: 10,),
+                      Expanded(
+                        child: Container(
+                          margin: EdgeInsets.only(bottom: 4),
+                          child: DropdownButtonFormField(
+                            value: selectedSpeed,
+                            style: GoogleFonts.roboto(
+                              textStyle: Theme.of(context).textTheme.bodyMedium,
+                              fontWeight: FontWeight.w600,
+                              letterSpacing: 1.2,
+                            ),
+                            decoration: InputDecoration(
+                              contentPadding: EdgeInsets.all(10),
+                              floatingLabelBehavior: FloatingLabelBehavior.auto,
+                              hintText: 'Speed Type'.toLowerCase(),
+                              hintStyle: GoogleFonts.roboto(
+                                  textStyle: Theme.of(context).textTheme.bodyMedium,
+                                  letterSpacing: 1.8,
+                                  fontWeight: FontWeight.w300),
+
+                              enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(color: Theme.of(context).colorScheme.outline),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(color: Theme.of(context).colorScheme.primary, width: 1),
+                              ),
+                            ),
+                            items: _SpeedList.map((String value) {
+                              return DropdownMenuItem<String>(
+                                value: value,
+                                child: Text(value,
+                                  style: GoogleFonts.roboto(
+                                    textStyle: Theme.of(context).textTheme.bodyMedium,
+                                    fontWeight: FontWeight.w600,
+                                    letterSpacing: 1.2,
+                                  ),
+                                ),
+                              );
+                            }).toList(),
+                            focusColor: Colors.white,
+                            onChanged: (String? newValue){
+                              setState(() {
+                                selectedSpeed = newValue!;
+                              });
+                            },
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              )
+          ),
           Container(
             margin: EdgeInsets.only(bottom: 10),
             child: Column(
@@ -103,27 +406,30 @@ class _PackageAddState extends State<PackageAdd> {
                 Container(
                   alignment: Alignment.topLeft,
                   padding: EdgeInsets.symmetric(vertical: 5),
-                  child: Text('Mobile',
-                  style: GoogleFonts.robotoCondensed(
-                    textStyle: Theme.of(context).textTheme.labelLarge,
-                    letterSpacing: 1.75,
-                    fontWeight: FontWeight.w400,
-                  ),
+                  child: Text('Package Type ',
+                    style: GoogleFonts.robotoCondensed(
+                      textStyle: Theme.of(context).textTheme.labelLarge,
+                      letterSpacing: 1.75,
+                      fontWeight: FontWeight.w400,
+                    ),
                   ),
                 ),
-                TextField(
+                DropdownButtonFormField(
+                  value: selectedPackage,
                   style: GoogleFonts.roboto(
                     textStyle: Theme.of(context).textTheme.bodyMedium,
                     fontWeight: FontWeight.w600,
                     letterSpacing: 1.2,
                   ),
                   decoration: InputDecoration(
-                    floatingLabelBehavior: FloatingLabelBehavior.never,
-                    hintText: 'Enter Mobile Number'.toLowerCase(),
+                    contentPadding: EdgeInsets.all(10),
+                    floatingLabelBehavior: FloatingLabelBehavior.auto,
+                    hintText: 'Select Package Type'.toLowerCase(),
                     hintStyle: GoogleFonts.roboto(
-                      textStyle: Theme.of(context).textTheme.bodyMedium,
-                      letterSpacing: 1.8,
-                      fontWeight: FontWeight.w300),
+                        textStyle: Theme.of(context).textTheme.bodyMedium,
+                        letterSpacing: 1.8,
+                        fontWeight: FontWeight.w300),
+
                     enabledBorder: OutlineInputBorder(
                       borderSide: BorderSide(color: Theme.of(context).colorScheme.outline),
                     ),
@@ -131,337 +437,110 @@ class _PackageAddState extends State<PackageAdd> {
                       borderSide: BorderSide(color: Theme.of(context).colorScheme.primary, width: 1),
                     ),
                   ),
+                  items: _packageList.map((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value,
+                        style: GoogleFonts.roboto(
+                          textStyle: Theme.of(context).textTheme.bodyMedium,
+                          fontWeight: FontWeight.w600,
+                          letterSpacing: 1.2,
+                        ),
+                      ),
+                    );
+                  }).toList(),
+                  focusColor: Colors.white,
+                  onChanged: (String? newValue){
+                    setState(() {
+                      selectedPackage = newValue!;
+                    });
+                  },
                 ),
               ],
-            )
+            ),
           ),
-
           Container(
-            margin: EdgeInsets.only(bottom: 10),
-            child: Column(
-              children: [
-                Container(
-                  alignment: Alignment.topLeft,
-                  padding: EdgeInsets.symmetric(vertical: 5),
-                  child: Text('Phone Number',
-                  style: GoogleFonts.robotoCondensed(
-                    textStyle: Theme.of(context).textTheme.labelLarge,
-                    letterSpacing: 1.75,
-                    fontWeight: FontWeight.w400,
-                  ),
-                  ),
-                ),
-                TextField(
-                  style: GoogleFonts.roboto(
-                    textStyle: Theme.of(context).textTheme.bodyMedium,
-                    fontWeight: FontWeight.w600,
-                    letterSpacing: 1.2,
-                  ),
-                  decoration: InputDecoration(
-                    floatingLabelBehavior: FloatingLabelBehavior.never,
-                    hintText: 'Enter Phone Number'.toLowerCase(),
-                    hintStyle: GoogleFonts.roboto(
-                      textStyle: Theme.of(context).textTheme.bodyMedium,
-                      letterSpacing: 1.8,
-                      fontWeight: FontWeight.w300),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Theme.of(context).colorScheme.outline),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Theme.of(context).colorScheme.primary, width: 1),
-                    ),
-                  ),
-                ),
-              ],
-            )
-          ),
+              child: Column(
+                children: [
 
+                  Container(
+                    alignment: Alignment.topLeft,
+                    padding: EdgeInsets.symmetric(vertical: 5),
+                    child: Text('Description',
+                      style: GoogleFonts.robotoCondensed(
+                        textStyle: Theme.of(context).textTheme.labelLarge,
+                        letterSpacing: 1.75,
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                  ),
+
+                  TextField(
+                    style: GoogleFonts.roboto(
+                      textStyle: Theme.of(context).textTheme.bodyMedium,
+                      fontWeight: FontWeight.w600,
+                      letterSpacing: 1.2,
+                    ),
+                    maxLines: 4,
+                    decoration: InputDecoration(
+                      floatingLabelBehavior: FloatingLabelBehavior.never,
+                      hintText: 'Enter Description'.toLowerCase(),
+                      hintStyle: GoogleFonts.roboto(
+                          textStyle: Theme.of(context).textTheme.bodyMedium,
+                          letterSpacing: 1.8,
+                          fontWeight: FontWeight.w300),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Theme.of(context).colorScheme.outline),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Theme.of(context).colorScheme.primary, width: 1),
+                      ),
+                    ),
+                  ),
+                ],
+              )
+          ),
           Container(
-            margin: EdgeInsets.only(bottom: 10),
-            child: Column(
-              children: [
-                Container(
-                  alignment: Alignment.topLeft,
-                  padding: EdgeInsets.symmetric(vertical: 5),
-                  child: Text('Email',
-                  style: GoogleFonts.robotoCondensed(
-                    textStyle: Theme.of(context).textTheme.labelLarge,
-                    letterSpacing: 1.75,
-                    fontWeight: FontWeight.w400,
+              child: Column(
+                children: [
+
+                  Container(
+                    alignment: Alignment.topLeft,
+                    padding: EdgeInsets.symmetric(vertical: 5),
+                    child: Text('Price to subscriber',
+                      style: GoogleFonts.robotoCondensed(
+                        textStyle: Theme.of(context).textTheme.labelLarge,
+                        letterSpacing: 1.75,
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
                   ),
-                  ),
-                ),
-                TextField(
-                  style: GoogleFonts.roboto(
-                    textStyle: Theme.of(context).textTheme.bodyMedium,
-                    fontWeight: FontWeight.w600,
-                    letterSpacing: 1.2,
-                  ),
-                  decoration: InputDecoration(
-                    floatingLabelBehavior: FloatingLabelBehavior.never,
-                    hintText: 'Enter Email'.toLowerCase(),
-                    hintStyle: GoogleFonts.roboto(
+
+                  TextField(
+                    style: GoogleFonts.roboto(
                       textStyle: Theme.of(context).textTheme.bodyMedium,
-                      letterSpacing: 1.8,
-                      fontWeight: FontWeight.w300),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Theme.of(context).colorScheme.outline),
+                      fontWeight: FontWeight.w600,
+                      letterSpacing: 1.2,
                     ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Theme.of(context).colorScheme.primary, width: 1),
+                    decoration: InputDecoration(
+                      floatingLabelBehavior: FloatingLabelBehavior.never,
+                      hintText: 'Enter Price'.toLowerCase(),
+                      hintStyle: GoogleFonts.roboto(
+                          textStyle: Theme.of(context).textTheme.bodyMedium,
+                          letterSpacing: 1.8,
+                          fontWeight: FontWeight.w300),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Theme.of(context).colorScheme.outline),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Theme.of(context).colorScheme.primary, width: 1),
+                      ),
                     ),
                   ),
-                ),
-              ],
-            )
+                ],
+              )
           ),
 
-          Divider(height: 30),
-
-          Container(
-            child: Column(
-              children: [
-
-                Container(
-                  alignment: Alignment.topLeft,
-                  padding: EdgeInsets.symmetric(vertical: 5),
-                  child: Text('Address Line',
-                  style: GoogleFonts.robotoCondensed(
-                    textStyle: Theme.of(context).textTheme.labelLarge,
-                    letterSpacing: 1.75,
-                    fontWeight: FontWeight.w400,
-                  ),
-                  ),
-                ),
-                
-                TextField(
-                  style: GoogleFonts.roboto(
-                    textStyle: Theme.of(context).textTheme.bodyMedium,
-                    fontWeight: FontWeight.w600,
-                    letterSpacing: 1.2,
-                  ),
-                  maxLines: 4,
-                  decoration: InputDecoration(
-                    floatingLabelBehavior: FloatingLabelBehavior.never,
-                    hintText: 'Enter Address Line'.toLowerCase(),
-                    hintStyle: GoogleFonts.roboto(
-                      textStyle: Theme.of(context).textTheme.bodyMedium,
-                      letterSpacing: 1.8,
-                      fontWeight: FontWeight.w300),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Theme.of(context).colorScheme.outline),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Theme.of(context).colorScheme.primary, width: 1),
-                    ),
-                  ),
-                ),
-              ],
-            )
-          ),
-
-          Container(
-            margin: EdgeInsets.only(bottom: 10),
-            child: Column(
-              children: [
-                Container(
-                  alignment: Alignment.topLeft,
-                  padding: EdgeInsets.symmetric(vertical: 5),
-                  child: Text('Pincode',
-                  style: GoogleFonts.robotoCondensed(
-                    textStyle: Theme.of(context).textTheme.labelLarge,
-                    letterSpacing: 1.75,
-                    fontWeight: FontWeight.w400,
-                  ),
-                  ),
-                ),
-                TextField(
-                  style: GoogleFonts.roboto(
-                    textStyle: Theme.of(context).textTheme.bodyMedium,
-                    fontWeight: FontWeight.w600,
-                    letterSpacing: 1.2,
-                  ),
-                  decoration: InputDecoration(
-                    floatingLabelBehavior: FloatingLabelBehavior.never,
-                    hintText: 'Enter Pincode'.toLowerCase(),
-                    hintStyle: GoogleFonts.roboto(
-                      textStyle: Theme.of(context).textTheme.bodyMedium,
-                      letterSpacing: 1.8,
-                      fontWeight: FontWeight.w300),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Theme.of(context).colorScheme.outline),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Theme.of(context).colorScheme.primary, width: 1),
-                    ),
-                  ),
-                ),
-              ],
-            )
-          ),
-
-          Container(
-            margin: EdgeInsets.only(bottom: 10),
-            child: Column(
-              children: [
-                Container(
-                  alignment: Alignment.topLeft,
-                  padding: EdgeInsets.symmetric(vertical: 5),
-                  child: Text('Country',
-                  style: GoogleFonts.robotoCondensed(
-                    textStyle: Theme.of(context).textTheme.labelLarge,
-                    letterSpacing: 1.75,
-                    fontWeight: FontWeight.w400,
-                  ),
-                  ),
-                ),
-                TextField(
-                  style: GoogleFonts.roboto(
-                    textStyle: Theme.of(context).textTheme.bodyMedium,
-                    fontWeight: FontWeight.w600,
-                    letterSpacing: 1.2,
-                  ),
-                  decoration: InputDecoration(
-                    floatingLabelBehavior: FloatingLabelBehavior.never,
-                    hintText: 'Select Country'.toLowerCase(),
-                    hintStyle: GoogleFonts.roboto(
-                      textStyle: Theme.of(context).textTheme.bodyMedium,
-                      letterSpacing: 1.8,
-                      fontWeight: FontWeight.w300),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Theme.of(context).colorScheme.outline),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Theme.of(context).colorScheme.primary, width: 1),
-                    ),
-                  ),
-                ),
-              ],
-            )
-          ),
-
-          Container(
-            margin: EdgeInsets.only(bottom: 10),
-            child: Column(
-              children: [
-                Container(
-                  alignment: Alignment.topLeft,
-                  padding: EdgeInsets.symmetric(vertical: 5),
-                  child: Text('State',
-                  style: GoogleFonts.robotoCondensed(
-                    textStyle: Theme.of(context).textTheme.labelLarge,
-                    letterSpacing: 1.75,
-                    fontWeight: FontWeight.w400,
-                  ),
-                  ),
-                ),
-                TextField(
-                  style: GoogleFonts.roboto(
-                    textStyle: Theme.of(context).textTheme.bodyMedium,
-                    fontWeight: FontWeight.w600,
-                    letterSpacing: 1.2,
-                  ),
-                  decoration: InputDecoration(
-                    floatingLabelBehavior: FloatingLabelBehavior.never,
-                    hintText: 'Enter State'.toLowerCase(),
-                    hintStyle: GoogleFonts.roboto(
-                      textStyle: Theme.of(context).textTheme.bodyMedium,
-                      letterSpacing: 1.8,
-                      fontWeight: FontWeight.w300),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Theme.of(context).colorScheme.outline),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Theme.of(context).colorScheme.primary, width: 1),
-                    ),
-                  ),
-                ),
-              ],
-            )
-          ),
-
-          Container(
-            margin: EdgeInsets.only(bottom: 10),
-            child: Column(
-              children: [
-                Container(
-                  alignment: Alignment.topLeft,
-                  padding: EdgeInsets.symmetric(vertical: 5),
-                  child: Text('City',
-                  style: GoogleFonts.robotoCondensed(
-                    textStyle: Theme.of(context).textTheme.labelLarge,
-                    letterSpacing: 1.75,
-                    fontWeight: FontWeight.w400,
-                  ),
-                  ),
-                ),
-                TextField(
-                  style: GoogleFonts.roboto(
-                    textStyle: Theme.of(context).textTheme.bodyMedium,
-                    fontWeight: FontWeight.w600,
-                    letterSpacing: 1.2,
-                  ),
-                  decoration: InputDecoration(
-                    floatingLabelBehavior: FloatingLabelBehavior.never,
-                    hintText: 'Select City'.toLowerCase(),
-                    hintStyle: GoogleFonts.roboto(
-                      textStyle: Theme.of(context).textTheme.bodyMedium,
-                      letterSpacing: 1.8,
-                      fontWeight: FontWeight.w300),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Theme.of(context).colorScheme.outline),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Theme.of(context).colorScheme.primary, width: 1),
-                    ),
-                  ),
-                ),
-              ],
-            )
-          ),
-
-          Divider(height: 30),
-
-          Container(
-            margin: EdgeInsets.only(bottom: 10),
-            child: Column(
-              children: [
-                Container(
-                  alignment: Alignment.topLeft,
-                  padding: EdgeInsets.symmetric(vertical: 5),
-                  child: Text('Comment',
-                  style: GoogleFonts.robotoCondensed(
-                    textStyle: Theme.of(context).textTheme.labelLarge,
-                    letterSpacing: 1.75,
-                    fontWeight: FontWeight.w400,
-                  ),
-                  ),
-                ),
-                TextField(
-                  style: GoogleFonts.roboto(
-                    textStyle: Theme.of(context).textTheme.bodyMedium,
-                    fontWeight: FontWeight.w600,
-                    letterSpacing: 1.2,
-                  ),
-                  maxLines: 4,
-                  decoration: InputDecoration(
-                    floatingLabelBehavior: FloatingLabelBehavior.never,
-                    hintText: 'Enter Comment'.toLowerCase(),
-                    hintStyle: GoogleFonts.roboto(
-                      textStyle: Theme.of(context).textTheme.bodyMedium,
-                      letterSpacing: 1.8,
-                      fontWeight: FontWeight.w300),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Theme.of(context).colorScheme.outline),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Theme.of(context).colorScheme.primary, width: 1),
-                    ),
-                  ),
-                ),
-              ],
-            )
-          ),
 
           
 
