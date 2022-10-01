@@ -46,8 +46,8 @@ class MyApp extends StatelessWidget {
             // ThemeMode.dark,
             // ThemeMode.light,
             home: 
-             SplashScreen(),
-            // const Dashboard(title: 'Dashboard')
+            //  SplashScreen(),
+             Dashboard()
             // const Profile(title: 'Profile')
             // SubscribersList()
             // SubscribersDetails()
@@ -57,7 +57,7 @@ class MyApp extends StatelessWidget {
             // const TicketsList(title: 'Ticket List')
             // const LeadsList(title: 'Leads List')
             // const SelectLocation(title: 'Select Location')
-           // PackageList()
+          //  PackageList()
           );
         });
   }
