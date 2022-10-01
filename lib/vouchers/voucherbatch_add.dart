@@ -253,7 +253,6 @@ class _VoucherBatchAddState extends State<VoucherBatchAdd> {
                     SizedBox(width: 10,),
                     Expanded(
                       child: Container(
-                        margin: EdgeInsets.only(bottom: 4),
                         child: DropdownButtonFormField(
                           style: GoogleFonts.roboto(
                             textStyle: Theme.of(context).textTheme.bodyMedium,
