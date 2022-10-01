@@ -82,6 +82,7 @@ class _VoucherBatchAddState extends State<VoucherBatchAdd> {
                   ),
                 ),
                 DropdownButtonFormField(
+                  isDense: false,
                   style: GoogleFonts.roboto(
                     textStyle: Theme.of(context).textTheme.bodyMedium,
                     fontWeight: FontWeight.w600,
