@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:xceednet/common_widgets/headToolbar.dart';
 import 'package:xceednet/common_widgets/menuDrawer.dart';
-import 'package:xceednet/subscribers/subscribers_add.dart';
 import 'package:xceednet/tickets/ticket_add.dart';
+import 'package:xceednet/tickets/tickets_details.dart';
 
 class TicketsList extends StatefulWidget {
 
@@ -186,7 +186,19 @@ List ticketsList = [
               },
               itemBuilder: (BuildContext context, int index) {
                 Map item = ticketsList[index];
-                return Card(
+                return InkWell(
+                  onTap: (){
+                  Navigator.of(context).push(
+                    PageRouteBuilder(
+                      pageBuilder: (context, animation, secondaryAnimation) =>
+                        FadeTransition(
+                        opacity: animation,
+                        child: TicketsDetails()
+                      ),
+                    ),
+                  );
+                },
+                  child: Card(
                   margin: EdgeInsets.zero,
                   shape: RoundedRectangleBorder(
                     side: BorderSide(width: 1, color: Theme.of(context).dividerColor)
@@ -508,6 +520,7 @@ List ticketsList = [
                       
                     ],
                   ),
+                ),
                 );
               }
             ),

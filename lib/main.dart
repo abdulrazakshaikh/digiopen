@@ -13,6 +13,7 @@ import 'package:xceednet/subscribers/subscribers_list.dart';
 import 'package:xceednet/theme/color_schemes.g.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:xceednet/tickets/tickets_details.dart';
 import 'package:xceednet/tickets/tickets_list.dart';
 
 void main() {
@@ -46,15 +47,16 @@ class MyApp extends StatelessWidget {
             // ThemeMode.dark,
             // ThemeMode.light,
             home: 
-            //  SplashScreen(),
-             Dashboard()
+             SplashScreen(),
+            //  Dashboard()
             // const Profile(title: 'Profile')
             // SubscribersList()
             // SubscribersDetails()
             // DataUsage()
             // const SubscribersAdd(title: 'Subscribers Add')
             // const Reports(title: 'Reports')
-            // const TicketsList(title: 'Ticket List')
+            // TicketsList()
+            // TicketsDetails()
             // const LeadsList(title: 'Leads List')
             // const SelectLocation(title: 'Select Location')
           //  PackageList()
