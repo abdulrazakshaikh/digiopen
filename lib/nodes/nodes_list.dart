@@ -5,6 +5,7 @@ import 'package:xceednet/common_widgets/headToolbar.dart';
 import 'package:xceednet/common_widgets/menuDrawer.dart';
 import 'package:xceednet/leads/leads_add.dart';
 import 'package:xceednet/leads/leads_details.dart';
+import 'package:xceednet/nodes/node_add.dart';
 import 'package:xceednet/subscribers/subscribers_add.dart';
 import 'package:xceednet/subscribers/subscribers_details.dart';
 
@@ -94,7 +95,7 @@ class _NodesListState extends State<NodesList> {
       appBar: AppBar(
         
         title: Text("Nodes"),
-        /*actions: [
+        actions: [
           IconButton(
             onPressed: (){
               Navigator.of(context).push(
@@ -102,7 +103,7 @@ class _NodesListState extends State<NodesList> {
                   pageBuilder: (context, animation, secondaryAnimation) =>
                     FadeTransition(
                     opacity: animation,
-                    child: LeadsAdd(title: 'Add Leads')
+                    child: NodeAdd()
                   ),
                 ),
               );
@@ -115,7 +116,7 @@ class _NodesListState extends State<NodesList> {
               fixedSize: Size(54, 54),
             ),
           ),
-        ],*/
+        ],
       ),
       body: ListView(
         children: [

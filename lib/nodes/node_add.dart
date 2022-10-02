@@ -5,13 +5,13 @@ import 'package:xceednet/common_widgets/headToolbar.dart';
 import 'package:xceednet/common_widgets/menuDrawer.dart';
 import 'package:xceednet/subscribers/subscribers_list.dart';
 
-class ZoneAdd extends StatefulWidget {
+class NodeAdd extends StatefulWidget {
 
   @override
-  State<ZoneAdd> createState() => _ZoneAddState();
+  State<NodeAdd> createState() => _NodeAddState();
 }
 
-class _ZoneAddState extends State<ZoneAdd> {
+class _NodeAddState extends State<NodeAdd> {
   var _zone=[
     "Service Person 1",
     "Service Person 2",
@@ -26,7 +26,7 @@ class _ZoneAddState extends State<ZoneAdd> {
       backgroundColor: Theme.of(context).colorScheme.background,
       appBar: AppBar(
         automaticallyImplyLeading: true,
-        title: Text("Add Zone"),
+        title: Text("Add Note"),
         actions: [],
       ),
       bottomNavigationBar: Container(
@@ -66,7 +66,7 @@ class _ZoneAddState extends State<ZoneAdd> {
                 Container(
                   alignment: Alignment.topLeft,
                   padding: EdgeInsets.symmetric(vertical: 5),
-                  child: Text('Zone Name',
+                  child: Text('Node Name',
                   style: GoogleFonts.robotoCondensed(
                     textStyle: Theme.of(context).textTheme.labelLarge,
                     letterSpacing: 1.75,
@@ -101,122 +101,6 @@ class _ZoneAddState extends State<ZoneAdd> {
           Container(
             child: Column(
               children: [
-                Container(
-                  alignment: Alignment.topLeft,
-                  padding: EdgeInsets.symmetric(vertical: 5),
-                  child: Text('Service Person',
-                    style: GoogleFonts.robotoCondensed(
-                      textStyle: Theme.of(context).textTheme.labelLarge,
-                      letterSpacing: 1.75,
-                      fontWeight: FontWeight.w400,
-                    ),
-                  ),
-                ),
-                DropdownButtonFormField(
-                  style: GoogleFonts.roboto(
-                    textStyle: Theme.of(context).textTheme.bodyMedium,
-                    fontWeight: FontWeight.w600,
-                    letterSpacing: 1.2,
-                  ),
-                  decoration: InputDecoration(
-                    contentPadding: EdgeInsets.all(10),
-                    floatingLabelBehavior: FloatingLabelBehavior.auto,
-                    hintText: 'Select Service Person'.toLowerCase(),
-                    hintStyle: GoogleFonts.roboto(
-                        textStyle: Theme.of(context).textTheme.bodyMedium,
-                        letterSpacing: 1.8,
-                        fontWeight: FontWeight.w300),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Theme.of(context).colorScheme.outline),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Theme.of(context).colorScheme.primary, width: 1),
-                    ),
-                  ),
-                  items: _zone.map((String value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(value,
-                        style: GoogleFonts.roboto(
-                          textStyle: Theme.of(context).textTheme.bodyMedium,
-                          fontWeight: FontWeight.w600,
-                          letterSpacing: 1.2,
-                        ),
-                      ),
-                    );
-                  }).toList(),
-                  focusColor: Colors.white,
-                  onChanged: (String? newValue){
-                    setState(() {
-                      selectedServicePerson = newValue!;
-                    });
-                  },
-                ),
-
-              ],
-            ),
-          ),
-          Container(
-            child: Column(
-              children: [
-                Container(
-                  alignment: Alignment.topLeft,
-                  padding: EdgeInsets.symmetric(vertical: 5),
-                  child: Text('Payment Collector',
-                    style: GoogleFonts.robotoCondensed(
-                      textStyle: Theme.of(context).textTheme.labelLarge,
-                      letterSpacing: 1.75,
-                      fontWeight: FontWeight.w400,
-                    ),
-                  ),
-                ),
-                DropdownButtonFormField(
-                  style: GoogleFonts.roboto(
-                    textStyle: Theme.of(context).textTheme.bodyMedium,
-                    fontWeight: FontWeight.w600,
-                    letterSpacing: 1.2,
-                  ),
-                  decoration: InputDecoration(
-                    contentPadding: EdgeInsets.all(10),
-                    floatingLabelBehavior: FloatingLabelBehavior.auto,
-                    hintText: 'Select Payment Collector'.toLowerCase(),
-                    hintStyle: GoogleFonts.roboto(
-                        textStyle: Theme.of(context).textTheme.bodyMedium,
-                        letterSpacing: 1.8,
-                        fontWeight: FontWeight.w300),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Theme.of(context).colorScheme.outline),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Theme.of(context).colorScheme.primary, width: 1),
-                    ),
-                  ),
-                  items: _zone.map((String value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(value,
-                        style: GoogleFonts.roboto(
-                          textStyle: Theme.of(context).textTheme.bodyMedium,
-                          fontWeight: FontWeight.w600,
-                          letterSpacing: 1.2,
-                        ),
-                      ),
-                    );
-                  }).toList(),
-                  focusColor: Colors.white,
-                  onChanged: (String? newValue){
-                    setState(() {
-                      selectedServicePerson = newValue!;
-                    });
-                  },
-                ),
-
-              ],
-            ),
-          ),
-          Container(
-            child: Column(
-              children: [
 
                 Container(
                   alignment: Alignment.topLeft,
@@ -240,6 +124,94 @@ class _ZoneAddState extends State<ZoneAdd> {
                   decoration: InputDecoration(
                     floatingLabelBehavior: FloatingLabelBehavior.never,
                     hintText: 'Enter Description'.toLowerCase(),
+                    hintStyle: GoogleFonts.roboto(
+                      textStyle: Theme.of(context).textTheme.bodyMedium,
+                      letterSpacing: 1.8,
+                      fontWeight: FontWeight.w300),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Theme.of(context).colorScheme.outline),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Theme.of(context).colorScheme.primary, width: 1),
+                    ),
+                  ),
+                ),
+              ],
+            )
+          ),
+          Container(
+            child: Column(
+              children: [
+
+                Container(
+                  alignment: Alignment.topLeft,
+                  padding: EdgeInsets.symmetric(vertical: 5),
+                  child: Text('Location ',
+                  style: GoogleFonts.robotoCondensed(
+                    textStyle: Theme.of(context).textTheme.labelLarge,
+                    letterSpacing: 1.75,
+                    fontWeight: FontWeight.w400,
+                  ),
+                  ),
+                ),
+
+                TextField(
+                  style: GoogleFonts.roboto(
+                    textStyle: Theme.of(context).textTheme.bodyMedium,
+                    fontWeight: FontWeight.w600,
+                    letterSpacing: 1.2,
+                  ),
+                  decoration: InputDecoration(
+                    floatingLabelBehavior: FloatingLabelBehavior.never,
+                    hintText: 'Enter Latitude'.toLowerCase(),
+                    hintStyle: GoogleFonts.roboto(
+                      textStyle: Theme.of(context).textTheme.bodyMedium,
+                      letterSpacing: 1.8,
+                      fontWeight: FontWeight.w300),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Theme.of(context).colorScheme.outline),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Theme.of(context).colorScheme.primary, width: 1),
+                    ),
+                  ),
+                ),
+                SizedBox(height: 8,),
+                TextField(
+                  style: GoogleFonts.roboto(
+                    textStyle: Theme.of(context).textTheme.bodyMedium,
+                    fontWeight: FontWeight.w600,
+                    letterSpacing: 1.2,
+                  ),
+                  decoration: InputDecoration(
+                    floatingLabelBehavior: FloatingLabelBehavior.never,
+                    hintText: 'Enter Longitude'.toLowerCase(),
+                    hintStyle: GoogleFonts.roboto(
+                      textStyle: Theme.of(context).textTheme.bodyMedium,
+                      letterSpacing: 1.8,
+                      fontWeight: FontWeight.w300),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Theme.of(context).colorScheme.outline),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Theme.of(context).colorScheme.primary, width: 1),
+                    ),
+                  ),
+                ),
+                SizedBox(height: 8,),
+                TextField(
+                  readOnly: true,
+                  style: GoogleFonts.roboto(
+                    textStyle: Theme.of(context).textTheme.bodyMedium,
+                    fontWeight: FontWeight.w600,
+                    letterSpacing: 1.2,
+                  ),
+                  onTap: (){
+
+                  },
+                  decoration: InputDecoration(
+                    floatingLabelBehavior: FloatingLabelBehavior.never,
+                    hintText: 'Select Location'.toLowerCase(),
                     hintStyle: GoogleFonts.roboto(
                       textStyle: Theme.of(context).textTheme.bodyMedium,
                       letterSpacing: 1.8,

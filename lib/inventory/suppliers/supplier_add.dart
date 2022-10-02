@@ -59,7 +59,7 @@ class _SupplierAddState extends State<SupplierAdd> {
                 Container(
                   alignment: Alignment.topLeft,
                   padding: EdgeInsets.symmetric(vertical: 5),
-                  child: Text('Full Name',
+                  child: Text('Company Name',
                   style: GoogleFonts.robotoCondensed(
                     textStyle: Theme.of(context).textTheme.labelLarge,
                     letterSpacing: 1.75,
@@ -75,7 +75,7 @@ class _SupplierAddState extends State<SupplierAdd> {
                   ),
                   decoration: InputDecoration(
                     floatingLabelBehavior: FloatingLabelBehavior.never,
-                    hintText: 'Enter Full Name'.toLowerCase(),
+                    hintText: 'Enter Company Name'.toLowerCase(),
                     hintStyle: GoogleFonts.roboto(
                       textStyle: Theme.of(context).textTheme.bodyMedium,
                       letterSpacing: 1.8,
@@ -91,7 +91,84 @@ class _SupplierAddState extends State<SupplierAdd> {
               ],
             )
           ),
-
+          Container(
+            margin: EdgeInsets.only(bottom: 10),
+            child: Column(
+              children: [
+                Container(
+                  alignment: Alignment.topLeft,
+                  padding: EdgeInsets.symmetric(vertical: 5),
+                  child: Text('Company Address',
+                  style: GoogleFonts.robotoCondensed(
+                    textStyle: Theme.of(context).textTheme.labelLarge,
+                    letterSpacing: 1.75,
+                    fontWeight: FontWeight.w400,
+                  ),
+                  ),
+                ),
+                TextField(
+                  style: GoogleFonts.roboto(
+                    textStyle: Theme.of(context).textTheme.bodyMedium,
+                    fontWeight: FontWeight.w600,
+                    letterSpacing: 1.2,
+                  ),
+                  decoration: InputDecoration(
+                    floatingLabelBehavior: FloatingLabelBehavior.never,
+                    hintText: 'Enter Company Address'.toLowerCase(),
+                    hintStyle: GoogleFonts.roboto(
+                      textStyle: Theme.of(context).textTheme.bodyMedium,
+                      letterSpacing: 1.8,
+                      fontWeight: FontWeight.w300),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Theme.of(context).colorScheme.outline),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Theme.of(context).colorScheme.primary, width: 1),
+                    ),
+                  ),
+                ),
+              ],
+            )
+          ),
+          Container(
+            margin: EdgeInsets.only(bottom: 10),
+            child: Column(
+              children: [
+                Container(
+                  alignment: Alignment.topLeft,
+                  padding: EdgeInsets.symmetric(vertical: 5),
+                  child: Text('Contact Name',
+                  style: GoogleFonts.robotoCondensed(
+                    textStyle: Theme.of(context).textTheme.labelLarge,
+                    letterSpacing: 1.75,
+                    fontWeight: FontWeight.w400,
+                  ),
+                  ),
+                ),
+                TextField(
+                  style: GoogleFonts.roboto(
+                    textStyle: Theme.of(context).textTheme.bodyMedium,
+                    fontWeight: FontWeight.w600,
+                    letterSpacing: 1.2,
+                  ),
+                  decoration: InputDecoration(
+                    floatingLabelBehavior: FloatingLabelBehavior.never,
+                    hintText: 'Enter Contact Name'.toLowerCase(),
+                    hintStyle: GoogleFonts.roboto(
+                      textStyle: Theme.of(context).textTheme.bodyMedium,
+                      letterSpacing: 1.8,
+                      fontWeight: FontWeight.w300),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Theme.of(context).colorScheme.outline),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Theme.of(context).colorScheme.primary, width: 1),
+                    ),
+                  ),
+                ),
+              ],
+            )
+          ),
           Container(
             margin: EdgeInsets.only(bottom: 10),
             child: Column(
@@ -116,46 +193,6 @@ class _SupplierAddState extends State<SupplierAdd> {
                   decoration: InputDecoration(
                     floatingLabelBehavior: FloatingLabelBehavior.never,
                     hintText: 'Enter Mobile Number'.toLowerCase(),
-                    hintStyle: GoogleFonts.roboto(
-                      textStyle: Theme.of(context).textTheme.bodyMedium,
-                      letterSpacing: 1.8,
-                      fontWeight: FontWeight.w300),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Theme.of(context).colorScheme.outline),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Theme.of(context).colorScheme.primary, width: 1),
-                    ),
-                  ),
-                ),
-              ],
-            )
-          ),
-
-          Container(
-            margin: EdgeInsets.only(bottom: 10),
-            child: Column(
-              children: [
-                Container(
-                  alignment: Alignment.topLeft,
-                  padding: EdgeInsets.symmetric(vertical: 5),
-                  child: Text('Phone Number',
-                  style: GoogleFonts.robotoCondensed(
-                    textStyle: Theme.of(context).textTheme.labelLarge,
-                    letterSpacing: 1.75,
-                    fontWeight: FontWeight.w400,
-                  ),
-                  ),
-                ),
-                TextField(
-                  style: GoogleFonts.roboto(
-                    textStyle: Theme.of(context).textTheme.bodyMedium,
-                    fontWeight: FontWeight.w600,
-                    letterSpacing: 1.2,
-                  ),
-                  decoration: InputDecoration(
-                    floatingLabelBehavior: FloatingLabelBehavior.never,
-                    hintText: 'Enter Phone Number'.toLowerCase(),
                     hintStyle: GoogleFonts.roboto(
                       textStyle: Theme.of(context).textTheme.bodyMedium,
                       letterSpacing: 1.8,
@@ -211,262 +248,6 @@ class _SupplierAddState extends State<SupplierAdd> {
               ],
             )
           ),
-
-          Divider(height: 30),
-
-          Container(
-            child: Column(
-              children: [
-
-                Container(
-                  alignment: Alignment.topLeft,
-                  padding: EdgeInsets.symmetric(vertical: 5),
-                  child: Text('Address Line',
-                  style: GoogleFonts.robotoCondensed(
-                    textStyle: Theme.of(context).textTheme.labelLarge,
-                    letterSpacing: 1.75,
-                    fontWeight: FontWeight.w400,
-                  ),
-                  ),
-                ),
-                
-                TextField(
-                  style: GoogleFonts.roboto(
-                    textStyle: Theme.of(context).textTheme.bodyMedium,
-                    fontWeight: FontWeight.w600,
-                    letterSpacing: 1.2,
-                  ),
-                  maxLines: 4,
-                  decoration: InputDecoration(
-                    floatingLabelBehavior: FloatingLabelBehavior.never,
-                    hintText: 'Enter Address Line'.toLowerCase(),
-                    hintStyle: GoogleFonts.roboto(
-                      textStyle: Theme.of(context).textTheme.bodyMedium,
-                      letterSpacing: 1.8,
-                      fontWeight: FontWeight.w300),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Theme.of(context).colorScheme.outline),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Theme.of(context).colorScheme.primary, width: 1),
-                    ),
-                  ),
-                ),
-              ],
-            )
-          ),
-
-          Container(
-            margin: EdgeInsets.only(bottom: 10),
-            child: Column(
-              children: [
-                Container(
-                  alignment: Alignment.topLeft,
-                  padding: EdgeInsets.symmetric(vertical: 5),
-                  child: Text('Pincode',
-                  style: GoogleFonts.robotoCondensed(
-                    textStyle: Theme.of(context).textTheme.labelLarge,
-                    letterSpacing: 1.75,
-                    fontWeight: FontWeight.w400,
-                  ),
-                  ),
-                ),
-                TextField(
-                  style: GoogleFonts.roboto(
-                    textStyle: Theme.of(context).textTheme.bodyMedium,
-                    fontWeight: FontWeight.w600,
-                    letterSpacing: 1.2,
-                  ),
-                  decoration: InputDecoration(
-                    floatingLabelBehavior: FloatingLabelBehavior.never,
-                    hintText: 'Enter Pincode'.toLowerCase(),
-                    hintStyle: GoogleFonts.roboto(
-                      textStyle: Theme.of(context).textTheme.bodyMedium,
-                      letterSpacing: 1.8,
-                      fontWeight: FontWeight.w300),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Theme.of(context).colorScheme.outline),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Theme.of(context).colorScheme.primary, width: 1),
-                    ),
-                  ),
-                ),
-              ],
-            )
-          ),
-
-          Container(
-            margin: EdgeInsets.only(bottom: 10),
-            child: Column(
-              children: [
-                Container(
-                  alignment: Alignment.topLeft,
-                  padding: EdgeInsets.symmetric(vertical: 5),
-                  child: Text('Country',
-                  style: GoogleFonts.robotoCondensed(
-                    textStyle: Theme.of(context).textTheme.labelLarge,
-                    letterSpacing: 1.75,
-                    fontWeight: FontWeight.w400,
-                  ),
-                  ),
-                ),
-                TextField(
-                  style: GoogleFonts.roboto(
-                    textStyle: Theme.of(context).textTheme.bodyMedium,
-                    fontWeight: FontWeight.w600,
-                    letterSpacing: 1.2,
-                  ),
-                  decoration: InputDecoration(
-                    floatingLabelBehavior: FloatingLabelBehavior.never,
-                    hintText: 'Select Country'.toLowerCase(),
-                    hintStyle: GoogleFonts.roboto(
-                      textStyle: Theme.of(context).textTheme.bodyMedium,
-                      letterSpacing: 1.8,
-                      fontWeight: FontWeight.w300),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Theme.of(context).colorScheme.outline),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Theme.of(context).colorScheme.primary, width: 1),
-                    ),
-                  ),
-                ),
-              ],
-            )
-          ),
-
-          Container(
-            margin: EdgeInsets.only(bottom: 10),
-            child: Column(
-              children: [
-                Container(
-                  alignment: Alignment.topLeft,
-                  padding: EdgeInsets.symmetric(vertical: 5),
-                  child: Text('State',
-                  style: GoogleFonts.robotoCondensed(
-                    textStyle: Theme.of(context).textTheme.labelLarge,
-                    letterSpacing: 1.75,
-                    fontWeight: FontWeight.w400,
-                  ),
-                  ),
-                ),
-                TextField(
-                  style: GoogleFonts.roboto(
-                    textStyle: Theme.of(context).textTheme.bodyMedium,
-                    fontWeight: FontWeight.w600,
-                    letterSpacing: 1.2,
-                  ),
-                  decoration: InputDecoration(
-                    floatingLabelBehavior: FloatingLabelBehavior.never,
-                    hintText: 'Enter State'.toLowerCase(),
-                    hintStyle: GoogleFonts.roboto(
-                      textStyle: Theme.of(context).textTheme.bodyMedium,
-                      letterSpacing: 1.8,
-                      fontWeight: FontWeight.w300),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Theme.of(context).colorScheme.outline),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Theme.of(context).colorScheme.primary, width: 1),
-                    ),
-                  ),
-                ),
-              ],
-            )
-          ),
-
-          Container(
-            margin: EdgeInsets.only(bottom: 10),
-            child: Column(
-              children: [
-                Container(
-                  alignment: Alignment.topLeft,
-                  padding: EdgeInsets.symmetric(vertical: 5),
-                  child: Text('City',
-                  style: GoogleFonts.robotoCondensed(
-                    textStyle: Theme.of(context).textTheme.labelLarge,
-                    letterSpacing: 1.75,
-                    fontWeight: FontWeight.w400,
-                  ),
-                  ),
-                ),
-                TextField(
-                  style: GoogleFonts.roboto(
-                    textStyle: Theme.of(context).textTheme.bodyMedium,
-                    fontWeight: FontWeight.w600,
-                    letterSpacing: 1.2,
-                  ),
-                  decoration: InputDecoration(
-                    floatingLabelBehavior: FloatingLabelBehavior.never,
-                    hintText: 'Select City'.toLowerCase(),
-                    hintStyle: GoogleFonts.roboto(
-                      textStyle: Theme.of(context).textTheme.bodyMedium,
-                      letterSpacing: 1.8,
-                      fontWeight: FontWeight.w300),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Theme.of(context).colorScheme.outline),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Theme.of(context).colorScheme.primary, width: 1),
-                    ),
-                  ),
-                ),
-              ],
-            )
-          ),
-
-          Divider(height: 30),
-
-          Container(
-            margin: EdgeInsets.only(bottom: 10),
-            child: Column(
-              children: [
-                Container(
-                  alignment: Alignment.topLeft,
-                  padding: EdgeInsets.symmetric(vertical: 5),
-                  child: Text('Comment',
-                  style: GoogleFonts.robotoCondensed(
-                    textStyle: Theme.of(context).textTheme.labelLarge,
-                    letterSpacing: 1.75,
-                    fontWeight: FontWeight.w400,
-                  ),
-                  ),
-                ),
-                TextField(
-                  style: GoogleFonts.roboto(
-                    textStyle: Theme.of(context).textTheme.bodyMedium,
-                    fontWeight: FontWeight.w600,
-                    letterSpacing: 1.2,
-                  ),
-                  maxLines: 4,
-                  decoration: InputDecoration(
-                    floatingLabelBehavior: FloatingLabelBehavior.never,
-                    hintText: 'Enter Comment'.toLowerCase(),
-                    hintStyle: GoogleFonts.roboto(
-                      textStyle: Theme.of(context).textTheme.bodyMedium,
-                      letterSpacing: 1.8,
-                      fontWeight: FontWeight.w300),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Theme.of(context).colorScheme.outline),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Theme.of(context).colorScheme.primary, width: 1),
-                    ),
-                  ),
-                ),
-              ],
-            )
-          ),
-
-          
-
-
-
-
-
-
-
 
         ],
       ),
