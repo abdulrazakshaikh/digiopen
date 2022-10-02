@@ -82,7 +82,7 @@ class _NodeAddState extends State<NodeAdd> {
                   ),
                   decoration: InputDecoration(
                     floatingLabelBehavior: FloatingLabelBehavior.never,
-                    hintText: 'Enter Zone Name'.toLowerCase(),
+                    hintText: 'Enter Node Name'.toLowerCase(),
                     hintStyle: GoogleFonts.roboto(
                       textStyle: Theme.of(context).textTheme.bodyMedium,
                       letterSpacing: 1.8,
