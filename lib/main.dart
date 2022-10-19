@@ -1,66 +1,70 @@
-import 'package:xceednet/accessrequest_log/accessrequest_list.dart';
-import 'package:xceednet/dashboard.dart';
-import 'package:xceednet/leads/leads_list.dart';
-import 'package:xceednet/login/select_location.dart';
-import 'package:xceednet/package/package_list.dart';
-import 'package:xceednet/profile/profile.dart';
-import 'package:xceednet/reports/reports.dart';
-import 'package:xceednet/splashscreen.dart';
-import 'package:xceednet/subscribers/datausage.dart';
-import 'package:xceednet/subscribers/subscribers_add.dart';
-import 'package:xceednet/subscribers/subscribers_details.dart';
-import 'package:xceednet/subscribers/subscribers_list.dart';
-import 'package:xceednet/theme/color_schemes.g.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:xceednet/tickets/tickets_details.dart';
-import 'package:xceednet/tickets/tickets_list.dart';
+import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:xceednet/ui/splashscreen.dart';
+import 'package:xceednet/ui/theme/color_schemes.g.dart';
+import 'package:xceednet/view_model/auth_view_model.dart';
 
-void main() {
-  runApp(MyApp());
+import 'model/storage/shared_prefs.dart';
+
+Future<void> main() async {
+  Provider.debugCheckInvalidValueType = null;
+
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setEnabledSystemUIOverlays(
+      [SystemUiOverlay.top, SystemUiOverlay.bottom]).then((_) {
+    SharedPreferences.getInstance().then((prefs) {
+      var darkModeOn = prefs.getBool('darkMode') ?? false;
+      runApp(MultiProvider(
+        providers: [
+          ChangeNotifierProvider(
+              create: (_) => ThemeNotifier(darkTheme: darkModeOn)),
+          ChangeNotifierProvider(create: (_) => AuthViewModel()),
+          ChangeNotifierProvider(create: (_) => SharedPrefs()),
+        ],
+        child: MyApp(darkModeOn: darkModeOn),
+      ));
+      // runApp(MyApp(darkModeOn: darkModeOn,));
+    });
+  });
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
+  var darkModeOn = true;
+
+  MyApp({this.darkModeOn = true});
+
+  /* static final ValueNotifier<ThemeMode> themeNotifier =
+      ValueNotifier(ThemeMode.light);*/
+
   @override
-  void initState() {
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light);
-  }
+  State<MyApp> createState() => _MyAppState();
+}
 
-  MyApp({Key? key}) : super(key: key);
-
-  static final ValueNotifier<ThemeMode> themeNotifier =
-      ValueNotifier(ThemeMode.light);
-
+class _MyAppState extends State<MyApp> {
   // This widget is the root of your application.
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    //  call();
+    SharedPrefs().init();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return ValueListenableBuilder<ThemeMode>(
-        valueListenable: themeNotifier,
-        builder: (_, ThemeMode currentMode, __) {
-          return MaterialApp(
-            debugShowCheckedModeBanner: false,
-            title: 'Xceednet',
-            theme: lightthemeData(context),
-            darkTheme: darkThemeData(context),
-            themeMode: 
-            currentMode,
-            // ThemeMode.dark,
-            // ThemeMode.light,
-            home: 
-             SplashScreen(),
-            //  Dashboard()
-            // const Profile(title: 'Profile')
-            // SubscribersList()
-            // SubscribersDetails()
-            // DataUsage()
-            // const SubscribersAdd(title: 'Subscribers Add')
-            // const Reports(title: 'Reports')
-            // TicketsList()
-            // TicketsDetails()
-            // const LeadsList(title: 'Leads List')
-            // const SelectLocation(title: 'Select Location')
-          //  PackageList()
-          );
-        });
+    ThemeNotifier themeNotifier = context.watch<ThemeNotifier>();
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      navigatorKey: SharedPrefs.navigatorKey,
+      title: 'Xceednet',
+      theme: lightthemeData(context),
+      darkTheme: darkThemeData(context),
+      themeMode: themeNotifier.darkTheme ? ThemeMode.dark : ThemeMode.light,
+      // ThemeMode.dark,
+      // ThemeMode.light,
+      home: SplashScreen(),
+    );
   }
 }
