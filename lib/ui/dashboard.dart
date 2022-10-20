@@ -1,9 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:xceednet/view_model/dashboard_view_model.dart';
 
+import '../data/dashboarddata.dart';
 import 'common_widgets/menuDrawer.dart';
-
+import 'package:provider/provider.dart';
 
 class Dashboard extends StatefulWidget {
 
@@ -16,6 +18,20 @@ class Dashboard extends StatefulWidget {
 
 class _DashboardState extends State<Dashboard> {
 
+  late DashboardViewModel dashboardViewModel;
+  late DashboardData dashboardData;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      await dashboardViewModel.getDashboardData();
+      if (dashboardViewModel.dashboardData != null) {
+        dashboardData=dashboardViewModel.dashboardData;
+       // locationList = dashboardViewModel.userlocationAccess;
+      }
+    });
+  }
 List accordionList = [
   {
     "id": "001",
@@ -283,13 +299,16 @@ List accordionList = [
 
   @override
   Widget build(BuildContext context) {
+    dashboardViewModel = context.watch<DashboardViewModel>();
     return Scaffold(
       drawer: MenuDrawer(),
       appBar: AppBar(
         title: Text("Dashboard"),
         actions: [],
       ),
-      body : ListView(
+      body : dashboardViewModel.isLoading ? Center(
+        child: CircularProgressIndicator(color: Theme.of(context).primaryColor,),
+      ): ListView(
         padding: EdgeInsets.all(15),
         children: [
         ListView.separated(

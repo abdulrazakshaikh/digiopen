@@ -5,6 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:xceednet/ui/splashscreen.dart';
 import 'package:xceednet/ui/theme/color_schemes.g.dart';
 import 'package:xceednet/view_model/auth_view_model.dart';
+import 'package:xceednet/view_model/dashboard_view_model.dart';
 
 import 'model/storage/shared_prefs.dart';
 
@@ -21,6 +22,7 @@ Future<void> main() async {
           ChangeNotifierProvider(
               create: (_) => ThemeNotifier(darkTheme: darkModeOn)),
           ChangeNotifierProvider(create: (_) => AuthViewModel()),
+          ChangeNotifierProvider(create: (_) => DashboardViewModel()),
           ChangeNotifierProvider(create: (_) => SharedPrefs()),
         ],
         child: MyApp(darkModeOn: darkModeOn),

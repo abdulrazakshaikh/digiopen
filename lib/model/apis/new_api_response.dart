@@ -27,7 +27,7 @@ class NewAPIResponse {
       }else {
         return NewAPIResponse(
           status: "2",
-          data: json,
+          data: json['error'],
           message: "",
         );
       }

@@ -1,3 +1,4 @@
+import 'package:xceednet/model/storage/shared_prefs.dart';
 import 'package:xceednet/ui/login/login.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -19,7 +20,8 @@ confirmationAlertDialog(BuildContext context) {
   );
   Widget yesButton = ElevatedButton(
     onPressed: (){
-      Navigator.of(context).push(
+      SharedPrefs().logout();
+      /*Navigator.of(context).push(
         PageRouteBuilder(
           pageBuilder: (context, animation, secondaryAnimation) =>
             FadeTransition(
@@ -27,7 +29,7 @@ confirmationAlertDialog(BuildContext context) {
             child: Login()
           ),
         ),
-      );
+      );*/
     }, 
     style: ElevatedButton.styleFrom(
       padding: EdgeInsets.symmetric(horizontal: 15, vertical: 15),

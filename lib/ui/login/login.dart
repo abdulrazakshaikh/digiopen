@@ -1,14 +1,17 @@
-import 'package:xceednet/ui/login/forgot_password.dart';
-import 'package:xceednet/ui/login/login_success.dart';
-import 'package:xceednet/ui/login/resend_confirmation.dart';
-import 'package:xceednet/ui/login/select_location.dart';
-import 'package:xceednet/ui/login/signup.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
+import 'package:xceednet/ui/login/forgot_password.dart';
+import 'package:xceednet/ui/login/resend_confirmation.dart';
+import 'package:xceednet/ui/login/select_location.dart';
+
+import '../../utils/AppMsg.dart';
+import '../../utils/AppUtils.dart';
+import '../../view_model/auth_view_model.dart';
 
 class Login extends StatefulWidget {
   @override
@@ -17,9 +20,12 @@ class Login extends StatefulWidget {
 
 class _LoginState extends State<Login> with TickerProviderStateMixin {
   bool _passwordVisible = false;
+  TextEditingController usernameController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
+    AuthViewModel authUserDataNotifier = context.watch<AuthViewModel>();
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -39,7 +45,6 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
                     child: Image.asset('assets/images/signin_bg.png',
                         fit: BoxFit.contain),
                   ),
-
                   Container(
                     margin: EdgeInsets.only(top: 10),
                     child: Column(
@@ -47,7 +52,8 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
                         Text(
                           'Login',
                           style: GoogleFonts.roboto(
-                            textStyle: Theme.of(context).textTheme.headlineLarge,
+                            textStyle:
+                                Theme.of(context).textTheme.headlineLarge,
                             fontWeight: FontWeight.w700,
                           ),
                         ),
@@ -61,7 +67,6 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
                       ],
                     ),
                   ),
-
                   Container(
                     padding: EdgeInsets.symmetric(vertical: 25),
                     child: Column(
@@ -69,6 +74,7 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
                         Container(
                           margin: EdgeInsets.only(bottom: 15),
                           child: TextField(
+                            controller: usernameController,
                             style: GoogleFonts.roboto(
                               textStyle: Theme.of(context).textTheme.bodyMedium,
                               fontWeight: FontWeight.w600,
@@ -76,19 +82,27 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
                             ),
                             autofocus: true,
                             decoration: InputDecoration(
-                              contentPadding: EdgeInsets.symmetric(vertical: 15),
-                              floatingLabelBehavior: FloatingLabelBehavior.never,
+                              contentPadding:
+                                  EdgeInsets.symmetric(vertical: 15),
+                              floatingLabelBehavior:
+                                  FloatingLabelBehavior.never,
                               hintText: 'Enter Email'.toLowerCase(),
                               hintStyle: GoogleFonts.roboto(
-                                textStyle: Theme.of(context).textTheme.bodyMedium,
-                                letterSpacing: 1.8,
-                                fontWeight: FontWeight.w300),
+                                  textStyle:
+                                      Theme.of(context).textTheme.bodyMedium,
+                                  letterSpacing: 1.8,
+                                  fontWeight: FontWeight.w300),
                               prefixIcon: Icon(Icons.alternate_email),
                               enabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(color: Theme.of(context).colorScheme.outline),
+                                borderSide: BorderSide(
+                                    color:
+                                        Theme.of(context).colorScheme.outline),
                               ),
                               focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(color: Theme.of(context).colorScheme.primary, width: 1),
+                                borderSide: BorderSide(
+                                    color:
+                                        Theme.of(context).colorScheme.primary,
+                                    width: 1),
                               ),
                             ),
                           ),
@@ -96,6 +110,7 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
                         Container(
                           margin: EdgeInsets.only(bottom: 5),
                           child: TextField(
+                            controller: passwordController,
                             style: GoogleFonts.roboto(
                               textStyle: Theme.of(context).textTheme.bodyMedium,
                               fontWeight: FontWeight.w600,
@@ -104,17 +119,22 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
                             autofocus: true,
                             obscureText: !_passwordVisible,
                             decoration: InputDecoration(
-                              contentPadding: EdgeInsets.symmetric(vertical: 15),
-                              floatingLabelBehavior: FloatingLabelBehavior.never,
+                              contentPadding:
+                                  EdgeInsets.symmetric(vertical: 15),
+                              floatingLabelBehavior:
+                                  FloatingLabelBehavior.never,
                               hintText: 'Password'.toLowerCase(),
                               hintStyle: GoogleFonts.roboto(
-                                textStyle: Theme.of(context).textTheme.bodyMedium,
-                                letterSpacing: 1.8,
-                                fontWeight: FontWeight.w300),
+                                  textStyle:
+                                      Theme.of(context).textTheme.bodyMedium,
+                                  letterSpacing: 1.8,
+                                  fontWeight: FontWeight.w300),
                               prefixIcon: Icon(Icons.lock_outlined),
                               suffixIcon: IconButton(
                                 icon: Icon(
-                                  _passwordVisible ? Icons.visibility_outlined : Icons.visibility_off_outlined,
+                                  _passwordVisible
+                                      ? Icons.visibility_outlined
+                                      : Icons.visibility_off_outlined,
                                 ),
                                 onPressed: () {
                                   setState(() {
@@ -123,10 +143,15 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
                                 },
                               ),
                               enabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(color: Theme.of(context).colorScheme.outline),
+                                borderSide: BorderSide(
+                                    color:
+                                        Theme.of(context).colorScheme.outline),
                               ),
                               focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(color: Theme.of(context).colorScheme.primary, width: 1),
+                                borderSide: BorderSide(
+                                    color:
+                                        Theme.of(context).colorScheme.primary,
+                                    width: 1),
                               ),
                             ),
                           ),
@@ -136,82 +161,118 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              
                               TextButton(
                                 style: TextButton.styleFrom(
                                   padding: EdgeInsets.fromLTRB(15, 15, 15, 15),
-                                  foregroundColor: Theme.of(context).colorScheme.primary,
+                                  foregroundColor:
+                                      Theme.of(context).colorScheme.primary,
                                 ),
                                 onPressed: () {
                                   showDialog(
-                                    context: context,
-                                    builder: (BuildContext context) {
-                                    return Dialog(
-                                      elevation: 2,
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(15)
-                                      ),
-                                      alignment: Alignment.center,
-                                      child: ForgotPassword());
-                                    });
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return Dialog(
+                                            elevation: 2,
+                                            shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(15)),
+                                            alignment: Alignment.center,
+                                            child: ForgotPassword());
+                                      });
                                 },
                                 child: Text(
                                   'Forgot Password ?',
                                   style: GoogleFonts.roboto(
-                                  textStyle: Theme.of(context).textTheme.titleSmall,
-                                    color: Theme.of(context).colorScheme.primary,
-                                    letterSpacing: 1,
-                                    fontWeight: FontWeight.bold
-                                  ),
+                                      textStyle: Theme.of(context)
+                                          .textTheme
+                                          .titleSmall,
+                                      color:
+                                          Theme.of(context).colorScheme.primary,
+                                      letterSpacing: 1,
+                                      fontWeight: FontWeight.bold),
                                 ),
                               ),
-
                               TextButton(
                                 style: TextButton.styleFrom(
                                   padding: EdgeInsets.fromLTRB(15, 15, 15, 15),
-                                  foregroundColor: Theme.of(context).colorScheme.primary,
+                                  foregroundColor:
+                                      Theme.of(context).colorScheme.primary,
                                 ),
                                 onPressed: () {
                                   showDialog(
-                                    context: context,
-                                    builder: (BuildContext context) {
-                                    return Dialog(
-                                      elevation: 2,
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(15)
-                                      ),
-                                      alignment: Alignment.center,
-                                      child: ResendConfirmation());
-                                    });
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return Dialog(
+                                            elevation: 2,
+                                            shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(15)),
+                                            alignment: Alignment.center,
+                                            child: ResendConfirmation());
+                                      });
                                 },
                                 child: Text(
                                   'Resend Confirmation',
                                   style: GoogleFonts.roboto(
-                                  textStyle: Theme.of(context).textTheme.titleSmall,
-                                    color: Theme.of(context).colorScheme.primary,
-                                    letterSpacing: 1,
-                                    fontWeight: FontWeight.bold
-                                  ),
+                                      textStyle: Theme.of(context)
+                                          .textTheme
+                                          .titleSmall,
+                                      color:
+                                          Theme.of(context).colorScheme.primary,
+                                      letterSpacing: 1,
+                                      fontWeight: FontWeight.bold),
                                 ),
                               ),
                             ],
                           ),
                         ),
-                        Container(
+                       authUserDataNotifier.isLoading ? CircularProgressIndicator(color: Theme.of(context).primaryColor,): Container(
                           margin: EdgeInsets.symmetric(vertical: 15),
                           child: Row(
                             children: [
                               Expanded(
                                 child: ElevatedButton(
-                                  onPressed: () {
-                                    Navigator.pushReplacement<void, void>(
-                                      context, MaterialPageRoute(
-                                        builder: (BuildContext context) => SelectLocation(title : 'Select Location')
-                                      )
-                                    );
+                                  onPressed: () async {
+                                    /* Navigator.pushReplacement<void, void>(
+                                        context, MaterialPageRoute(
+                                          builder: (BuildContext context) => BottomNavigation()
+                                        )
+                                      );*/
+                                    String username =
+                                        usernameController.text.toString();
+                                    String password =
+                                        passwordController.text.toString();
+                                    bool isValid = true;
+                                    if (username.isEmpty) {
+                                      isValid = false;
+                                      AppUtils.appToast(AppMsg.username_error);
+                                      return;
+                                    }
+                                    if (password.isEmpty) {
+                                      AppUtils.appToast(AppMsg.password_error);
+                                      isValid = false;
+                                      return;
+                                    }
+                                    if (isValid) {
+                                      bool status = await authUserDataNotifier
+                                          .userLogin(username, password);
+                                      if (status) {
+                                        AppUtils.appToast(AppMsg.login_success);
+                                        Navigator.pushReplacement<void, void>(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder:
+                                                    (BuildContext context) =>
+                                                        SelectLocation()));
+                                      } else {
+                                        AppUtils.appToast(
+                                            authUserDataNotifier.error!);
+                                      }
+                                    }
                                   },
                                   style: ElevatedButton.styleFrom(
-                                    padding: EdgeInsets.symmetric(horizontal: 15, vertical: 20),
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: 15, vertical: 20),
                                     alignment: Alignment.center,
                                   ),
                                   child: Text('Login'),
@@ -262,8 +323,6 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
                 ],
               ),
             ),
-          
-          
           ],
         ),
       ),

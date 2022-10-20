@@ -6,6 +6,8 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../home_screen.dart';
+
 class LoginSuccess extends StatefulWidget {
   @override
   _LoginSuccessState createState() => _LoginSuccessState();

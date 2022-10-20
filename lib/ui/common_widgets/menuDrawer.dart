@@ -28,6 +28,8 @@ import 'package:xceednet/ui/vouchers/vouchers_list.dart';
 import 'package:xceednet/ui/zones/zones_list.dart';
 
 class MenuDrawer extends StatefulWidget {
+  var onChange;
+  MenuDrawer({this.onChange});
   @override
   State<MenuDrawer> createState() => _MenuDrawerState();
 }
@@ -39,7 +41,8 @@ class _MenuDrawerState extends State<MenuDrawer> {
   // Navigation Rail on Hover Open Close
   // https://github.com/Luckey-Elijah/auto_expanding_navigation_rail
 
-  List adminmenuList = [
+  List adminmenuList =
+  [
     {
       "id": "001",
       "title": "Users",
@@ -193,12 +196,6 @@ class _MenuDrawerState extends State<MenuDrawer> {
     },
   ];
 
-  /*void _themeChange() {
-    *//*MyApp.themeNotifier.value = MyApp.themeNotifier.value == ThemeMode.light
-    ? ThemeMode.dark
-    : ThemeMode.light;*//*
-
-  }*/
   void onThemeChanged(bool value, ThemeNotifier themeNotifier) async {
     print("IsDark$value");
     themeNotifier.setIsDarkTheme(value);
@@ -250,11 +247,15 @@ class _MenuDrawerState extends State<MenuDrawer> {
                               SizedBox(height: 5),
                               OutlinedButton(
                                 onPressed: (){
-                                  Navigator.pushReplacement(context,
-                                    MaterialPageRoute(
-                                      builder: (BuildContext context) => Profile(title: 'Profile')
+                                  Navigator.pop(context);
+                                  Navigator.push(context,
+                                      PageRouteBuilder(
+                                          pageBuilder: (context, animation, secondaryAnimation) =>
+                                              FadeTransition(
+                                                  opacity: animation,
+                                                  child: Profile(title: 'Profile')
                                     ),
-                                  );
+                                  ));
                                 },
                                 style: OutlinedButton.styleFrom(
                                   shape: RoundedRectangleBorder(
@@ -371,6 +372,8 @@ class _MenuDrawerState extends State<MenuDrawer> {
                       ),
                     ),
                     onTap: () {
+                      //if(widget.onChange!=null) widget.onChange(item);
+                     // Navigator.pop(context);
                       callPage(context, item);
                     },
                   )
@@ -404,6 +407,8 @@ class _MenuDrawerState extends State<MenuDrawer> {
                         ),
                         onTap: (){
                           print(subitem['title']);
+                          //if(widget.onChange!=null)  widget.onChange(subitem);
+                          //Navigator.pop(context);
                           callPage(context, subitem);
                         },
                       ),
@@ -466,7 +471,7 @@ class _MenuDrawerState extends State<MenuDrawer> {
 
   void callPage(BuildContext context, Map<dynamic, dynamic> item) {
     print(item['id']);
-     Navigator.of(context).push(
+     Navigator.of(context).pushAndRemoveUntil(
       PageRouteBuilder(
         pageBuilder: (context, animation, secondaryAnimation) =>
           FadeTransition(
@@ -526,6 +531,7 @@ class _MenuDrawerState extends State<MenuDrawer> {
 
         ),
       ),
+           (Route<dynamic> route) => false,
     );
   }
 

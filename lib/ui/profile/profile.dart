@@ -22,7 +22,7 @@ class _ProfileState extends State<Profile> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.surface,
-      drawer: MenuDrawer(),
+    //  drawer: MenuDrawer(),
       appBar: AppBar(
         elevation: 0,        
         // scrolledUnderElevation: 0,        
