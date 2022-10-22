@@ -200,6 +200,7 @@ class _MenuDrawerState extends State<MenuDrawer> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Drawer(
+        backgroundColor: Theme.of(context).colorScheme.background,
         child: Column(
           children: [
             Container(
@@ -320,11 +321,12 @@ class _MenuDrawerState extends State<MenuDrawer> {
               ),
             ),
 
-            SizedBox(height: 10),
+
 
             Container(
               width: double.infinity,
-              padding: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+              color: Theme.of(context).colorScheme.background,
+              padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
               child: Text('Navigation'.toUpperCase(),
               style: GoogleFonts.robotoCondensed(
                 textStyle: Theme.of(context).textTheme.labelMedium,
@@ -342,7 +344,7 @@ class _MenuDrawerState extends State<MenuDrawer> {
                 shrinkWrap: true,
                 itemCount: menuList == null ? 0 : menuList.length,
                 separatorBuilder: (BuildContext context, int index) {
-                  return Divider(height: 1);
+                  return Divider(height: 1, color: Theme.of(context).dividerColor.withOpacity(0.1),);
                 },
                 itemBuilder: (BuildContext context, int index) {
                   Map item = menuList[index];
@@ -351,6 +353,7 @@ class _MenuDrawerState extends State<MenuDrawer> {
                   ListTile(
                     leading: Icon(item["icon"], size: 24, color: Theme.of(context).iconTheme.color!.withOpacity(0.75)),
                     horizontalTitleGap: 0,
+                    tileColor: Theme.of(context).colorScheme.background,
                     trailing: Icon(Icons.chevron_right_outlined),
                     title: Text(
                       '${item["title"]}',
@@ -367,6 +370,8 @@ class _MenuDrawerState extends State<MenuDrawer> {
                   ExpansionTile(
                     // childrenPadding: EdgeInsets.only(left: 15),
                     leading: Icon(item["icon"], size: 24, color: Theme.of(context).iconTheme.color!.withOpacity(0.75)),
+                    backgroundColor: Theme.of(context).colorScheme.background,
+                    collapsedBackgroundColor: Theme.of(context).colorScheme.background,
                     title: Align(
                     alignment: Alignment(-1.25, 0),
                     child: Text(

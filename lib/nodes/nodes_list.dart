@@ -142,7 +142,7 @@ class _NodesListState extends State<NodesList> {
                           pageBuilder: (context, animation, secondaryAnimation) =>
                               FadeTransition(
                                   opacity: animation,
-                                  child: LeadsDetails(title: 'Leads Details')
+                                  child: LeadsDetails()
                               ),
                         ),
                       );

@@ -217,7 +217,7 @@ class _LeadsAddState extends State<LeadsAdd> {
             )
           ),
 
-          Divider(height: 30),
+          Divider(height: 30, color: Theme.of(context).dividerColor.withOpacity(0.1),),
 
           Container(
             child: Column(
@@ -421,7 +421,7 @@ class _LeadsAddState extends State<LeadsAdd> {
             )
           ),
 
-          Divider(height: 30),
+          Divider(height: 30, color: Theme.of(context).dividerColor.withOpacity(0.1),),
 
           Container(
             margin: EdgeInsets.only(bottom: 10),

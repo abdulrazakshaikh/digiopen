@@ -47,8 +47,8 @@ class MyApp extends StatelessWidget {
             // ThemeMode.dark,
             // ThemeMode.light,
             home: 
-             SplashScreen(),
-            //  Dashboard()
+            //  SplashScreen(),
+             Dashboard()
             // const Profile(title: 'Profile')
             // SubscribersList()
             // SubscribersDetails()

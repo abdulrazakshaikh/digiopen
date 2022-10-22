@@ -110,7 +110,7 @@ List subscribersList = [
                       pageBuilder: (context, animation, secondaryAnimation) =>
                         FadeTransition(
                         opacity: animation,
-                        child: LeadsDetails(title: 'Leads Details')
+                        child: LeadsDetails()
                       ),
                     ),
                   );
