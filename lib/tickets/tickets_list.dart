@@ -470,7 +470,7 @@ List ticketsList = [
                                     letterSpacing: 1.5
                                   ),
                                   ),
-                                  SizedBox(height: 3),
+                                  SizedBox(width: 3),
                                   Text('${item["status"]}',
                                   style: GoogleFonts.roboto(
                                     textStyle: Theme.of(context).textTheme.bodyMedium,

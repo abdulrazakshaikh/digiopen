@@ -1,5 +1,7 @@
 import 'package:xceednet/accessrequest_log/accessrequest_list.dart';
 import 'package:xceednet/dashboard.dart';
+import 'package:xceednet/invoice/invoice_add.dart';
+import 'package:xceednet/invoice/invoice_details.dart';
 import 'package:xceednet/leads/leads_list.dart';
 import 'package:xceednet/login/select_location.dart';
 import 'package:xceednet/package/package_list.dart';
@@ -59,7 +61,11 @@ class MyApp extends StatelessWidget {
             // TicketsDetails()
             // const LeadsList(title: 'Leads List')
             // const SelectLocation(title: 'Select Location')
-          //  PackageList()
+            //  PackageList()
+            // InvoiceAdd()
+
+            // InvoiceDetails()
+
           );
         });
   }

@@ -103,17 +103,7 @@ List subscribersList = [
                 itemBuilder: (BuildContext context, int index) {
                   Map item = subscribersList[index];
                   return InkWell(
-                    onTap: (){
-                      Navigator.of(context).push(
-                        PageRouteBuilder(
-                          pageBuilder: (context, animation, secondaryAnimation) =>
-                              FadeTransition(
-                                  opacity: animation,
-                                  child: LeadsDetails()
-                              ),
-                        ),
-                      );
-                    },
+                    onTap: (){},
                     child: Card(
                       margin: EdgeInsets.zero,
                       shape: RoundedRectangleBorder(

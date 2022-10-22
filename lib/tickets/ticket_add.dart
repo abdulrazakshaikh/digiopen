@@ -61,7 +61,7 @@ class _TicketAddState extends State<TicketAdd> {
       backgroundColor: Theme.of(context).colorScheme.background,
       appBar: AppBar(
         automaticallyImplyLeading: true,
-        title: Text(widget.title.toUpperCase()),       
+        title: Text(widget.title),       
         actions: [],
       ),
       bottomNavigationBar: Container(

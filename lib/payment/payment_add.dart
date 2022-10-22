@@ -3,6 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class PaymentAdd extends StatefulWidget {
+  const PaymentAdd({Key? key, required this.title}) : super(key: key);
+
+  final String title;
+
   @override
   State<PaymentAdd> createState() => _PaymentAddState();
 }

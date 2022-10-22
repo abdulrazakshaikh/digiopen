@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:xceednet/common_widgets/headToolbar.dart';
 import 'package:xceednet/common_widgets/menuDrawer.dart';
 import 'package:xceednet/invoice/invoice_add.dart';
+import 'package:xceednet/invoice/invoice_details.dart';
 import 'package:xceednet/leads/leads_add.dart';
 import 'package:xceednet/leads/leads_details.dart';
 import 'package:xceednet/subscribers/subscribers_add.dart';
@@ -20,39 +21,84 @@ class InvoicesList extends StatefulWidget {
 
 class _InvoicesListState extends State<InvoicesList> {
 
-List subscribersList = [
+List invoicesList = [
   {
     "id": "101",
-    "status" : "John Doe",
-
+    "username" : "johndoe1545",
     "name" : "John Doe",
-    "mobile" : "9876543210",
-
-    "createdon" : "01 Sep, 2022",
-    "assignedto" : "Johnson Doe",
-    
-    "ticket" : "-",
-
+    "invoicedate" : "01 Sep, 2022",
+    "assignedto" : "Johnson Singh",
+    "dueby" : "30 Sep, 2022",
+    "amountbeforetax" : "500",
+    "totalbalance" : "500",
+    "status" : "open",
   },
   {
     "id": "102",
+    "username" : "johndoe1545",
     "name" : "John Doe",
-    "mobile" : "9876543210",
-    "createdon" : "01 Sep, 2022",
-    "assignedto" : "Johnson Doe",
-    "ticket" : "-",
-    "status" : "John Doe",
+    "invoicedate" : "01 Sep, 2022",
+    "assignedto" : "Johnson Singh",
+    "dueby" : "30 Sep, 2022",
+    "amountbeforetax" : "500",
+    "totalbalance" : "500",
+    "status" : "assigned",
   },
   {
     "id": "103",
+    "username" : "johndoe1545",
     "name" : "John Doe",
-    "mobile" : "9876543210",
-    "createdon" : "01 Sep, 2022",
-    "assignedto" : "Johnson Doe",
-    "ticket" : "-",
-    "status" : "John Doe",
+    "invoicedate" : "01 Sep, 2022",
+    "assignedto" : "Johnson Singh",
+    "dueby" : "30 Sep, 2022",
+    "amountbeforetax" : "500",
+    "totalbalance" : "500",
+    "status" : "closed",
   },
-
+  {
+    "id": "104",
+    "username" : "johndoe1545",
+    "name" : "John Doe",
+    "invoicedate" : "01 Sep, 2022",
+    "assignedto" : "Johnson Singh",
+    "dueby" : "30 Sep, 2022",
+    "amountbeforetax" : "500",
+    "totalbalance" : "500",
+    "status" : "reopen",
+  },
+  {
+    "id": "105",
+    "username" : "johndoe1545",
+    "name" : "John Doe",
+    "invoicedate" : "01 Sep, 2022",
+    "assignedto" : "Johnson Singh",
+    "dueby" : "30 Sep, 2022",
+    "amountbeforetax" : "500",
+    "totalbalance" : "500",
+    "status" : "open",
+  },
+  {
+    "id": "106",
+    "username" : "johndoe1545",
+    "name" : "John Doe",
+    "invoicedate" : "01 Sep, 2022",
+    "assignedto" : "Johnson Singh",
+    "dueby" : "30 Sep, 2022",
+    "amountbeforetax" : "500",
+    "totalbalance" : "500",
+    "status" : "cancelled",
+  },
+  {
+    "id": "107",
+    "username" : "johndoe1545",
+    "name" : "John Doe",
+    "invoicedate" : "01 Sep, 2022",
+    "assignedto" : "Johnson Singh",
+    "dueby" : "30 Sep, 2022",
+    "amountbeforetax" : "500",
+    "totalbalance" : "500",
+    "status" : "closed",
+  },
 ];
 
   @override
@@ -61,7 +107,6 @@ List subscribersList = [
       backgroundColor: Theme.of(context).colorScheme.surface,
       drawer: MenuDrawer(),
       appBar: AppBar(
-        
         title: Text("Invoices"),
         actions: [
           IconButton(
@@ -97,12 +142,12 @@ List subscribersList = [
                 primary: false,
                 physics: NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
-                itemCount: subscribersList == null ? 0 : subscribersList.length,
+                itemCount: invoicesList == null ? 0 : invoicesList.length,
                 separatorBuilder: (BuildContext context, int index) {
                   return SizedBox(height: 5);
                 },
                 itemBuilder: (BuildContext context, int index) {
-                  Map item = subscribersList[index];
+                  Map item = invoicesList[index];
                   return InkWell(
                     onTap: (){
                       Navigator.of(context).push(
@@ -110,7 +155,7 @@ List subscribersList = [
                           pageBuilder: (context, animation, secondaryAnimation) =>
                               FadeTransition(
                                   opacity: animation,
-                                  child: LeadsDetails()
+                                  child: InvoiceDetails()
                               ),
                         ),
                       );
@@ -168,7 +213,7 @@ List subscribersList = [
                                         ),
                                       ),
                                       SizedBox(height: 3),
-                                      Text('${item["status"]}',
+                                      Text('${item["username"]}',
                                         style: GoogleFonts.roboto(
                                             textStyle: Theme.of(context).textTheme.bodyMedium,
                                             fontSize: 13,
@@ -223,7 +268,7 @@ List subscribersList = [
                                         ),
                                       ),
                                       SizedBox(height: 3),
-                                      Text('22/01/2022',
+                                      Text('${item["invoicedate"]}',
                                         style: GoogleFonts.roboto(
                                             textStyle: Theme.of(context).textTheme.bodyMedium,
                                             fontSize: 13,
@@ -255,7 +300,7 @@ List subscribersList = [
                                         ),
                                       ),
                                       SizedBox(height: 3),
-                                      Text('${item["createdon"]}',
+                                      Text('${item["assignedto"]}',
                                         style: GoogleFonts.roboto(
                                             textStyle: Theme.of(context).textTheme.bodyMedium,
                                             fontSize: 13,
@@ -278,7 +323,7 @@ List subscribersList = [
                                         ),
                                       ),
                                       SizedBox(height: 3),
-                                      Text('info@digitalopeners.com',
+                                      Text('${item["dueby"]}',
                                         style: GoogleFonts.roboto(
                                             textStyle: Theme.of(context).textTheme.bodyMedium,
                                             fontSize: 13,
@@ -310,7 +355,7 @@ List subscribersList = [
                                         ),
                                       ),
                                       SizedBox(height: 3),
-                                      Text('₹500',
+                                      Text('₹${item["amountbeforetax"]}',
                                         style: GoogleFonts.roboto(
                                             textStyle: Theme.of(context).textTheme.bodyMedium,
                                             fontSize: 13,
@@ -333,7 +378,7 @@ List subscribersList = [
                                         ),
                                       ),
                                       SizedBox(height: 3),
-                                      Text('₹500',
+                                      Text('₹${item["totalbalance"]}',
                                         style: GoogleFonts.roboto(
                                             textStyle: Theme.of(context).textTheme.bodyMedium,
                                             fontSize: 13,
@@ -348,13 +393,17 @@ List subscribersList = [
                             ),
                           ),
                           Container(
-                            padding: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+                            padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                            decoration: BoxDecoration(
+                              border: Border(
+                                top: BorderSide(width: 1, color: Theme.of(context).dividerColor)
+                              )
+                            ),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Expanded(
-                                  flex: 5,
-                                  child: Column(
+                                  child: Row(
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
                                       Text('Status : '.toLowerCase(),
@@ -363,21 +412,47 @@ List subscribersList = [
                                             letterSpacing: 1.5
                                         ),
                                       ),
-                                      SizedBox(height: 3),
-                                      Container(
-                                        width: 70 ,
-                                        padding: EdgeInsets.all(5),
-                                        alignment: Alignment.center,
-                                        decoration: BoxDecoration(
-                                          color: Colors.green,
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(5.0)),
-                                        ),
-
-                                        child: Text("Open",style: TextStyle(
-                                            color: Colors.white
-                                        ),),
-                                      )
+                                      SizedBox(width: 3),
+                                      Text('${item["status"]}',
+                                      style: GoogleFonts.roboto(
+                                        textStyle: Theme.of(context).textTheme.bodyMedium,
+                                        fontSize: 13,
+                                        fontWeight: FontWeight.w500,
+                                        letterSpacing: 1.2,
+                                        color: 
+                                        item["status"] == "open" ?
+                                        Colors.blue
+                                        :
+                                        item["status"] == "assigned" ?
+                                        Colors.deepPurple                                    
+                                        :
+                                        item["status"] == "reassigned" ?
+                                        Colors.deepPurple
+                                        :
+                                        item["status"] == "rejected" ?
+                                        Colors.red
+                                        :
+                                        item["status"] == "pending" ?
+                                        Colors.orange
+                                        :
+                                        item["status"] == "inprocess" ?
+                                        Colors.blue
+                                        :
+                                        item["status"] == "cancelled" ?
+                                        Colors.red
+                                        :
+                                        item["status"] == "resolved" ?
+                                        Colors.green
+                                        :
+                                        item["status"] == "reopened" ?
+                                        Colors.blue
+                                        :
+                                        item["status"] == "closed" ?
+                                        Colors.green
+                                        :
+                                        null,
+                                      ),
+                                      ),
                                     ],
                                   ),
                                 ),

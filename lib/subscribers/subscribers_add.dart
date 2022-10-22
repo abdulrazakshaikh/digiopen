@@ -51,7 +51,7 @@ class _SubscribersAddState extends State<SubscribersAdd> {
       backgroundColor: Theme.of(context).colorScheme.background,
       appBar: AppBar(
         automaticallyImplyLeading: true,
-        title: Text(widget.title.toUpperCase()),       
+        title: Text(widget.title),       
         actions: [],
       ),
       bottomNavigationBar: Container(
