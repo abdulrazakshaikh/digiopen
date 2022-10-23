@@ -6,6 +6,7 @@ import 'package:xceednet/common_widgets/menuDrawer.dart';
 import 'package:xceednet/leads/leads_add.dart';
 import 'package:xceednet/leads/leads_details.dart';
 import 'package:xceednet/payment/payment_add.dart';
+import 'package:xceednet/payment/payment_details.dart';
 import 'package:xceednet/subscribers/subscribers_add.dart';
 import 'package:xceednet/subscribers/subscribers_details.dart';
 
@@ -24,33 +25,32 @@ List subscribersList = [
   {
     "id": "101",
     "status" : "Assigned",
-
+    "username" : "johndoe121",
     "name" : "John Doe",
-    "mobile" : "9876543210",
-
-    "createdon" : "01 Sep, 2022",
-    "assignedto" : "Johnson Doe",
-    
-    "ticket" : "-",
-
+    "paymentdate" : "01 Sep, 2022",
+    "receiptnum" : "REC15454",
+    "amount" : "₹500",
+    "receivedby" : "Johnson Doe",
   },
   {
     "id": "102",
+    "status" : "Closed",
+    "username" : "johndoe121",
     "name" : "John Doe",
-    "mobile" : "9876543210",
-    "createdon" : "01 Sep, 2022",
-    "assignedto" : "Johnson Doe",
-    "ticket" : "-",
-    "status" : "Assigned",
+    "paymentdate" : "01 Sep, 2022",
+    "receiptnum" : "REC15454",
+    "amount" : "₹500",
+    "receivedby" : "Johnson Doe",
   },
   {
     "id": "103",
+    "status" : "Open",
+    "username" : "johndoe121",
     "name" : "John Doe",
-    "mobile" : "9876543210",
-    "createdon" : "01 Sep, 2022",
-    "assignedto" : "Johnson Doe",
-    "ticket" : "-",
-    "status" : "Assigned",
+    "paymentdate" : "01 Sep, 2022",
+    "receiptnum" : "REC15454",
+    "amount" : "₹500",
+    "receivedby" : "Johnson Doe",
   },
 
 ];
@@ -110,7 +110,7 @@ List subscribersList = [
                       pageBuilder: (context, animation, secondaryAnimation) =>
                         FadeTransition(
                         opacity: animation,
-                        child: LeadsDetails()
+                        child: PaymentDetails()
                       ),
                     ),
                   );
@@ -168,7 +168,7 @@ List subscribersList = [
                                   ),
                                   ),
                                   SizedBox(height: 3),
-                                  Text('John Doe',
+                                  Text('${item["username"]}',
                                   style: GoogleFonts.roboto(
                                     textStyle: Theme.of(context).textTheme.bodyMedium,
                                     fontSize: 13,
@@ -223,7 +223,7 @@ List subscribersList = [
                                   ),
                                   ),
                                   SizedBox(height: 3),
-                                  Text('22/02/2022',
+                                  Text('${item["paymentdate"]}',
                                   style: GoogleFonts.roboto(
                                     textStyle: Theme.of(context).textTheme.bodyMedium,
                                     fontSize: 13,
@@ -255,7 +255,7 @@ List subscribersList = [
                                   ),
                                   ),
                                   SizedBox(height: 3),
-                                  Text('ABC',
+                                  Text('${item["receiptnum"]}',
                                   style: GoogleFonts.roboto(
                                     textStyle: Theme.of(context).textTheme.bodyMedium,
                                     fontSize: 13,
@@ -278,7 +278,7 @@ List subscribersList = [
                                   ),
                                   ),
                                   SizedBox(height: 3),
-                                  Text('₹500',
+                                  Text('${item["amount"]}',
                                   style: GoogleFonts.roboto(
                                     textStyle: Theme.of(context).textTheme.bodyMedium,
                                     fontSize: 13,
@@ -310,7 +310,7 @@ List subscribersList = [
                                   ),
                                   ),
                                   SizedBox(height: 3),
-                                  Text('Dipesh Jain',
+                                  Text('${item["receivedby"]}',
                                   style: GoogleFonts.roboto(
                                     textStyle: Theme.of(context).textTheme.bodyMedium,
                                     fontSize: 13,
@@ -334,19 +334,40 @@ List subscribersList = [
                                   ),
                                   SizedBox(height: 3),
                                   Container(
-                                    width: 70 ,
-                                    padding: EdgeInsets.all(3),
-                                    alignment: Alignment.center,
-                                    decoration: BoxDecoration(
-                                      color: Colors.green,
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(5.0)),
+                                  decoration: BoxDecoration(
+                                    color: 
+                                    item["status"] == "Open" ? Colors.blue :
+                                    item["status"] == "Assigned" ? Colors.deepPurple :
+                                    item["status"] == "Reassigned" ? Colors.deepPurple : 
+                                    item["status"] == "Rejected" ? Colors.red :
+                                    item["status"] == "Pending" ? Colors.orange :
+                                    item["status"] == "In Process" ? Colors.blue : 
+                                    item["status"] == "Cancelled" ? Colors.red :
+                                    item["status"] == "Resolved" ? Colors.green :
+                                    item["status"] == "Reopen" ? Colors.blue : 
+                                    item["status"] == "Closed" ? Colors.green : 
+                                    null,
+                                    borderRadius: BorderRadius.circular(4),
+                                  ),
+                                  padding: EdgeInsets.symmetric(horizontal: 10, vertical: 3),
+                                  child: Text(
+                                    item["status"] == "Open" ? 'Open'.toUpperCase() :
+                                    item["status"] == "Assigned" ? 'Assigned'.toUpperCase() :
+                                    item["status"] == "Reassigned" ? 'Reassigned'.toUpperCase() :
+                                    item["status"] == "Rejected" ? 'Rejected'.toUpperCase() :
+                                    item["status"] == "Pending" ? 'Pending'.toUpperCase() :
+                                    item["status"] == "In Process" ? 'In Process'.toUpperCase() :
+                                    item["status"] == "Cancelled" ? 'Cancelled'.toUpperCase() :
+                                    item["status"] == "Resolved" ? 'Resolved'.toUpperCase() :
+                                    item["status"] == "Reopen" ? 'Reopen'.toUpperCase() : 
+                                    item["status"] == "Closed" ? 'Closed'.toUpperCase() :
+                                    '-',
+                                    style: GoogleFonts.robotoCondensed(
+                                      textStyle: Theme.of(context).appBarTheme.titleTextStyle, 
+                                      fontSize: 11, color: Colors.white, letterSpacing: 1.5,
                                     ),
-
-                                    child: Text("Open",style: TextStyle(
-                                        color: Colors.white
-                                    ),),
-                                  )
+                                  ),
+                                ),
                                 ],
                               ),
                             ),
