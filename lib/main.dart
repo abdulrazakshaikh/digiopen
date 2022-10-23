@@ -17,6 +17,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:xceednet/tickets/tickets_details.dart';
 import 'package:xceednet/tickets/tickets_list.dart';
+import 'package:xceednet/vouchers/vouchers_batches_list.dart';
 
 void main() {
   runApp(MyApp());
@@ -50,7 +51,7 @@ class MyApp extends StatelessWidget {
             // ThemeMode.light,
             home: 
             //  SplashScreen(),
-             Dashboard()
+            //  Dashboard()
             // const Profile(title: 'Profile')
             // SubscribersList()
             // SubscribersDetails()
@@ -63,6 +64,7 @@ class MyApp extends StatelessWidget {
             // const SelectLocation(title: 'Select Location')
             //  PackageList()
             // InvoiceAdd()
+            VouchersBatchesList()
 
             // InvoiceDetails()
 

@@ -55,6 +55,7 @@ void _onChoiceSelected(String choice) {
       return 
       choice == 'Cancel Payment' ? CancelPaymentBottomSheet() :
       choice == 'Close Payment' ? ClosePaymentBottomSheet() :
+      choice == 'Printable Payment' ? Container() :
       Container();
     }, 
   );
@@ -204,5 +205,7 @@ void _onChoiceSelected(String choice) {
 class Constants {
   static const String FirstItem = 'Cancel Payment';
   static const String SecondItem = 'Close Payment';
-  static const List<String> choices = <String>[FirstItem, SecondItem];
+  static const String ThirdItem = 'Printable Payment';
+  
+  static const List<String> choices = <String>[FirstItem, SecondItem, ThirdItem];
 }

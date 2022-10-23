@@ -1,49 +1,44 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class PaymentTabDetails extends StatefulWidget {
+class VoucherBatchTabDetails extends StatefulWidget {
   @override
-  _PaymentTabDetailsState createState() => new _PaymentTabDetailsState();
+  _VoucherBatchTabDetailsState createState() => new _VoucherBatchTabDetailsState();
 }
 
-class _PaymentTabDetailsState extends State<PaymentTabDetails> {
+class _VoucherBatchTabDetailsState extends State<VoucherBatchTabDetails> {
 
 
 List detailsList = [
   {
     "id": "001",
-    "label" : "Payment ID",
+    "label" : "ID",
     "value" : "#12346579"
   },
   {
     "id": "002",
-    "label" : "Payment Date",
-    "value" : "23-Sep-2022"
+    "label" : "Package",
+    "value" : "100"
   },
   {
     "id": "003",
-    "label" : "Description",
-    "value" : "lorem uo]dnsjkhdsllsa jlalsldsaulojelpoq;asfdposajlsdjlk lpsaopidadsplajl"
+    "label" : "Price per voucher",
+    "value" : "₹100"
   },
   {
     "id": "004",
-    "label" : "Amount",
-    "value" : "₹500"
+    "label" : "No. of Vouchers",
+    "value" : "2"
   },
   {
     "id": "005",
-    "label" : "Mode of Payment",
-    "value" : "Cash"
+    "label" : "Voucher Type",
+    "value" : "Pin"
   },
   {
     "id": "006",
-    "label" : "Receipt Number",
-    "value" : "REC56564564"
-  },
-  {
-    "id": "007",
-    "label" : "Received by",
-    "value" : "Dipesh Jain"
+    "label" : "Voucher Valid Till",
+    "value" : "23-Sep-2022"
   },
 ];
 

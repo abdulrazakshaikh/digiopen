@@ -7,6 +7,7 @@ import 'package:xceednet/leads/leads_add.dart';
 import 'package:xceednet/leads/leads_details.dart';
 import 'package:xceednet/subscribers/subscribers_add.dart';
 import 'package:xceednet/subscribers/subscribers_details.dart';
+import 'package:xceednet/vouchers/vouchers_batches_list.dart';
 
 class VouchersList extends StatefulWidget {
 
@@ -109,7 +110,7 @@ List subscribersList = [
                       pageBuilder: (context, animation, secondaryAnimation) =>
                         FadeTransition(
                         opacity: animation,
-                        child: LeadsDetails()
+                        child: VouchersBatchesList()
                       ),
                     ),
                   );

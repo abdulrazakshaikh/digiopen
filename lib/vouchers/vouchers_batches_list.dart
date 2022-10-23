@@ -8,6 +8,7 @@ import 'package:xceednet/leads/leads_details.dart';
 import 'package:xceednet/subscribers/subscribers_add.dart';
 import 'package:xceednet/subscribers/subscribers_details.dart';
 import 'package:xceednet/vouchers/voucherbatch_add.dart';
+import 'package:xceednet/vouchers/voucherbatch_details.dart';
 
 class VouchersBatchesList extends StatefulWidget {
 
@@ -23,34 +24,33 @@ class _VouchersBatchesListState extends State<VouchersBatchesList> {
 List subscribersList = [
   {
     "id": "101",
-    "status" : "Assigned",
-
-    "name" : "John Doe",
-    "mobile" : "9876543210",
-
-    "createdon" : "01 Sep, 2022",
-    "assignedto" : "Johnson Doe",
-    
-    "ticket" : "-",
-
+    "batchid": "YZUUU",
+    "packagename": "100",
+    "totalvouchers": "2",
+    "usedvouchers": "0",
+    "unusedvouchers": "2",
+    "vouchersvalid" : "01/09/2022 15:59",
+    "status" : "Open",
   },
   {
     "id": "102",
-    "name" : "John Doe",
-    "mobile" : "9876543210",
-    "createdon" : "01 Sep, 2022",
-    "assignedto" : "Johnson Doe",
-    "ticket" : "-",
-    "status" : "Assigned",
+    "batchid": "YZUUU",
+    "packagename": "100",
+    "totalvouchers": "2",
+    "usedvouchers": "0",
+    "unusedvouchers": "2",
+    "vouchersvalid" : "01/09/2022 15:59",
+    "status" : "Cancelled",
   },
   {
     "id": "103",
-    "name" : "John Doe",
-    "mobile" : "9876543210",
-    "createdon" : "01 Sep, 2022",
-    "assignedto" : "Johnson Doe",
-    "ticket" : "-",
-    "status" : "Assigned",
+    "batchid": "YZUUU",
+    "packagename": "100",
+    "totalvouchers": "2",
+    "usedvouchers": "0",
+    "unusedvouchers": "2",
+    "vouchersvalid" : "01/09/2022 15:59",
+    "status" : "Expired",
   },
 
 ];
@@ -110,7 +110,7 @@ List subscribersList = [
                       pageBuilder: (context, animation, secondaryAnimation) =>
                         FadeTransition(
                         opacity: animation,
-                        child: LeadsDetails()
+                        child: VoucherBatchDetails()
                       ),
                     ),
                   );
@@ -168,7 +168,7 @@ List subscribersList = [
                                   ),
                                   ),
                                   SizedBox(height: 3),
-                                  Text('121',
+                                  Text('${item["batchid"]}',
                                   style: GoogleFonts.roboto(
                                     textStyle: Theme.of(context).textTheme.bodyMedium,
                                     fontSize: 13,
@@ -200,7 +200,7 @@ List subscribersList = [
                                   ),
                                   ),
                                   SizedBox(height: 3),
-                                  Text('${item["name"]}',
+                                  Text('${item["packagename"]}',
                                   style: GoogleFonts.roboto(
                                     textStyle: Theme.of(context).textTheme.bodyMedium,
                                     fontSize: 13,
@@ -223,7 +223,7 @@ List subscribersList = [
                                   ),
                                   ),
                                   SizedBox(height: 3),
-                                  Text('${item["mobile"]}',
+                                  Text('${item["totalvouchers"]}',
                                   style: GoogleFonts.roboto(
                                     textStyle: Theme.of(context).textTheme.bodyMedium,
                                     fontSize: 13,
@@ -255,7 +255,7 @@ List subscribersList = [
                                   ),
                                   ),
                                   SizedBox(height: 3),
-                                  Text('${item["createdon"]}',
+                                  Text('${item["usedvouchers"]}',
                                   style: GoogleFonts.roboto(
                                     textStyle: Theme.of(context).textTheme.bodyMedium,
                                     fontSize: 13,
@@ -278,7 +278,7 @@ List subscribersList = [
                                   ),
                                   ),
                                   SizedBox(height: 3),
-                                  Text('${item["assignedto"]}',
+                                  Text('${item["unusedvouchers"]}',
                                   style: GoogleFonts.roboto(
                                     textStyle: Theme.of(context).textTheme.bodyMedium,
                                     fontSize: 13,
@@ -310,7 +310,7 @@ List subscribersList = [
                                   ),
                                   ),
                                   SizedBox(height: 3),
-                                  Text('01/09/2022 15:59',
+                                  Text('${item["vouchersvalid"]}',
                                   style: GoogleFonts.roboto(
                                     textStyle: Theme.of(context).textTheme.bodyMedium,
                                     fontSize: 13,
@@ -334,19 +334,26 @@ List subscribersList = [
                                   ),
                                   SizedBox(height: 3),
                                   Container(
-                                    width: 70 ,
-                                    padding: EdgeInsets.all(5),
-                                    alignment: Alignment.center,
-                                    decoration: BoxDecoration(
-                                      color: Colors.green,
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(5.0)),
+                                  decoration: BoxDecoration(
+                                    color: 
+                                    item["status"] == "Open" ? Colors.green :
+                                    item["status"] == "Expired" ? Colors.redAccent :
+                                    item["status"] == "Cancelled" ? Colors.red :
+                                    null,
+                                    borderRadius: BorderRadius.circular(4),
+                                  ),
+                                  padding: EdgeInsets.symmetric(horizontal: 10, vertical: 3),
+                                  child: Text(
+                                    item["status"] == "Open" ? 'Open'.toUpperCase() :
+                                    item["status"] == "Expired" ? 'Expired'.toUpperCase() :
+                                    item["status"] == "Cancelled" ? 'Cancelled'.toUpperCase() :
+                                    '-',
+                                    style: GoogleFonts.robotoCondensed(
+                                      textStyle: Theme.of(context).textTheme.bodyMedium, 
+                                      fontSize: 11, color: Colors.white, letterSpacing: 1.5,
                                     ),
-
-                                    child: Text("Open",style: TextStyle(
-                                        color: Colors.white
-                                    ),),
-                                  )
+                                  ),
+                                ),
                                 ],
                               ),
                             ),
