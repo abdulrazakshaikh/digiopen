@@ -1,16 +1,12 @@
 import 'package:flutter/cupertino.dart';
-import 'package:xceednet/data/user_location_access.dart';
 
-import '../data/dashboarddata.dart';
-import '../data/userdata.dart';
-import '../model/auth_repository.dart';
 import '../model/dashboard_repository.dart';
-import '../model/storage/shared_prefs.dart';
 
 class DashboardViewModel extends ChangeNotifier {
   bool _isLoading = false;
   String? _error;
-  late DashboardData dashboardData;
+  late Map dashboardData;
+
   String? get error {
     return _error;
   }
@@ -31,7 +27,7 @@ class DashboardViewModel extends ChangeNotifier {
         _error = _userdata.message;
         return false;
       } else {
-        dashboardData = DashboardData.fromJson(_userdata.data);
+        dashboardData = _userdata.data;
         print('sss');
         // SharedPrefs().authToken=_userdata.data['auth_token'];
         //SharedPrefs().isLogin = true;
