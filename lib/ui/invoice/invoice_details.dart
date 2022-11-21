@@ -2,46 +2,44 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:xceednet/ui/invoice/invoice_details_card.dart';
 import 'package:xceednet/ui/profile/changepassword_bottomsheet.dart';
 import 'package:xceednet/ui/subscribers/datausage.dart';
 import 'package:xceednet/ui/subscribers/disablesubscriber_bottomsheet.dart';
-import 'package:xceednet/ui/subscribers/instantsms_bottomsheet.dart';
 import 'package:xceednet/ui/subscribers/resetmacaddress_bottomsheet.dart';
-import 'package:xceednet/ui/subscribers/subscribers_details_card.dart';
 import 'package:xceednet/ui/subscribers/tab_audittrail.dart';
-import 'package:xceednet/ui/subscribers/tab_connection.dart';
-import 'package:xceednet/ui/subscribers/tab_details.dart';
+import 'package:xceednet/view_model/invoice_view_model.dart';
 
-import '../../view_model/subscriber_view_model.dart';
+import 'invoice_tab_details.dart';
 
-class SubscribersDetails extends StatefulWidget {
-  String subscriberId;
+class InvoiceDetails extends StatefulWidget {
+  String invoiceId;
 
-  SubscribersDetails(this.subscriberId);
+  InvoiceDetails(this.invoiceId);
 
   @override
-  State<SubscribersDetails> createState() => _SubscribersDetailsState();
+  State<InvoiceDetails> createState() => _InvoiceDetailsState();
 }
 
-class _SubscribersDetailsState extends State<SubscribersDetails>
+class _InvoiceDetailsState extends State<InvoiceDetails>
     with TickerProviderStateMixin {
   late TabController _tabController;
-  late SubscriberViewModel subscriberViewModel;
-  Map? subscriberDetail;
+  late InvoiceViewModel invoiceViewModel;
+  Map? invoiceDetail;
 
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      bool a = await subscriberViewModel.getSubscriberDetailData(
-          subscriberId: widget.subscriberId);
+      bool a = await invoiceViewModel.getInvoiceDetailData(
+          invoiceId: widget.invoiceId);
       if (a) {
-        subscriberDetail = subscriberViewModel.subscriberDetail;
+        invoiceDetail = invoiceViewModel.invoiceDetail;
       }
     });
     _tabController = TabController(
       initialIndex: 0,
-      length: 3,
+      length: 2,
       vsync: this,
     );
   }
@@ -75,7 +73,7 @@ class _SubscribersDetailsState extends State<SubscribersDetails>
 
   @override
   Widget build(BuildContext context) {
-    subscriberViewModel = context.watch<SubscriberViewModel>();
+    invoiceViewModel = context.watch<InvoiceViewModel>();
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
       floatingActionButton: _tabController.index == 2
@@ -89,10 +87,10 @@ class _SubscribersDetailsState extends State<SubscribersDetails>
               foregroundColor: Theme.of(context).colorScheme.onPrimary,
               child: Icon(Icons.create_outlined),
             ),
-      appBar: subscriberViewModel.isLoading
+      appBar: invoiceViewModel.isLoading
           ? AppBar(
               title: Text(
-                'Subscriber Detail',
+                'Invoice Detail',
                 style: GoogleFonts.roboto(
                     textStyle: Theme.of(context).appBarTheme.titleTextStyle),
               ),
@@ -103,37 +101,17 @@ class _SubscribersDetailsState extends State<SubscribersDetails>
               title: Container(
                 child: Row(
                   children: [
-                    Container(
-                      width: 36,
-                      height: 36,
-                      child: CircleAvatar(
-                        backgroundImage:
-                            AssetImage('assets/images/default.jpg'),
-                        radius: 60,
-                      ),
-                    ),
-              SizedBox(width: 10),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                        Text(
-                          '${subscriberDetail!['name']}',
-                          style: GoogleFonts.roboto(
-                              textStyle:
-                                  Theme.of(context).appBarTheme.titleTextStyle),
-                        ),
-                        SizedBox(height: 3),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
                         Row(
                           children: [
                             Text(
-                              '${subscriberDetail!['mobile1']}',
+                              'Invoice #${invoiceDetail!['invoiceid']}',
                               style: GoogleFonts.roboto(
-                                textStyle: Theme.of(context)
-                                    .appBarTheme
-                                    .titleTextStyle,
-                                fontSize: 12,
-                                color: Theme.of(context).colorScheme.secondary,
-                              ),
+                                  textStyle: Theme.of(context)
+                                      .appBarTheme
+                                      .titleTextStyle),
                             ),
                             SizedBox(
                               width: 5,
@@ -144,75 +122,50 @@ class _SubscribersDetailsState extends State<SubscribersDetails>
                                   left: 3, right: 3, top: 1, bottom: 1),
                               alignment: Alignment.center,
                               decoration: BoxDecoration(
-                                color: subscriberDetail!['status'] == "expired"
+                                color: invoiceDetail!['status'] != "closed"
                                     ? Colors.red
                                     : Colors.green,
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(5.0)),
                               ),
                               child: Text(
-                                "${subscriberDetail!['status']}",
+                                "${invoiceDetail!['status']}",
                                 style: TextStyle(color: Colors.white),
                               ),
                             )
                           ],
                         ),
                       ],
-              )
-            ],
-          ),
-        ),
-        actions: [
-          IconButton(
-            tooltip: 'Instant SMS',
-            onPressed: () {
-                    showModalBottomSheet(
-                      elevation: 2,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(20),
-                          topRight: Radius.circular(20),
-                        ),
-                      ),
-                      context: context,
-                      builder: (BuildContext context) {
-                        return InstantSmsBottomSheet();
-                      },
-                    );
-                  },
-                  icon: Icon(Icons.sms_outlined),
-                  style: IconButton.styleFrom(
-                    shape: RoundedRectangleBorder(),
-                    // foregroundColor: Theme.of(context).colorScheme.primary,
-                    minimumSize: Size(54, 54),
-                    fixedSize: Size(54, 54),
-                  ),
+                    )
+                  ],
                 ),
-          Container(
-            width: 54,
-            height: 54,
-            child: PopupMenuButton<String>(
-              shape: RoundedRectangleBorder(),
-              icon: Icon(Icons.more_vert_outlined),
-              onSelected: _onChoiceSelected,
-              color: Theme.of(context).colorScheme.surface,
-              position: PopupMenuPosition.under,
-              tooltip: 'Options',
-              itemBuilder: (BuildContext context) {
-                return Constants.choices.map((String choice) {
-                  return PopupMenuItem<String>(
-                    value: choice,
+              ),
+              actions: [
+                Container(
+                  width: 54,
+                  height: 54,
+                  child: PopupMenuButton<String>(
+                    shape: RoundedRectangleBorder(),
+                    icon: Icon(Icons.more_vert_outlined),
+                    onSelected: _onChoiceSelected,
+                    color: Theme.of(context).colorScheme.surface,
+                    position: PopupMenuPosition.under,
+                    tooltip: 'Options',
+                    itemBuilder: (BuildContext context) {
+                      return Constants.choices.map((String choice) {
+                        return PopupMenuItem<String>(
+                          value: choice,
                           child: Text(choice,
                               style: Theme.of(context).textTheme.bodyMedium),
                           // onTap: (){
-                    //   showModalBottomSheet(
-                    //     elevation: 2,
-                    //     shape: RoundedRectangleBorder(
-                    //       borderRadius: BorderRadius.only(
-                    //         topLeft: Radius.circular(20),
-                    //         topRight: Radius.circular(20),
-                    //       ),
-                    //     ),
+                          //   showModalBottomSheet(
+                          //     elevation: 2,
+                          //     shape: RoundedRectangleBorder(
+                          //       borderRadius: BorderRadius.only(
+                          //         topLeft: Radius.circular(20),
+                          //         topRight: Radius.circular(20),
+                          //       ),
+                          //     ),
                           //     context: context, builder: (BuildContext context) {
                           //       return FilterBottomSheet();
                           //     },
@@ -225,7 +178,7 @@ class _SubscribersDetailsState extends State<SubscribersDetails>
                 ),
               ],
             ),
-      body: subscriberViewModel.isLoading
+      body: invoiceViewModel.isLoading
           ? Container(
               child: Center(
                 child: CircularProgressIndicator(),
@@ -243,7 +196,7 @@ class _SubscribersDetailsState extends State<SubscribersDetails>
                           .colorScheme
                           .secondary
                           .withOpacity(0.5),
-                      child: SubscribersDetailsCard(subscriberDetail!),
+                      child: InvoiceDetailsCard(invoiceDetail!),
                     ),
                   ),
                   SliverAppBar(
@@ -273,7 +226,6 @@ class _SubscribersDetailsState extends State<SubscribersDetails>
                         },
                         tabs: [
                           Tab(text: 'Details'),
-                          Tab(text: 'Connection'),
                           Tab(text: 'Audit Trail'),
                         ]),
                   ),
@@ -283,8 +235,7 @@ class _SubscribersDetailsState extends State<SubscribersDetails>
                 // physics: NeverScrollableScrollPhysics(),
                 controller: _tabController,
                 children: [
-                  TabDetails(subscriberDetail!),
-                  TabConnection(subscriberDetail!),
+                  InvoiceTabDetails(invoiceDetail!),
                   TabAuditTrail(),
                 ],
               ),
@@ -344,10 +295,10 @@ class _SubscribersDetailsState extends State<SubscribersDetails>
 }
 
 class Constants {
-  static const String FirstItem = 'Reset Mac Address';
-  static const String SecondItem = 'Disable Subscriber';
-  static const String ThirdItem = 'Change Password';
-  static const String FourthItem = 'Data Usage';
+  static const String FirstItem = 'Assign Invoice';
+  static const String SecondItem = 'Received Payment';
+  static const String ThirdItem = 'Cancel Invoice';
+  static const String FourthItem = 'Close Invoice';
   static const List<String> choices = <String>[
     FirstItem,
     SecondItem,

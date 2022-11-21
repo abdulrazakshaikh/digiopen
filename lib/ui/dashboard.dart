@@ -58,7 +58,8 @@ class _DashboardState extends State<Dashboard> {
               {
                 "id": "001-5",
                 "label": "Acts Renewed Today :",
-                "value": "Key Required",
+                "value":
+                    "${dashboardData['accts_renewed_today_subscribers_count']}",
               },
               {
                 "id": "001-6",
@@ -108,12 +109,12 @@ class _DashboardState extends State<Dashboard> {
               {
                 "id": "002-2",
                 "label": "Registered This Month :",
-                "value": "Required Key",
+                "value": "${dashboardData['registered_this_month']}",
               },
               {
                 "id": "002-3",
                 "label": "Registered Last Month :",
-                "value": "Required Key",
+                "value": "${dashboardData['registered_last_month']}",
               },
             ],
           },
@@ -174,42 +175,42 @@ class _DashboardState extends State<Dashboard> {
           {
             "id": "004",
             "icon": Icons.confirmation_number_outlined,
-            "title": "Active Tickets / Data Required",
+            "title": "Active Tickets",
             "content": [
               {
                 "id": "004-1",
                 "label": "All Active Tickets :",
-                "value": "24",
+                "value": "${dashboardData['all_active_tickets']}",
               },
               {
                 "id": "004-2",
                 "label": "Due in Next 4 hours :",
-                "value": "24",
+                "value": "${dashboardData['tickets_due_in_next_4_hours']}",
               },
               {
                 "id": "004-3",
                 "label": "Due in Next 8 hours :",
-                "value": "24",
+                "value": "${dashboardData['tickets_due_in_next_8_hours']}",
               },
               {
                 "id": "004-4",
                 "label": "Due by Today :",
-                "value": "24",
+                "value": "${dashboardData['tickets_due_by_today']}",
               },
               {
                 "id": "004-5",
                 "label": "Overdue :",
-                "value": "24",
+                "value": "${dashboardData['tickets_overdue']}",
               },
               {
                 "id": "004-6",
                 "label": "Created by me :",
-                "value": "24",
+                "value": "${dashboardData['tickets_created_by_me']}",
               },
               {
                 "id": "004-7",
                 "label": "Assigned to me :",
-                "value": "24",
+                "value": "${dashboardData['tickets_assigned_to_me']}",
               },
             ],
           },
@@ -308,271 +309,13 @@ class _DashboardState extends State<Dashboard> {
         if (dashboardData['reseller'] == "false") {
           accordionList.removeWhere((element) => element['id'] == '008');
         }
+        accordionList.removeWhere((element) => element['id'] == '003');
+        accordionList.removeWhere((element) => element['id'] == '005');
       }
     });
   }
-List accordionList = [
-  {
-    "id": "001",
-    "icon" : Icons.person_outlined,
-    "title" : "Subscribers",
-    "content" : [
-      {
-        "id": "001-1",
-        "label": "Total :",
-        "value": "24",
-      },
-      {
-        "id": "001-2",
-        "label": "Online :",
-        "value": "24",
-      },
-      {
-        "id": "001-3",
-        "label": "Active :",
-        "value": "24",
-      },
-      {
-        "id": "001-4",
-        "label": "Disabled :",
-        "value": "24",
-      },
-      {
-        "id": "001-5",
-        "label": "Acts Renewed Today :",
-        "value": "24",
-      },
-      {
-        "id": "001-6",
-        "label": "Total Advance Renewals Scheduled :",
-        "value": "24",
-      },
-      {
-        "id": "001-7",
-        "label": "Accts Expired :",
-        "value": "24",
-      },
-      {
-        "id": "001-8",
-        "label": "Expiring Today / Without Adv. Renewal :",
-        "value": "24",
-      },
-      {
-        "id": "001-9",
-        "label": "Expiring In Next 4 Days :",
-        "value": "0",
-      },
-      {
-        "id": "001-10",
-        "label": "Without Adv. Renewal: :",
-        "value": "2",
-      },
-      {
-        "id": "001-11",
-        "label": "Accts Expired in Last 4 days :",
-        "value": "4",
-      },
-    ],
-  },
-  {
-    "id": "002",
-    "icon" : Icons.how_to_reg_outlined,
-    "title" : "Registrations",
-    "content" : [
-      {
-        "id": "002-1",
-        "label": "Registered Today :",
-        "value": "24",
-      },
-      {
-        "id": "002-2",
-        "label": "Registered This Month :",
-        "value": "24",
-      },
-      {
-        "id": "002-3",
-        "label": "Registered Last Month :",
-        "value": "24",
-      },
-    ],
-  },
-  {
-    "id": "003",
-    "icon" : Icons.portrait_outlined,
-    "title" : "Active Leads",
-    "content" : [
-      {
-        "id": "003-1",
-        "label": "All Active Leads :",
-        "value": "24",
-      },
-      {
-        "id": "003-2",
-        "label": "Registered Today :",
-        "value": "24",
-      },
-      {
-        "id": "003-3",
-        "label": "Pending Feasibility Check :",
-        "value": "24",
-      },
-      {
-        "id": "003-4",
-        "label": "Pending Cabling :",
-        "value": "24",
-      },
-      {
-        "id": "003-5",
-        "label": "Pending Account Activation :",
-        "value": "24",
-      },
-      {
-        "id": "003-6",
-        "label": "Created by Me :",
-        "value": "24",
-      },
-      {
-        "id": "003-7",
-        "label": "Assigned to Me :",
-        "value": "24",
-      },
-    ],
-  },
-  {
-    "id": "004",
-    "icon" : Icons.confirmation_number_outlined,
-    "title" : "Active Tickets",
-    "content" : [
-      {
-        "id": "004-1",
-        "label": "All Active Tickets :",
-        "value": "24",
-      },
-      {
-        "id": "004-2",
-        "label": "Due in Next 4 hours :",
-        "value": "24",
-      },
-      {
-        "id": "004-3",
-        "label": "Due in Next 8 hours :",
-        "value": "24",
-      },
-      {
-        "id": "004-4",
-        "label": "Due by Today :",
-        "value": "24",
-      },
-      {
-        "id": "004-5",
-        "label": "Overdue :",
-        "value": "24",
-      },
-      {
-        "id": "004-6",
-        "label": "Created by me :",
-        "value": "24",
-      },
-      {
-        "id": "004-7",
-        "label": "Assigned to me :",
-        "value": "24",
-      },
-    ],
-  },
-  {
-    "id": "005",
-    "icon" : Icons.data_usage_outlined,
-    "title" : "Data Usage",
-    "content" : [
-      {
-        "id": "005-1",
-        "label": "Date :",
-        "value": "24",
-      },
-      {
-        "id": "005-2",
-        "label": "Downloaded :",
-        "value": "24",
-      },
-      {
-        "id": "005-3",
-        "label": "Uploaded :",
-        "value": "24",
-      },
-      {
-        "id": "005-4",
-        "label": "Total :",
-        "value": "24",
-      },
-    ],
-  },
-  {
-    "id": "006",
-    "icon" : Icons.receipt_long_outlined,
-    "title" : "Subscriber Billing",
-    "content" : [
-      {
-        "id": "006-1",
-        "label": "Active Invoices :",
-        "value": "24",
-      },
-      {
-        "id": "006-2",
-        "label": "Total Active Invoices Amount :",
-        "value": "24",
-      },
-      {
-        "id": "006-3",
-        "label": "Active Payments :",
-        "value": "24",
-      },
-      {
-        "id": "006-4",
-        "label": "Total Active Payments Amount :",
-        "value": "24",
-      },
-      {
-        "id": "006-5",
-        "label": "Total Active Balance Amount Due :",
-        "value": "24",
-      },
-      {
-        "id": "006-6",
-        "label": "Total Balance Amount Due :",
-        "value": "24",
-      },
-    ],
-  },
-    {
-    "id": "007",
-    "icon" : Icons.shopping_basket_outlined,
-    "title" : "Package Sales",
-    "content" : [
-      {
-        "id": "007-1",
-        "label": "Packages Sold Today :",
-        "value": "24",
-      },
-      {
-        "id": "007-2",
-        "label": "Packages Sold Yesterday :",
-        "value": "24",
-      },
-      {
-        "id": "007-3",
-        "label": "Packages Sold This Month :",
-        "value": "24",
-      },
-      {
-        "id": "007-4",
-        "label": "Packages Sold Last Month :",
-        "value": "24",
-      },
-    ],
-  },
-];
 
+  List accordionList = [];
 
   int selected = 0;
 

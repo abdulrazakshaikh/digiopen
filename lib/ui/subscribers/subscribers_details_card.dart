@@ -1,33 +1,41 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:xceednet/ui/common_widgets/menuDrawer.dart';
+import 'package:intl/intl.dart';
+import 'package:xceednet/utils/AppUtils.dart';
 
 class SubscribersDetailsCard extends StatefulWidget {
-  const SubscribersDetailsCard({Key? key}) : super(key: key);
+  Map subscriberDetail;
+
+  SubscribersDetailsCard(this.subscriberDetail, {Key? key}) : super(key: key);
 
   @override
   State<SubscribersDetailsCard> createState() => _SubscribersDetailsCardState();
 }
 
-class _SubscribersDetailsCardState extends State<SubscribersDetailsCard> with TickerProviderStateMixin {
- 
+class _SubscribersDetailsCardState extends State<SubscribersDetailsCard>
+    with TickerProviderStateMixin {
   bool _isPlanActive = true;
 
  @override
   Widget build(BuildContext context) {
+    var string1 = widget.subscriberDetail['expires_at']
+        .toString()
+        .substring(0, 10)
+        .toString();
+    String expires_at = DateFormat('dd-MMM-yyyy')
+        .format(DateFormat('yyyy-MM-dd').parse(string1));
+
     return Card(
-      elevation: 6,
-      shadowColor: Theme.of(context).shadowColor.withOpacity(0.5),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10)
-      ),
-      child: Container(
-        // height: 200,
-        // padding: EdgeInsets.all(15),
-        child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
+        elevation: 6,
+        shadowColor: Theme.of(context).shadowColor.withOpacity(0.5),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+        child: Container(
+          // height: 200,
+          // padding: EdgeInsets.all(15),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
             
@@ -41,14 +49,17 @@ class _SubscribersDetailsCardState extends State<SubscribersDetailsCard> with Ti
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       _isPlanActive ?
-                      Text('50Mbps plan',
-                        style: GoogleFonts.robotoCondensed(
-                          textStyle: Theme.of(context).textTheme.headlineSmall,
-                          fontWeight: FontWeight.w900,
-                          letterSpacing: 1,
-                        ),
-                      )
-                      :
+                      Text(
+                                  '${widget.subscriberDetail['location_package_name'] ?? ""}',
+                                  style: GoogleFonts.robotoCondensed(
+                                    textStyle: Theme.of(context)
+                                        .textTheme
+                                        .headlineSmall,
+                                    fontWeight: FontWeight.w900,
+                                    letterSpacing: 1,
+                                  ),
+                                )
+                              :
                       Text('No Plan Active',
                         style: GoogleFonts.robotoCondensed(
                           textStyle: Theme.of(context).textTheme.headlineSmall,
@@ -111,8 +122,7 @@ class _SubscribersDetailsCardState extends State<SubscribersDetailsCard> with Ti
                         letterSpacing: 1,
                       ),
                       children: [
-                        TextSpan(text: '16 Dec, 2022')
-                      ]
+                        TextSpan(text: '$expires_at')]
                     ),
                   )
                   :
@@ -125,22 +135,26 @@ class _SubscribersDetailsCardState extends State<SubscribersDetailsCard> with Ti
                         color: Colors.red,
                       ),
                       children: [
-                        TextSpan(text: '11 Sep, 2022')
-                      ]
+                        TextSpan(text: '$expires_at')]
                     ),
                   ),
                 ),
                 ElevatedButton(
-                  onPressed: () {},
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Theme.of(context).colorScheme.primary,
-                    minimumSize: Size(74, 42),
-                    textStyle: GoogleFonts.roboto(
-                      textStyle: TextStyle( fontSize: 14, letterSpacing: 1.25, fontWeight: FontWeight.w600),
+                      onPressed: () {
+                        AppUtils.appToast("Coming soon");
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Theme.of(context).colorScheme.primary,
+                        minimumSize: Size(74, 42),
+                        textStyle: GoogleFonts.roboto(
+                          textStyle: TextStyle(
+                              fontSize: 14,
+                              letterSpacing: 1.25,
+                              fontWeight: FontWeight.w600),
+                        ),
+                      ),
+                      child: Text('Recharge Now'),
                     ),
-                  ),
-                  child: Text('Recharge Now'),
-                ),
               ],
             ),
           ),
@@ -157,14 +171,16 @@ class _SubscribersDetailsCardState extends State<SubscribersDetailsCard> with Ti
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text('₹5000',
-                        style: GoogleFonts.robotoCondensed(
-                          textStyle: Theme.of(context).textTheme.headlineSmall,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20,
-                          letterSpacing: 1,
-                        ),
-                      ),
+                      Text(
+                            '${widget.subscriberDetail['balance_amount_human']}',
+                            style: GoogleFonts.robotoCondensed(
+                              textStyle:
+                                  Theme.of(context).textTheme.headlineSmall,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20,
+                              letterSpacing: 1,
+                            ),
+                          ),
                       Text('Balance ',
                         style: GoogleFonts.roboto(
                           textStyle: Theme.of(context).textTheme.labelLarge,
@@ -176,18 +192,24 @@ class _SubscribersDetailsCardState extends State<SubscribersDetailsCard> with Ti
                 ),
                 Container(
                   child: TextButton(
-                    onPressed: (){}, 
-                    child: Row(
-                      children: [
-                        Text('Previous Recharges'),
-                        SizedBox(width: 3),
-                        Icon(Icons.arrow_forward_outlined, size: 18,), 
-                      ],
-                    ),
-                    style: TextButton.styleFrom(
-                      textStyle: GoogleFonts.roboto(
-                        textStyle: Theme.of(context).textTheme.labelLarge,
-                        fontSize: 14
+                          onPressed: () {
+                            AppUtils.appToast("Coming soon");
+                          },
+                          child: Row(
+                            children: [
+                              Text('Previous Recharges'),
+                              SizedBox(width: 3),
+                              Icon(
+                                Icons.arrow_forward_outlined,
+                                size: 18,
+                              ),
+                            ],
+                          ),
+                          style: TextButton.styleFrom(
+                            textStyle: GoogleFonts.roboto(
+                                textStyle:
+                                    Theme.of(context).textTheme.labelLarge,
+                                fontSize: 14
                       ),
                       foregroundColor: Theme.of(context).colorScheme.primary,
                     )

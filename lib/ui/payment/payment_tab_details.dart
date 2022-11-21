@@ -1,66 +1,68 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class TabConnection extends StatefulWidget {
+class PaymentTabDetails extends StatefulWidget {
   Map subscriberDetail;
 
-  TabConnection(this.subscriberDetail);
+  PaymentTabDetails(this.subscriberDetail);
 
   @override
-  _TabConnectionState createState() => _TabConnectionState(subscriberDetail);
+  _PaymentTabDetailsState createState() =>
+      new _PaymentTabDetailsState(subscriberDetail);
 }
 
-class _TabConnectionState extends State<TabConnection> {
-  Map subscriberDetail;
+class _PaymentTabDetailsState extends State<PaymentTabDetails> {
+  Map subscriberDetail = {};
 
-  _TabConnectionState(this.subscriberDetail);
+  _PaymentTabDetailsState(this.subscriberDetail);
 
-  List connectionList = [];
+  List detailsList = [];
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    connectionList = [
+
+    detailsList = [
       {
         "id": "001",
-        "label": "zone",
-        "value": "${subscriberDetail['location_zone_id'] ?? ""}"
+        "label": "Payment no",
+        "value": "${subscriberDetail['payment_no']}"
       },
       {
         "id": "002",
-        "label": "Node",
-        "value": "${subscriberDetail['location_node_id'] ?? ""}"
+        "label": "Payment Date",
+        "value": "${subscriberDetail['payment_date'] ?? ""}"
       },
       {
         "id": "003",
-        "label": "Distance From Node",
-        "value": "${subscriberDetail['distance_from_node'] ?? ""}"
+        "label": "Description",
+        "value": "${subscriberDetail['description']}"
       },
       {
         "id": "004",
-        "label": "Fix IP Address",
-        "value": "${subscriberDetail['fix_ip']}"
+        "label": "Amount",
+        "value": "${subscriberDetail['amount_human']}"
       },
       {
         "id": "005",
-        "label": "Bind MAC Address",
-        "value": "${subscriberDetail['bind_mac_address']}",
+        "label": "Mode of payment",
+        "value": "${subscriberDetail['mode_of_payment']}"
       },
       {
         "id": "006",
-        "label": "MAC Address",
-        "value": "${subscriberDetail['mac_address'] ?? ""}"
+        "label": "Description",
+        "value": "${subscriberDetail['description'] ?? ""}"
       },
       {
         "id": "007",
-        "label": "Reset MAC Address",
-        "value": '${subscriberDetail['reset_mac_address']}'
+        "label": "Receipt#",
+        "value": "${subscriberDetail['receipt_no'] ?? ""}"
       },
       {
         "id": "008",
-        "label": "Leased Line Subscriber",
-        "value": "${subscriberDetail['leased_line_subscriber']}"
+        "label": "Received By",
+        "value": "${widget.subscriberDetail['user_profiles.name'] ?? ""}"
       },
     ];
   }
@@ -75,33 +77,34 @@ class _TabConnectionState extends State<TabConnection> {
               primary: false,
               physics: NeverScrollableScrollPhysics(),
               shrinkWrap: true,
-              itemCount: connectionList == null ? 0 : connectionList.length,
+              itemCount: detailsList == null ? 0 : detailsList.length,
               separatorBuilder: (BuildContext context, int index) {
                 return SizedBox(height: 20);
               },
               itemBuilder: (BuildContext context, int index) {
-                Map item = connectionList[index];
+                Map item = detailsList[index];
                 return Container(
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Expanded(
                         flex: 35,
-                        child: Text('${item["label"]} : '.toLowerCase(),
+                        child: Text(
+                          '${item["label"]} : ',
                           textAlign: TextAlign.end,
                           style: GoogleFonts.roboto(
-                              textStyle: Theme.of(context).textTheme.labelMedium,
-                              letterSpacing: 1.5
-                          ),
+                              textStyle:
+                                  Theme.of(context).textTheme.labelMedium,
+                              letterSpacing: 1.5),
                         ),
                       ),
                       SizedBox(width: 5),
                       Expanded(
                         flex: 65,
                         child: Text(
-                          item["value"] == "false"
+                          item["value"] == false
                               ? 'No'
-                              : item["value"] == "true"
+                              : item["value"] == true
                                   ? 'Yes'
                                   : '${item["value"]}',
                           style: GoogleFonts.roboto(
@@ -109,9 +112,9 @@ class _TabConnectionState extends State<TabConnection> {
                             fontSize: 13,
                             fontWeight: FontWeight.w500,
                             letterSpacing: 1.2,
-                            color: item["value"] == "false"
+                            color: item["value"] == false
                                 ? Colors.red
-                                : item["value"] == "true"
+                                : item["value"] == true
                                     ? Colors.green.shade700
                                     : null,
                           ),
@@ -120,8 +123,7 @@ class _TabConnectionState extends State<TabConnection> {
                     ],
                   ),
                 );
-              }
-          ),
+              }),
         ),
       ],
     );

@@ -6,6 +6,10 @@ import 'package:xceednet/ui/splashscreen.dart';
 import 'package:xceednet/ui/theme/color_schemes.g.dart';
 import 'package:xceednet/view_model/auth_view_model.dart';
 import 'package:xceednet/view_model/dashboard_view_model.dart';
+import 'package:xceednet/view_model/invoice_view_model.dart';
+import 'package:xceednet/view_model/package_view_model.dart';
+import 'package:xceednet/view_model/payment_view_model.dart';
+import 'package:xceednet/view_model/subscriber_view_model.dart';
 
 import 'model/storage/shared_prefs.dart';
 
@@ -23,6 +27,10 @@ Future<void> main() async {
               create: (_) => ThemeNotifier(darkTheme: darkModeOn)),
           ChangeNotifierProvider(create: (_) => AuthViewModel()),
           ChangeNotifierProvider(create: (_) => DashboardViewModel()),
+          ChangeNotifierProvider(create: (_) => SubscriberViewModel()),
+          ChangeNotifierProvider(create: (_) => PackageViewModel()),
+          ChangeNotifierProvider(create: (_) => InvoiceViewModel()),
+          ChangeNotifierProvider(create: (_) => PaymentViewModel()),
           ChangeNotifierProvider(create: (_) => SharedPrefs()),
         ],
         child: MyApp(darkModeOn: darkModeOn),

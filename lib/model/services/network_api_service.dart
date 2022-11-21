@@ -46,9 +46,11 @@ class NetworkApiService extends BaseService {
         newBaseUrl = AppUrl.baseUrl;
       } else {
         var keySelectedUserLocation2 = SharedPrefs().selectedUserLocation;
-        newBaseUrl = "http://"+keySelectedUserLocation2!.subdomain! +
+        newBaseUrl = "https://" +
+            keySelectedUserLocation2!.subdomain! +
             "." +
-            keySelectedUserLocation2!.domain!+"/";
+            keySelectedUserLocation2!.domain! +
+            "/";
       }
       var parse = Uri.parse(newBaseUrl + url);
       print("dsvv");
@@ -77,16 +79,21 @@ class NetworkApiService extends BaseService {
     }
     dynamic responseJson;
     try {
-      var header = {"content-type": "application/json"};
+      var header = {
+        "content-type": "application/json",
+        "accept": "application/json"
+      };
 
       var newBaseUrl;
       if (url == AppUrl.login) {
         newBaseUrl = AppUrl.baseUrl;
       } else {
         var keySelectedUserLocation2 = SharedPrefs().selectedUserLocation;
-        newBaseUrl = "http://"+keySelectedUserLocation2!.subdomain! +
+        newBaseUrl = "https://" +
+            keySelectedUserLocation2!.subdomain! +
             "." +
-            keySelectedUserLocation2!.domain!+"/";
+            keySelectedUserLocation2!.domain! +
+            "/";
         if (SharedPrefs().authTokenn != null &&
             SharedPrefs().authTokenn!.isNotEmpty) {
           header['Authentication'] = SharedPrefs().authTokenn!;

@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:xceednet/ui/common_widgets/filter_bottomsheet.dart';
-import 'package:xceednet/ui/dashboard.dart';
-import 'package:xceednet/main.dart';
-import 'package:xceednet/ui/profile/profile.dart';
 
 class HeadToolbar extends StatefulWidget {
+  var onChange;
+
+  HeadToolbar({this.onChange});
+
   @override
   State<HeadToolbar> createState() => _HeadToolbarState();
 }
 
 class _HeadToolbarState extends State<HeadToolbar> {
+  DateTime? dateTime1 = null;
 
   @override
   Widget build(BuildContext context) {
@@ -31,19 +33,25 @@ class _HeadToolbarState extends State<HeadToolbar> {
             child: Container(
               color: Theme.of(context).colorScheme.background,
               child: TextField(
+                onChanged: (value) {
+                  if (widget.onChange != null) {
+                    widget.onChange(value);
+                  }
+                },
                 style: GoogleFonts.roboto(
                   textStyle: Theme.of(context).textTheme.bodyMedium,
                   fontWeight: FontWeight.w600,
                   letterSpacing: 1.2,
                 ),
                 decoration: InputDecoration(
-                  contentPadding: EdgeInsets.symmetric(vertical: 15, horizontal: 15),
+                  contentPadding:
+                      EdgeInsets.symmetric(vertical: 15, horizontal: 15),
                   floatingLabelBehavior: FloatingLabelBehavior.never,
                   hintText: 'Search'.toLowerCase(),
                   hintStyle: GoogleFonts.roboto(
-                    textStyle: Theme.of(context).textTheme.bodyMedium,
-                    letterSpacing: 1.8,
-                    fontWeight: FontWeight.w300
+                      textStyle: Theme.of(context).textTheme.bodyMedium,
+                      letterSpacing: 1.8,
+                      fontWeight: FontWeight.w300
                   ),
                   prefixIcon: Icon(Icons.search_outlined),
                   enabledBorder: OutlineInputBorder(
@@ -68,18 +76,21 @@ class _HeadToolbarState extends State<HeadToolbar> {
               ),
             ),
           ),
-          Container(
-            width: 48,
-            height: 48,
-            decoration: BoxDecoration(
-              color: Theme.of(context).colorScheme.background,
-              border: Border.all(width: 1, color: Theme.of(context).colorScheme.outline),
-              borderRadius: BorderRadius.only(
-                topRight: Radius.circular(4),
-                bottomRight: Radius.circular(4),
-                topLeft: Radius.circular(0),
-                bottomLeft: Radius.circular(0),
-              ),
+          true
+              ? Container()
+              : Container(
+                  width: 48,
+                  height: 48,
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).colorScheme.background,
+                    border: Border.all(
+                        width: 1, color: Theme.of(context).colorScheme.outline),
+                    borderRadius: BorderRadius.only(
+                      topRight: Radius.circular(4),
+                      bottomRight: Radius.circular(4),
+                      topLeft: Radius.circular(0),
+                      bottomLeft: Radius.circular(0),
+                    ),
             ),
             child: IconButton(
               icon: Icon(Icons.tune_outlined),
