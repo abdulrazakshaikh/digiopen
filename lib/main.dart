@@ -51,7 +51,7 @@ class MyApp extends StatelessWidget {
             // ThemeMode.light,
             home: 
             //  SplashScreen(),
-            //  Dashboard()
+             Dashboard()
             // const Profile(title: 'Profile')
             // SubscribersList()
             // SubscribersDetails()
@@ -64,7 +64,7 @@ class MyApp extends StatelessWidget {
             // const SelectLocation(title: 'Select Location')
             //  PackageList()
             // InvoiceAdd()
-            VouchersBatchesList()
+            // VouchersBatchesList()
 
             // InvoiceDetails()
 

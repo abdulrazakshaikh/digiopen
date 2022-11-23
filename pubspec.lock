@@ -183,10 +183,10 @@ packages:
     dependency: transitive
     description:
       name: path_provider_android
-      sha256: "4d5542667150f5b779ba411dd5dc0b674a85d1355e45bda2877e0e82f4ad08d8"
+      sha256: a776c088d671b27f6e3aa8881d64b87b3e80201c64e8869b811325de7a76c15e
       url: "https://pub.dev"
     source: hosted
-    version: "2.0.20"
+    version: "2.0.22"
   path_provider_ios:
     dependency: transitive
     description:
@@ -364,10 +364,10 @@ packages:
     dependency: transitive
     description:
       name: win32
-      sha256: "9555cd63283445e101f0df32105862fdc0b30adb9b84fd0553e9433b3e074d4c"
+      sha256: d13ac5deea7327f027b3b97ee19ee210f68256ecf3f1a304bcfb992ee947637c
       url: "https://pub.dev"
     source: hosted
-    version: "3.0.1"
+    version: "3.1.1"
   xdg_directories:
     dependency: transitive
     description:

@@ -1,6 +1,6 @@
 #!/bin/sh
 # This is a generated file; do not edit or check into version control.
-export "FLUTTER_ROOT=D:\flutter_3.3.2"
+export "FLUTTER_ROOT=D:\flutter"
 export "FLUTTER_APPLICATION_PATH=D:\flutter_3.3.2\examples\xceednet"
 export "COCOAPODS_PARALLEL_CODE_SIGN=true"
 export "FLUTTER_BUILD_DIR=build"

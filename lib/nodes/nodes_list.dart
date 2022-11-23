@@ -3,11 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:xceednet/common_widgets/headToolbar.dart';
 import 'package:xceednet/common_widgets/menuDrawer.dart';
-import 'package:xceednet/leads/leads_add.dart';
-import 'package:xceednet/leads/leads_details.dart';
 import 'package:xceednet/nodes/node_add.dart';
-import 'package:xceednet/subscribers/subscribers_add.dart';
-import 'package:xceednet/subscribers/subscribers_details.dart';
+import 'package:xceednet/nodes/nodes_details.dart';
 
 class NodesList extends StatefulWidget {
 
@@ -142,7 +139,7 @@ class _NodesListState extends State<NodesList> {
                           pageBuilder: (context, animation, secondaryAnimation) =>
                               FadeTransition(
                                   opacity: animation,
-                                  child: LeadsDetails()
+                                  child: NodesDetails()
                               ),
                         ),
                       );

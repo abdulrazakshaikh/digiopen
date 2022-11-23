@@ -5,8 +5,11 @@ import 'package:xceednet/common_widgets/filter_bottomsheet.dart';
 import 'package:xceednet/common_widgets/menuDrawer.dart';
 import 'package:xceednet/package/packagetab_audittrail.dart';
 import 'package:xceednet/package/packagetab_details.dart';
+import 'package:xceednet/vouchers/changevalidity_bottomsheet.dart';
 import 'package:xceednet/vouchers/voucherbatchtab_audittrail.dart';
 import 'package:xceednet/vouchers/voucherbatchtab_details.dart';
+import 'package:xceednet/vouchers/vouchercancelbatch_bottomsheet.dart';
+import 'package:xceednet/vouchers/voucherexpirebatch_bottomsheet.dart';
 
 class VoucherBatchDetails extends StatefulWidget {
   
@@ -42,8 +45,14 @@ void _onChoiceSelected(String choice) {
     ),
     context: context, builder: (BuildContext context) { 
       return 
-      choice == 'Disable Subscriber' ?
-      Container()
+      choice == 'Cancel Batch' ?
+      VoucherCancelBatchBottomSheet()
+      :
+      choice == 'Expire Batch & Subscribers' ?
+      VoucherExpireBatchBottomSheet()
+      :
+      choice == 'Change Validity' ?
+      ChangeValidityBottomSheet()
       :
       Container();
     }, 

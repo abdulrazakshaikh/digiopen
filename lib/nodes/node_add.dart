@@ -26,7 +26,7 @@ class _NodeAddState extends State<NodeAdd> {
       backgroundColor: Theme.of(context).colorScheme.background,
       appBar: AppBar(
         automaticallyImplyLeading: true,
-        title: Text("Add Note"),
+        title: Text("Add Node"),
         actions: [],
       ),
       bottomNavigationBar: Container(

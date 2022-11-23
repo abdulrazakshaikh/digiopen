@@ -8,6 +8,7 @@ import 'package:xceednet/leads/leads_details.dart';
 import 'package:xceednet/subscribers/subscribers_add.dart';
 import 'package:xceednet/subscribers/subscribers_details.dart';
 import 'package:xceednet/zones/zone_add.dart';
+import 'package:xceednet/zones/zones_details.dart';
 
 class ZonesList extends StatefulWidget {
 
@@ -142,7 +143,7 @@ List subscribersList = [
                       pageBuilder: (context, animation, secondaryAnimation) =>
                         FadeTransition(
                         opacity: animation,
-                        child: LeadsDetails()
+                        child: ZonesDetails(),
                       ),
                     ),
                   );
@@ -152,10 +153,10 @@ List subscribersList = [
                   shape: RoundedRectangleBorder(
                     side: BorderSide(width: 1, color: Theme.of(context).dividerColor)
                   ),
-                  child: Column(
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(vertical: 10),
+                    child: Column(
                     children: [
-
-
                       Container(
                         padding: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
                         child: Row(
@@ -268,6 +269,7 @@ List subscribersList = [
 
                     ],
                   ),
+                  )
                 ),
                 );
               }

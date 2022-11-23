@@ -11,6 +11,7 @@ import 'package:xceednet/package/packagetab_details.dart';
 import 'package:xceednet/package/packagetab_limit.dart';
 import 'package:xceednet/package/packagetab_minimum.dart';
 import 'package:xceednet/package/packagetab_timeslot.dart';
+import 'package:xceednet/package/unpublishedpackage_bottomsheet.dart';
 import 'package:xceednet/profile/changepassword_bottomsheet.dart';
 import 'package:xceednet/subscribers/datausage.dart';
 import 'package:xceednet/subscribers/disablesubscriber_bottomsheet.dart';
@@ -55,8 +56,11 @@ void _onChoiceSelected(String choice) {
     ),
     context: context, builder: (BuildContext context) { 
       return 
-      choice == 'Disable Subscriber' ?
+      choice == 'Disable Package' ?
       DisablePackageBottomSheet()
+      :
+      choice == 'Unpublished Package' ?
+      UnPublishedPackageBottomSheet()
       :
       Container();
     }, 

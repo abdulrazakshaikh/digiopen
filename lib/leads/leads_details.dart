@@ -18,6 +18,7 @@ class LeadsDetails extends StatefulWidget {
 
 class _LeadsDetailsState extends State<LeadsDetails> with TickerProviderStateMixin {
  
+var _ticketStatus = "Assigned";
 
 late TabController _tabController;
 
@@ -84,9 +85,39 @@ void _onChoiceSelected(String choice) {
                     style: GoogleFonts.roboto(textStyle: Theme.of(context).appBarTheme.titleTextStyle),
                   ),
                   SizedBox(height: 3),
-                  Text('9876543210',
-                    style: GoogleFonts.roboto(textStyle: Theme.of(context).appBarTheme.titleTextStyle, 
-                      fontSize: 12, color: Theme.of(context).colorScheme.secondary,
+                  Container(
+                    decoration: BoxDecoration(
+                      color: 
+                      _ticketStatus == "Open" ? Colors.blue :
+                      _ticketStatus == "Assigned" ? Colors.deepPurple :
+                      _ticketStatus == "Reassigned" ? Colors.deepPurple : 
+                      _ticketStatus == "Rejected" ? Colors.red :
+                      _ticketStatus == "Pending" ? Colors.orange :
+                      _ticketStatus == "In Process" ? Colors.blue : 
+                      _ticketStatus == "Cancelled" ? Colors.red :
+                      _ticketStatus == "Resolved" ? Colors.green :
+                      _ticketStatus == "Reopen" ? Colors.blue : 
+                      _ticketStatus == "Closed" ? Colors.green : 
+                      null,
+                      borderRadius: BorderRadius.circular(4),
+                    ),
+                    padding: EdgeInsets.symmetric(horizontal: 10, vertical: 3),
+                    child: Text(
+                      _ticketStatus == "Open" ? 'Open'.toUpperCase() :
+                      _ticketStatus == "Assigned" ? 'Assigned'.toUpperCase() :
+                      _ticketStatus == "Reassigned" ? 'Reassigned'.toUpperCase() :
+                      _ticketStatus == "Rejected" ? 'Rejected'.toUpperCase() :
+                      _ticketStatus == "Pending" ? 'Pending'.toUpperCase() :
+                      _ticketStatus == "In Process" ? 'In Process'.toUpperCase() :
+                      _ticketStatus == "Cancelled" ? 'Cancelled'.toUpperCase() :
+                      _ticketStatus == "Resolved" ? 'Resolved'.toUpperCase() :
+                      _ticketStatus == "Reopen" ? 'Reopen'.toUpperCase() : 
+                      _ticketStatus == "Closed" ? 'Closed'.toUpperCase() :
+                      '-',
+                      style: GoogleFonts.robotoCondensed(
+                        textStyle: Theme.of(context).appBarTheme.titleTextStyle, 
+                        fontSize: 11, color: Colors.white, letterSpacing: 1.5,
+                      ),
                     ),
                   ),
                 ],
