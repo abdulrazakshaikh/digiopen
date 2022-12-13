@@ -11,6 +11,7 @@ import 'package:xceednet/ui/inventory/sales/sales_list.dart';
 import 'package:xceednet/ui/inventory/suppliers/supplier_list.dart';
 import 'package:xceednet/ui/invoice/invoices_list.dart';
 import 'package:xceednet/ui/leads/leads_list.dart';
+import 'package:xceednet/ui/login/select_location.dart';
 import 'package:xceednet/ui/new_update.dart';
 import 'package:xceednet/ui/nodes/nodes_list.dart';
 import 'package:xceednet/ui/online_subscribers/onlinesubscribers_list.dart';
@@ -25,6 +26,8 @@ import 'package:xceednet/ui/tickets/tickets_list.dart';
 import 'package:xceednet/ui/vouchers/vouchers_batches_list.dart';
 import 'package:xceednet/ui/vouchers/vouchers_list.dart';
 import 'package:xceednet/ui/zones/zones_list.dart';
+
+import '../../model/storage/shared_prefs.dart';
 
 class MenuDrawer extends StatefulWidget {
   var onChange;
@@ -112,7 +115,7 @@ class _MenuDrawerState extends State<MenuDrawer> {
       "title": "Access Request Log",
       "submenu": "",
     },
-    {
+    /* {
       "id": "005",
       "icon": Icons.article_outlined,
       "title": "Reports",
@@ -186,17 +189,22 @@ class _MenuDrawerState extends State<MenuDrawer> {
       "icon": Icons.local_activity_outlined,
       "title": "Voucher Batches",
       "submenu": "",
-    },
+    },*/
     {
       "id": "017",
       "icon": Icons.campaign_outlined,
       "title": "New Updates",
       "submenu": "",
     },
+    /*{
+      "id": "018",
+      "icon": Icons.change_circle_outlined,
+      "title": "Change Location",
+      "submenu": "",
+    },*/
   ];
 
   void onThemeChanged(bool value, ThemeNotifier themeNotifier) async {
-    print("IsDark$value");
     themeNotifier.setIsDarkTheme(value);
     var prefs = await SharedPreferences.getInstance();
     prefs.setBool('darkMode', value);
@@ -210,105 +218,123 @@ class _MenuDrawerState extends State<MenuDrawer> {
       child: Drawer(
         child: Column(
           children: [
-            Container(
-                width: double.infinity,
-                padding: EdgeInsets.fromLTRB(10, 15, 5, 15),
-                decoration: BoxDecoration(
-                  color: Theme.of(context).colorScheme.primary,
-                ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Row(
-                      children: [
-                        Container(
-                          width: 54,
-                          height: 54,
-                          child: CircleAvatar(
-                            backgroundImage:
-                                AssetImage('assets/images/default.jpg'),
-                            radius: 60,
+            GestureDetector(
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.push(
+                    context,
+                    PageRouteBuilder(
+                      pageBuilder: (context, animation, secondaryAnimation) =>
+                          FadeTransition(
+                              opacity: animation,
+                              child: Profile(title: 'Profile')),
+                    ));
+              },
+              child: Container(
+                  width: double.infinity,
+                  padding: EdgeInsets.fromLTRB(10, 15, 5, 15),
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Row(
+                        children: [
+                          Container(
+                            width: 54,
+                            height: 54,
+                            child: CircleAvatar(
+                              backgroundImage:
+                                  AssetImage('assets/images/default.jpg'),
+                              radius: 60,
+                            ),
                           ),
-                        ),
-                        SizedBox(width: 10),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'Augustus Harrell',
-                                style: GoogleFonts.roboto(
-                                  textStyle:
-                                      Theme.of(context).textTheme.titleLarge,
-                                  color: Colors.white,
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
-                                  letterSpacing: 1,
-                                ),
-                              ),
-                              SizedBox(height: 5),
-                              OutlinedButton(
-                                onPressed: () {
-                                  Navigator.pop(context);
-                                  Navigator.push(
-                                      context,
-                                      PageRouteBuilder(
-                                        pageBuilder: (context, animation,
-                                                secondaryAnimation) =>
-                                            FadeTransition(
-                                                opacity: animation,
-                                                child:
-                                                    Profile(title: 'Profile')),
-                                      ));
-                                },
-                                style: OutlinedButton.styleFrom(
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(10)),
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: 10, vertical: 5),
-                                  alignment: Alignment.center,
-                                  side:
-                                      BorderSide(width: 1, color: Colors.white),
-                                ),
-                                child: Text(
-                                  'View Profile',
+                          SizedBox(width: 10),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  '${SharedPrefs().selectedUserLocation!.subdomain.toString().toUpperCase()}',
                                   style: GoogleFonts.roboto(
                                     textStyle:
-                                        Theme.of(context).textTheme.labelSmall,
-                                    color:
-                                        Theme.of(context).colorScheme.onPrimary,
-                                    letterSpacing: 1.2,
+                                        Theme.of(context).textTheme.titleLarge,
+                                    color: Colors.white,
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                    letterSpacing: 1,
                                   ),
                                 ),
-                              ),
-                            ],
+                                SizedBox(height: 5),
+                                OutlinedButton(
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                    Navigator.push(
+                                        context,
+                                        PageRouteBuilder(
+                                          pageBuilder: (context, animation,
+                                                  secondaryAnimation) =>
+                                              FadeTransition(
+                                                  opacity: animation,
+                                                  child: SelectLocation()),
+                                        ));
+                                  },
+                                  style: OutlinedButton.styleFrom(
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(10)),
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: 5, vertical: 0),
+                                    alignment: Alignment.center,
+                                    side: BorderSide(
+                                        width: 1, color: Colors.white),
+                                  ),
+                                  child: Text(
+                                    'Change Location',
+                                    style: GoogleFonts.roboto(
+                                      textStyle: Theme.of(context)
+                                          .textTheme
+                                          .labelSmall,
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .onPrimary,
+                                      letterSpacing: 0.8,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
+                          IconButton(
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                              icon: Icon(
+                                Icons.close,
+                                color: Colors.white,
+                              )),
+                        ],
+                      ),
+                    ],
+                  )),
+            ),
+            true
+                ? Container()
+                : Container(
+                    child: ExpansionTile(
+                      collapsedBackgroundColor:
+                          Theme.of(context).colorScheme.surface,
+                      backgroundColor: Theme.of(context).colorScheme.surface,
+                      leading: Icon(Icons.admin_panel_settings_outlined),
+                      title: Text(
+                        'Admin',
+                        style: GoogleFonts.robotoCondensed(
+                          textStyle: Theme.of(context).textTheme.titleSmall,
+                          letterSpacing: 1.5,
                         ),
-                        IconButton(
-                            onPressed: () {
-                              Navigator.pop(context);
-                            },
-                            icon: Icon(
-                              Icons.close,
-                              color: Colors.white,
-                            )),
-                      ],
-                    ),
-                  ],
-                )),
-            Container(
-              child: ExpansionTile(
-                collapsedBackgroundColor: Theme.of(context).colorScheme.surface,
-                backgroundColor: Theme.of(context).colorScheme.surface,
-                leading: Icon(Icons.admin_panel_settings_outlined),
-                title: Text(
-                  'Admin',
-                  style: GoogleFonts.robotoCondensed(
-                    textStyle: Theme.of(context).textTheme.titleSmall,
-                    letterSpacing: 1.5,
-                  ),
-                ),
+                      ),
                 children: [
                   Container(
                     decoration: BoxDecoration(
@@ -332,29 +358,31 @@ class _MenuDrawerState extends State<MenuDrawer> {
                             style: GoogleFonts.robotoCondensed(
                               textStyle: Theme.of(context).textTheme.titleSmall,
                               letterSpacing: 1.5,
-                            ),
+                                  ),
+                                ),
+                                onTap: () {},
+                              );
+                            },
                           ),
-                          onTap: () {},
-                        );
-                      },
+                        )
+                      ],
                     ),
-                  )
-                ],
-              ),
-            ),
-            SizedBox(height: 10),
-            Container(
-              width: double.infinity,
-              padding: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
-              child: Text(
-                'Navigation'.toUpperCase(),
-                style: GoogleFonts.robotoCondensed(
-                  textStyle: Theme.of(context).textTheme.labelMedium,
-                  color: Theme.of(context).colorScheme.secondary,
-                  fontWeight: FontWeight.w500,
-                  letterSpacing: 2.5,
-                ),
-              ),
+                  ),
+            true ? Container() : SizedBox(height: 10),
+            true
+                ? Container()
+                : Container(
+                    width: double.infinity,
+                    padding: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+                    child: Text(
+                      'Navigation'.toUpperCase(),
+                      style: GoogleFonts.robotoCondensed(
+                        textStyle: Theme.of(context).textTheme.labelMedium,
+                        color: Theme.of(context).colorScheme.secondary,
+                        fontWeight: FontWeight.w500,
+                        letterSpacing: 2.5,
+                      ),
+                    ),
             ),
             Expanded(
               child: ListView.separated(
@@ -495,61 +523,70 @@ class _MenuDrawerState extends State<MenuDrawer> {
   }
 
   void callPage(BuildContext context, Map<dynamic, dynamic> item) {
-    print(item['id']);
-    Navigator.of(context).pushAndRemoveUntil(
-      PageRouteBuilder(
-        pageBuilder: (context, animation, secondaryAnimation) => FadeTransition(
-          opacity: animation,
-          child: item["id"] == "001"
-              ? Dashboard()
-              : item["id"] == "002"
-                  ? SubscribersList()
-                  : item["id"] == "003"
-                      ? OnlineSubscribersList()
-                      : item["id"] == "004"
-                          ? AccessRequestList()
-                          : item["id"] == "005"
-                              ? Reports()
-                              : item["id"] == "006"
-                                  ? TicketsList()
-                                  : item["id"] == "007"
-                                      ? LeadsList()
-                                      : item["id"] == "008"
-                                          ? PackageSalesList()
-                                          : item["id"] == "009"
-                                              ? InvoicesList()
-                                              : item["id"] == "010"
-                                                  ? PaymentList()
-                                                  : item["id"] == "011-1"
-                                                      ? SalesList()
-                                                      : item["id"] == "011-2"
-                                                          ? PurchaseList()
-                                                          : item["id"] ==
-                                                                  "011-3"
-                                                              ? ProductList()
-                                                              : item["id"] ==
-                                                                      "011-4"
-                                                                  ? SupplierList()
-                                                                  : item["id"] ==
-                                                                          "011-5"
-                                                                      ? LogList()
-                                                                      : item["id"] ==
-                                                                              "012"
-                                                                          ? ZonesList()
-                                                                          : item["id"] == "013"
-                                                                              ? NodesList()
-                                                                              : item["id"] == "014"
-                                                                                  ? PackageList()
-                                                                                  : item["id"] == "015"
-                                                                                      ? VouchersList()
-                                                                                      : item["id"] == "016"
-                                                                                          ? VouchersBatchesList()
-                                                                                          : item["id"] == "017"
-                                                                                              ? NewUpdateScreen()
-                                                                                              : Dashboard(),
+    if (item['id'] == "018") {
+      Navigator.of(context)
+          .push(MaterialPageRoute(builder: (context) => SelectLocation()));
+    } else if (item['id'] == "017") {
+      Navigator.of(context)
+          .push(MaterialPageRoute(builder: (context) => NewUpdateScreen()));
+    } else
+      Navigator.of(context).pushAndRemoveUntil(
+        PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) =>
+              FadeTransition(
+            opacity: animation,
+            child: item["id"] == "001"
+                ? Dashboard()
+                : item["id"] == "002"
+                    ? SubscribersList()
+                    : item["id"] == "003"
+                        ? OnlineSubscribersList()
+                        : item["id"] == "004"
+                            ? AccessRequestList()
+                            : item["id"] == "005"
+                                ? Reports()
+                                : item["id"] == "006"
+                                    ? TicketsList()
+                                    : item["id"] == "007"
+                                        ? LeadsList()
+                                        : item["id"] == "008"
+                                            ? PackageSalesList()
+                                            : item["id"] == "009"
+                                                ? InvoicesList()
+                                                : item["id"] == "010"
+                                                    ? PaymentList()
+                                                    : item["id"] == "011-1"
+                                                        ? SalesList()
+                                                        : item["id"] == "011-2"
+                                                            ? PurchaseList()
+                                                            : item["id"] ==
+                                                                    "011-3"
+                                                                ? ProductList()
+                                                                : item["id"] ==
+                                                                        "011-4"
+                                                                    ? SupplierList()
+                                                                    : item["id"] ==
+                                                                            "011-5"
+                                                                        ? LogList()
+                                                                        : item["id"] ==
+                                                                                "012"
+                                                                            ? ZonesList()
+                                                                            : item["id"] == "013"
+                                                                                ? NodesList()
+                                                                                : item["id"] == "014"
+                                                                                    ? PackageList()
+                                                                                    : item["id"] == "015"
+                                                                                        ? VouchersList()
+                                                                                        : item["id"] == "016"
+                                                                                            ? VouchersBatchesList()
+                                                                                            : item["id"] == "017"
+                                                                                                ? NewUpdateScreen()
+                                                                                                : item["id"] == "018"
+                                                                                                    ? SelectLocation()
+                                                                                                    : Dashboard(),
+          ),
         ),
-      ),
-      (Route<dynamic> route) => false,
-    );
+        (Route<dynamic> route) => false,
+      );
   }
 }

@@ -1,21 +1,20 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:intl/intl.dart';
 import 'package:xceednet/ui/subscribers/subscribers_details.dart';
 
-class SubscriberListItem extends StatefulWidget {
+class OnlineSubscriberListItem extends StatefulWidget {
   late Map item;
 
-  SubscriberListItem(this.item);
+  OnlineSubscriberListItem(this.item);
 
   @override
   State<StatefulWidget> createState() {
-    return SubscriberListItemState();
+    return OnlineSubscriberListItemState();
   }
 }
 
-class SubscriberListItemState extends State<SubscriberListItem> {
+class OnlineSubscriberListItemState extends State<OnlineSubscriberListItem> {
   late Map item;
 
   @override
@@ -38,20 +37,14 @@ class SubscriberListItemState extends State<SubscriberListItem> {
 
   @override
   Widget build(BuildContext context) {
-    var renewed = "NA";
-    var expires_at = "NA";
-    if (item['subscribers.renewed_at'] != null) {
-      String string =
-          item['subscribers.renewed_at'] ?? "".substring(0, 10).toString();
-      renewed = DateFormat('dd-MMM-yyyy')
-          .format(DateFormat('yyyy-MM-dd').parse(string));
-    }
-    if (item['subscribers.expires_at'] != null) {
-      var string1 =
-          item['subscribers.expires_at'] ?? "".substring(0, 10).toString();
-      expires_at = DateFormat('dd-MMM-yyyy')
-          .format(DateFormat('yyyy-MM-dd').parse(string1));
-    }
+    /* var string =
+        item['subscribers.renewed_at'].toString().substring(0, 10).toString();
+    var string1 =
+        item['subscribers.expires_at'].toString().substring(0, 10).toString();
+    String renewed = DateFormat('dd-MMM-yyyy')
+        .format(DateFormat('yyyy-MM-dd').parse(string));
+    String expires_at = DateFormat('dd-MMM-yyyy')
+        .format(DateFormat('yyyy-MM-dd').parse(string1));*/
     return GestureDetector(
       onTap: () {
         Navigator.of(context).push(
@@ -85,30 +78,6 @@ class SubscriberListItemState extends State<SubscriberListItem> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Customer ID : '.toLowerCase(),
-                          style: GoogleFonts.roboto(
-                              textStyle:
-                                  Theme.of(context).textTheme.labelMedium,
-                              letterSpacing: 1.5),
-                        ),
-                        SizedBox(height: 3),
-                        Text(
-                          '${item["subscribers.subscriberid"]}',
-                          style: GoogleFonts.roboto(
-                              textStyle: Theme.of(context).textTheme.bodyMedium,
-                              fontSize: 13,
-                              fontWeight: FontWeight.w500,
-                              letterSpacing: 1.2),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Expanded(
-                    flex: 5,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
                           'Username : '.toLowerCase(),
                           style: GoogleFonts.roboto(
                               textStyle:
@@ -117,7 +86,31 @@ class SubscriberListItemState extends State<SubscriberListItem> {
                         ),
                         SizedBox(height: 3),
                         Text(
-                          '${item["subscribers.username"]}',
+                          '${item["radacct.username"]}',
+                          style: GoogleFonts.roboto(
+                              textStyle: Theme.of(context).textTheme.bodyMedium,
+                              fontSize: 13,
+                              fontWeight: FontWeight.w500,
+                              letterSpacing: 1.2),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Expanded(
+                    flex: 5,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Logon Time : '.toLowerCase(),
+                          style: GoogleFonts.roboto(
+                              textStyle:
+                                  Theme.of(context).textTheme.labelMedium,
+                              letterSpacing: 1.5),
+                        ),
+                        SizedBox(height: 3),
+                        Text(
+                          '${item["radacct.acctstarttime"]}',
                           style: GoogleFonts.roboto(
                               textStyle: Theme.of(context).textTheme.bodyMedium,
                               fontSize: 13,
@@ -141,7 +134,7 @@ class SubscriberListItemState extends State<SubscriberListItem> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Name : '.toLowerCase(),
+                          'NAS : '.toLowerCase(),
                           style: GoogleFonts.roboto(
                               textStyle:
                                   Theme.of(context).textTheme.labelMedium,
@@ -149,7 +142,7 @@ class SubscriberListItemState extends State<SubscriberListItem> {
                         ),
                         SizedBox(height: 3),
                         Text(
-                          '${item["subscribers.name"]}',
+                          '${item["radacct.nasipaddress"]}',
                           style: GoogleFonts.roboto(
                               textStyle: Theme.of(context).textTheme.bodyMedium,
                               fontSize: 13,
@@ -165,7 +158,7 @@ class SubscriberListItemState extends State<SubscriberListItem> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Mobile : '.toLowerCase(),
+                          'NAS Id : '.toLowerCase(),
                           style: GoogleFonts.roboto(
                               textStyle:
                                   Theme.of(context).textTheme.labelMedium,
@@ -173,7 +166,7 @@ class SubscriberListItemState extends State<SubscriberListItem> {
                         ),
                         SizedBox(height: 3),
                         Text(
-                          '${item["subscribers.mobile"] ?? "Key Required"}',
+                          '${item["radacct.nasipaddress"]}',
                           style: GoogleFonts.roboto(
                               textStyle: Theme.of(context).textTheme.bodyMedium,
                               fontSize: 13,
@@ -197,7 +190,7 @@ class SubscriberListItemState extends State<SubscriberListItem> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Zone : '.toLowerCase(),
+                          'MAC Address : '.toLowerCase(),
                           style: GoogleFonts.roboto(
                               textStyle:
                                   Theme.of(context).textTheme.labelMedium,
@@ -205,7 +198,7 @@ class SubscriberListItemState extends State<SubscriberListItem> {
                         ),
                         SizedBox(height: 3),
                         Text(
-                          '${item["location_zones.name"]['location_zone_name'] ?? "NA"}',
+                          '${item["radacct.callingstationid"]}',
                           style: GoogleFonts.roboto(
                               textStyle: Theme.of(context).textTheme.bodyMedium,
                               fontSize: 13,
@@ -221,7 +214,7 @@ class SubscriberListItemState extends State<SubscriberListItem> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Node : '.toLowerCase(),
+                          'IP Address : '.toLowerCase(),
                           style: GoogleFonts.roboto(
                               textStyle:
                                   Theme.of(context).textTheme.labelMedium,
@@ -229,7 +222,7 @@ class SubscriberListItemState extends State<SubscriberListItem> {
                         ),
                         SizedBox(height: 3),
                         Text(
-                          '${item["location_nodes.name"]['location_node_name'] ?? "NA"}',
+                          '${item["radacct.framedipaddress"]}',
                           style: GoogleFonts.roboto(
                               textStyle: Theme.of(context).textTheme.bodyMedium,
                               fontSize: 13,
@@ -253,7 +246,7 @@ class SubscriberListItemState extends State<SubscriberListItem> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Package : '.toLowerCase(),
+                          'Upload : '.toLowerCase(),
                           style: GoogleFonts.roboto(
                               textStyle:
                                   Theme.of(context).textTheme.labelMedium,
@@ -261,7 +254,7 @@ class SubscriberListItemState extends State<SubscriberListItem> {
                         ),
                         SizedBox(height: 3),
                         Text(
-                          '${item["location_packages.name"]['location_package_name']}',
+                          '${item["radacct.acctinputoctets"]}',
                           style: GoogleFonts.roboto(
                               textStyle: Theme.of(context).textTheme.bodyMedium,
                               fontSize: 13,
@@ -277,7 +270,7 @@ class SubscriberListItemState extends State<SubscriberListItem> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Online : '.toLowerCase(),
+                          'Download : '.toLowerCase(),
                           style: GoogleFonts.roboto(
                               textStyle:
                                   Theme.of(context).textTheme.labelMedium,
@@ -285,103 +278,7 @@ class SubscriberListItemState extends State<SubscriberListItem> {
                         ),
                         SizedBox(height: 3),
                         Text(
-                          '${item["subscribers.online"] == 'false' ? 'online' : 'offline'}',
-                          style: GoogleFonts.roboto(
-                              textStyle: Theme.of(context).textTheme.bodyMedium,
-                              fontSize: 13,
-                              fontWeight: FontWeight.w500,
-                              letterSpacing: 1.2),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Expanded(
-                    flex: 5,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Status : '.toLowerCase(),
-                          style: GoogleFonts.roboto(
-                              textStyle:
-                                  Theme.of(context).textTheme.labelMedium,
-                              letterSpacing: 1.5),
-                        ),
-                        SizedBox(height: 3),
-                        Text(
-                          '${item["subscribers.status"]}',
-                          style: GoogleFonts.roboto(
-                              textStyle: Theme.of(context).textTheme.bodyMedium,
-                              fontSize: 13,
-                              fontWeight: FontWeight.w500,
-                              letterSpacing: 1.2),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-              decoration: BoxDecoration(
-                  border: Border(
-                      top: BorderSide(
-                          width: 1, color: Theme.of(context).dividerColor))),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Expanded(
-                    flex: 5,
-                    child: Wrap(
-                      crossAxisAlignment: WrapCrossAlignment.start,
-                      runSpacing: 3,
-                      spacing: 5,
-                      children: [
-                        Text(
-                          'Renewed at : '.toLowerCase(),
-                          style: GoogleFonts.roboto(
-                              textStyle:
-                                  Theme.of(context).textTheme.labelMedium,
-                              letterSpacing: 1.5),
-                        ),
-                        SizedBox(height: 3),
-                        Text(
-                          '${renewed}',
-                          style: GoogleFonts.roboto(
-                              textStyle: Theme.of(context).textTheme.bodyMedium,
-                              fontSize: 13,
-                              fontWeight: FontWeight.w500,
-                              letterSpacing: 1.2),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Expanded(
-                    flex: 5,
-                    child: Wrap(
-                      crossAxisAlignment: WrapCrossAlignment.start,
-                      runSpacing: 3,
-                      spacing: 5,
-                      children: [
-                        Text(
-                          'Expired at : '.toLowerCase(),
-                          style: GoogleFonts.roboto(
-                              textStyle:
-                                  Theme.of(context).textTheme.labelMedium,
-                              letterSpacing: 1.5),
-                        ),
-                        SizedBox(height: 3),
-                        Text(
-                          '$expires_at',
+                          '${item["radacct.acctoutputoctets"]}',
                           style: GoogleFonts.roboto(
                               textStyle: Theme.of(context).textTheme.bodyMedium,
                               fontSize: 13,

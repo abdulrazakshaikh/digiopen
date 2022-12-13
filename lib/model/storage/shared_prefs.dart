@@ -57,13 +57,17 @@ class SharedPrefs extends ChangeNotifier {
     _sharedPrefs.setString(keyAuthToken, value);
   }
 
-
   String? get authTokenn {
     return _sharedPrefs.getString(keyAuthToken);
   }
 
+  set email(String? value) {
+    _sharedPrefs.setString(keySelectedUserId, value ?? "");
+  }
 
-
+  String? get email {
+    return _sharedPrefs.getString(keySelectedUserId);
+  }
 
   void logout() {
     SharedPrefs().isLogin = false;

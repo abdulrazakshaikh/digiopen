@@ -9,7 +9,6 @@ import 'package:provider/provider.dart';
 import 'package:xceednet/data/user_location_access.dart';
 import 'package:xceednet/model/storage/shared_prefs.dart';
 import 'package:xceednet/ui/dashboard.dart';
-import 'package:xceednet/ui/home_screen.dart';
 
 import '../../view_model/auth_view_model.dart';
 
@@ -172,7 +171,7 @@ class _SelectLocationState extends State<SelectLocation>
                                     ),
                                   ),
                                   subtitle: Text(
-                                    '${item.domain}/${item.subdomain}',
+                                    '${item.subdomain}/${item.domain}',
                                     style: GoogleFonts.roboto(
                                         textStyle: Theme.of(context)
                                             .textTheme
@@ -184,7 +183,7 @@ class _SelectLocationState extends State<SelectLocation>
                                     onPressed: () {
                                       SharedPrefs().selectedUserLocation=item;
                                       SharedPrefs().isLogin=true;
-                                      Navigator.of(context).push(
+                                      Navigator.of(context).pushAndRemoveUntil(
                                         PageRouteBuilder(
                                           pageBuilder: (context, animation,
                                                   secondaryAnimation) =>
@@ -192,6 +191,7 @@ class _SelectLocationState extends State<SelectLocation>
                                                   opacity: animation,
                                                   child: Dashboard()),
                                         ),
+                                        (Route<dynamic> route) => false,
                                       );
                                     },
                                     child: Text('Select'),

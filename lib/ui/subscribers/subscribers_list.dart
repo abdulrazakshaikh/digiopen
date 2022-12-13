@@ -56,7 +56,6 @@ class _SubscribersListState extends State<SubscribersList>
         setState(() {});
       } else {
         subscribersList.addAll(subscriberViewModel.subscriberData!);
-        print("objectobjectobjectobjectobjectobjectobject");
         listListner.addListList({
           "current_page": currentPage,
           "last_page": 1000,
@@ -73,18 +72,23 @@ class _SubscribersListState extends State<SubscribersList>
   Widget build(BuildContext context) {
     subscriberViewModel = context.watch<SubscriberViewModel>();
     return Scaffold(
+      bottomNavigationBar: subscriberViewModel.isLoading
+          ? Container(
+              color: Theme.of(context).colorScheme.surface,
+              height: 50,
+              padding: EdgeInsets.only(right: 10),
+              child: Center(
+                child: CircularProgressIndicator(),
+              ),
+            )
+          : null,
       backgroundColor: Theme.of(context).colorScheme.surface,
       drawer: MenuDrawer(),
       appBar: AppBar(
         title: Text("Subscribers List"),
         actions: [
           subscriberViewModel.isLoading
-              ? Container(
-                  padding: EdgeInsets.only(right: 10),
-                  child: Center(
-                    child: CircularProgressIndicator(),
-                  ),
-                )
+              ? Container()
               : IconButton(
                   onPressed: () {
                     Navigator.of(context).push(
@@ -96,15 +100,15 @@ class _SubscribersListState extends State<SubscribersList>
                       ),
                     );
                   },
-                  icon: Icon(Icons.add),
-                  style: IconButton.styleFrom(
-                    shape: RoundedRectangleBorder(),
-                    // backgroundColor: Theme.of(context).colorScheme.tertiary.withOpacity(0.1),
-                    foregroundColor: Theme.of(context).colorScheme.primary,
-                    minimumSize: Size(54, 54),
-                    fixedSize: Size(54, 54),
-                  ),
-                ),
+            icon: Icon(Icons.add),
+            style: IconButton.styleFrom(
+              shape: RoundedRectangleBorder(),
+              // backgroundColor: Theme.of(context).colorScheme.tertiary.withOpacity(0.1),
+              foregroundColor: Theme.of(context).colorScheme.primary,
+              minimumSize: Size(54, 54),
+              fixedSize: Size(54, 54),
+            ),
+          ),
         ],
       ),
       body: Column(
@@ -119,18 +123,18 @@ class _SubscribersListState extends State<SubscribersList>
           true
               ? Flexible(child: widget1!)
               : ListView.separated(
-                  primary: false,
-                  physics: NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
-                  itemCount:
-                      subscribersList == null ? 0 : subscribersList.length,
-                  separatorBuilder: (BuildContext context, int index) {
-                    return SizedBox(height: 5);
-                  },
-                  itemBuilder: (BuildContext context, int index) {
-                    Map item = subscribersList[index];
-                    return SubscriberListItem(item);
-                  }),
+              primary: false,
+              physics: NeverScrollableScrollPhysics(),
+              shrinkWrap: true,
+              itemCount:
+              subscribersList == null ? 0 : subscribersList.length,
+              separatorBuilder: (BuildContext context, int index) {
+                return SizedBox(height: 5);
+              },
+              itemBuilder: (BuildContext context, int index) {
+                Map item = subscribersList[index];
+                return SubscriberListItem(item);
+              }),
         ],
       ),
     );

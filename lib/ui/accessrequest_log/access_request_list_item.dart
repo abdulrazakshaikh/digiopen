@@ -1,21 +1,20 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:intl/intl.dart';
-import 'package:xceednet/ui/subscribers/subscribers_details.dart';
 
-class SubscriberListItem extends StatefulWidget {
+class AccessRequestListItem extends StatefulWidget {
   late Map item;
 
-  SubscriberListItem(this.item);
+  AccessRequestListItem(this.item);
 
   @override
   State<StatefulWidget> createState() {
-    return SubscriberListItemState();
+    return AccessRequestListItemState();
   }
 }
 
-class SubscriberListItemState extends State<SubscriberListItem> {
+class AccessRequestListItemState extends State<AccessRequestListItem> {
   late Map item;
 
   @override
@@ -38,31 +37,17 @@ class SubscriberListItemState extends State<SubscriberListItem> {
 
   @override
   Widget build(BuildContext context) {
-    var renewed = "NA";
-    var expires_at = "NA";
-    if (item['subscribers.renewed_at'] != null) {
-      String string =
-          item['subscribers.renewed_at'] ?? "".substring(0, 10).toString();
-      renewed = DateFormat('dd-MMM-yyyy')
-          .format(DateFormat('yyyy-MM-dd').parse(string));
-    }
-    if (item['subscribers.expires_at'] != null) {
-      var string1 =
-          item['subscribers.expires_at'] ?? "".substring(0, 10).toString();
-      expires_at = DateFormat('dd-MMM-yyyy')
-          .format(DateFormat('yyyy-MM-dd').parse(string1));
-    }
+    /* var string = item['subscriber_invoices.due_by'].toString().substring(0,10).toString();
+    String due_by=DateFormat('dd-MMM-yyyy').format(DateFormat('yyyy-MM-dd').parse(string));*/
+
     return GestureDetector(
       onTap: () {
-        Navigator.of(context).push(
+        /*Navigator.of(context).push(
           PageRouteBuilder(
             pageBuilder: (context, animation, secondaryAnimation) =>
-                FadeTransition(
-                    opacity: animation,
-                    child:
-                        SubscribersDetails(item['subscribers.id'].toString())),
+                FadeTransition(opacity: animation, child: PaymentDetails(item)),
           ),
-        );
+        );*/
       },
       child: Card(
         margin: EdgeInsets.zero,
@@ -85,7 +70,7 @@ class SubscriberListItemState extends State<SubscriberListItem> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Customer ID : '.toLowerCase(),
+                          'Requested on : '.toLowerCase(),
                           style: GoogleFonts.roboto(
                               textStyle:
                                   Theme.of(context).textTheme.labelMedium,
@@ -93,7 +78,7 @@ class SubscriberListItemState extends State<SubscriberListItem> {
                         ),
                         SizedBox(height: 3),
                         Text(
-                          '${item["subscribers.subscriberid"]}',
+                          '${item["subscriber_access_requests.requested_on"]}',
                           style: GoogleFonts.roboto(
                               textStyle: Theme.of(context).textTheme.bodyMedium,
                               fontSize: 13,
@@ -117,7 +102,64 @@ class SubscriberListItemState extends State<SubscriberListItem> {
                         ),
                         SizedBox(height: 3),
                         Text(
-                          '${item["subscribers.username"]}',
+                          '${item["subscriber_access_requests.username"]}',
+                          style: GoogleFonts.roboto(
+                              textStyle: Theme.of(context).textTheme.bodyMedium,
+                              fontSize: 13,
+                              fontWeight: FontWeight.w500,
+                              letterSpacing: 1.2),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(height: 10),
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Expanded(
+                    flex: 5,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Client MAC Address : '.toLowerCase(),
+                          style: GoogleFonts.roboto(
+                              textStyle:
+                                  Theme.of(context).textTheme.labelMedium,
+                              letterSpacing: 1.5),
+                        ),
+                        SizedBox(height: 3),
+                        Text(
+                          '${item["subscriber_access_requests.client_mac_address"]}',
+                          style: GoogleFonts.roboto(
+                              textStyle: Theme.of(context).textTheme.bodyMedium,
+                              fontSize: 13,
+                              fontWeight: FontWeight.w500,
+                              letterSpacing: 1.2),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Expanded(
+                    flex: 5,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Client IP Address : '.toLowerCase(),
+                          style: GoogleFonts.roboto(
+                              textStyle:
+                                  Theme.of(context).textTheme.labelMedium,
+                              letterSpacing: 1.5),
+                        ),
+                        SizedBox(height: 3),
+                        Text(
+                          '${item["subscriber_access_requests.client_ip_address"]}',
                           style: GoogleFonts.roboto(
                               textStyle: Theme.of(context).textTheme.bodyMedium,
                               fontSize: 13,
@@ -141,20 +183,22 @@ class SubscriberListItemState extends State<SubscriberListItem> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Name : '.toLowerCase(),
+                          'NAS IP Address : '.toLowerCase(),
                           style: GoogleFonts.roboto(
                               textStyle:
                                   Theme.of(context).textTheme.labelMedium,
                               letterSpacing: 1.5),
                         ),
                         SizedBox(height: 3),
-                        Text(
-                          '${item["subscribers.name"]}',
-                          style: GoogleFonts.roboto(
+                        Html(
+                          data:
+                              '${item["subscriber_access_requests.nas_ip_address"]}',
+                          /*style: GoogleFonts.roboto(
                               textStyle: Theme.of(context).textTheme.bodyMedium,
                               fontSize: 13,
                               fontWeight: FontWeight.w500,
-                              letterSpacing: 1.2),
+                              letterSpacing: 1.2
+                          ),*/
                         ),
                       ],
                     ),
@@ -165,7 +209,7 @@ class SubscriberListItemState extends State<SubscriberListItem> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Mobile : '.toLowerCase(),
+                          'Reply Type : '.toLowerCase(),
                           style: GoogleFonts.roboto(
                               textStyle:
                                   Theme.of(context).textTheme.labelMedium,
@@ -173,7 +217,7 @@ class SubscriberListItemState extends State<SubscriberListItem> {
                         ),
                         SizedBox(height: 3),
                         Text(
-                          '${item["subscribers.mobile"] ?? "Key Required"}',
+                          '${item["subscriber_access_requests.reply_type"]}',
                           style: GoogleFonts.roboto(
                               textStyle: Theme.of(context).textTheme.bodyMedium,
                               fontSize: 13,
@@ -197,7 +241,7 @@ class SubscriberListItemState extends State<SubscriberListItem> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Zone : '.toLowerCase(),
+                          'Reply Message : '.toLowerCase(),
                           style: GoogleFonts.roboto(
                               textStyle:
                                   Theme.of(context).textTheme.labelMedium,
@@ -205,31 +249,7 @@ class SubscriberListItemState extends State<SubscriberListItem> {
                         ),
                         SizedBox(height: 3),
                         Text(
-                          '${item["location_zones.name"]['location_zone_name'] ?? "NA"}',
-                          style: GoogleFonts.roboto(
-                              textStyle: Theme.of(context).textTheme.bodyMedium,
-                              fontSize: 13,
-                              fontWeight: FontWeight.w500,
-                              letterSpacing: 1.2),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Expanded(
-                    flex: 5,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Node : '.toLowerCase(),
-                          style: GoogleFonts.roboto(
-                              textStyle:
-                                  Theme.of(context).textTheme.labelMedium,
-                              letterSpacing: 1.5),
-                        ),
-                        SizedBox(height: 3),
-                        Text(
-                          '${item["location_nodes.name"]['location_node_name'] ?? "NA"}',
+                          '${item["subscriber_access_requests.reply_message"]}',
                           style: GoogleFonts.roboto(
                               textStyle: Theme.of(context).textTheme.bodyMedium,
                               fontSize: 13,
@@ -242,161 +262,11 @@ class SubscriberListItemState extends State<SubscriberListItem> {
                 ],
               ),
             ),
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Expanded(
-                    flex: 5,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Package : '.toLowerCase(),
-                          style: GoogleFonts.roboto(
-                              textStyle:
-                                  Theme.of(context).textTheme.labelMedium,
-                              letterSpacing: 1.5),
-                        ),
-                        SizedBox(height: 3),
-                        Text(
-                          '${item["location_packages.name"]['location_package_name']}',
-                          style: GoogleFonts.roboto(
-                              textStyle: Theme.of(context).textTheme.bodyMedium,
-                              fontSize: 13,
-                              fontWeight: FontWeight.w500,
-                              letterSpacing: 1.2),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Expanded(
-                    flex: 5,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Online : '.toLowerCase(),
-                          style: GoogleFonts.roboto(
-                              textStyle:
-                                  Theme.of(context).textTheme.labelMedium,
-                              letterSpacing: 1.5),
-                        ),
-                        SizedBox(height: 3),
-                        Text(
-                          '${item["subscribers.online"] == 'false' ? 'online' : 'offline'}',
-                          style: GoogleFonts.roboto(
-                              textStyle: Theme.of(context).textTheme.bodyMedium,
-                              fontSize: 13,
-                              fontWeight: FontWeight.w500,
-                              letterSpacing: 1.2),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Expanded(
-                    flex: 5,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Status : '.toLowerCase(),
-                          style: GoogleFonts.roboto(
-                              textStyle:
-                                  Theme.of(context).textTheme.labelMedium,
-                              letterSpacing: 1.5),
-                        ),
-                        SizedBox(height: 3),
-                        Text(
-                          '${item["subscribers.status"]}',
-                          style: GoogleFonts.roboto(
-                              textStyle: Theme.of(context).textTheme.bodyMedium,
-                              fontSize: 13,
-                              fontWeight: FontWeight.w500,
-                              letterSpacing: 1.2),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-              decoration: BoxDecoration(
-                  border: Border(
-                      top: BorderSide(
-                          width: 1, color: Theme.of(context).dividerColor))),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Expanded(
-                    flex: 5,
-                    child: Wrap(
-                      crossAxisAlignment: WrapCrossAlignment.start,
-                      runSpacing: 3,
-                      spacing: 5,
-                      children: [
-                        Text(
-                          'Renewed at : '.toLowerCase(),
-                          style: GoogleFonts.roboto(
-                              textStyle:
-                                  Theme.of(context).textTheme.labelMedium,
-                              letterSpacing: 1.5),
-                        ),
-                        SizedBox(height: 3),
-                        Text(
-                          '${renewed}',
-                          style: GoogleFonts.roboto(
-                              textStyle: Theme.of(context).textTheme.bodyMedium,
-                              fontSize: 13,
-                              fontWeight: FontWeight.w500,
-                              letterSpacing: 1.2),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Expanded(
-                    flex: 5,
-                    child: Wrap(
-                      crossAxisAlignment: WrapCrossAlignment.start,
-                      runSpacing: 3,
-                      spacing: 5,
-                      children: [
-                        Text(
-                          'Expired at : '.toLowerCase(),
-                          style: GoogleFonts.roboto(
-                              textStyle:
-                                  Theme.of(context).textTheme.labelMedium,
-                              letterSpacing: 1.5),
-                        ),
-                        SizedBox(height: 3),
-                        Text(
-                          '$expires_at',
-                          style: GoogleFonts.roboto(
-                              textStyle: Theme.of(context).textTheme.bodyMedium,
-                              fontSize: 13,
-                              fontWeight: FontWeight.w500,
-                              letterSpacing: 1.2),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
+            SizedBox(height: 10),
           ],
         ),
       ),
     );
+    ;
   }
 }

@@ -11,11 +11,18 @@ class AuthRepository {
     // var newAPIResponse = NewAPIResponse.fromJson(response);
     return response!;
   }
+
+  Future<NewAPIResponse> getUserLoginDetail({dynamic map}) async {
+    print("sdvdsvdsvvdsv");
+    NewAPIResponse response =
+        await _netoworkService.get(AppUrl.location_users, data: map);
+    // var newAPIResponse = NewAPIResponse.fromJson(response);
+    return response;
+  }
+
   Future<NewAPIResponse> getUserLocationAccess(dynamic map) async {
     NewAPIResponse response = await _netoworkService.get(AppUrl.listOfLocation);
     // var newAPIResponse = NewAPIResponse.fromJson(response);
     return response!;
   }
-
-
 }

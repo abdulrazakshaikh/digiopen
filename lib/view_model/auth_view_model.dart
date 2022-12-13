@@ -16,7 +16,9 @@ class AuthViewModel extends ChangeNotifier {
   bool get isLoading {
     return _isLoading;
   }
-  List<UserLocationAccess> userlocationAccess=[];
+
+  List<UserLocationAccess> userlocationAccess = [];
+
   Future<bool> userLogin(String username, String password) async {
     try {
       _isLoading = true;
@@ -31,8 +33,10 @@ class AuthViewModel extends ChangeNotifier {
         _error = _userdata.message;
         return false;
       } else {
-      //  var data = _userdata.data as List;
-        SharedPrefs().authToken=_userdata.data['auth_token'];
+        //  var data = _userdata.data as List;
+        SharedPrefs().authToken = _userdata.data['auth_token'];
+        SharedPrefs().email = username;
+        userDetails();
         //SharedPrefs().isLogin = true;
         notifyListeners();
         return true;
@@ -46,10 +50,33 @@ class AuthViewModel extends ChangeNotifier {
     }
   }
 
+  Future<bool> userDetails() async {
+    try {
+      print("aassasasasa");
+      var _userdata = await new AuthRepository().getUserLoginDetail(map: {});
+      if (!_userdata.isSuccess) {
+        _error = _userdata.message;
+        return false;
+      } else {
+        //  var data = _userdata.data as List;
+        var where = (_userdata.data['data'] as List)
+            .where((element) => element['email'] == SharedPrefs().email)
+            .toList();
+        UserData userData = UserData.fromJson(where[0]);
+        SharedPrefs().userdata = userData;
+        return true;
+      }
+    } catch (e) {
+      print(e);
+      _isLoading = false;
+      _error = e.toString();
+      return false;
+    }
+  }
 
   Future<bool> getUserLocationAccess() async {
     try {
-      userlocationAccess=[];
+      userlocationAccess = [];
       _isLoading = true;
       notifyListeners();
       var _userdata = await new AuthRepository().getUserLocationAccess({});
@@ -64,7 +91,7 @@ class AuthViewModel extends ChangeNotifier {
         data.forEach((element) {
           userlocationAccess.add(UserLocationAccess.fromJson(element));
         });
-       // SharedPrefs().authToken=_userdata.data['auth_token'];
+        // SharedPrefs().authToken=_userdata.data['auth_token'];
         //SharedPrefs().isLogin = true;
         notifyListeners();
         return true;

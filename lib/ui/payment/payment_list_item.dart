@@ -39,7 +39,6 @@ class PaymentListItemState extends State<PaymentListItem> {
   Widget build(BuildContext context) {
     /* var string = item['subscriber_invoices.due_by'].toString().substring(0,10).toString();
     String due_by=DateFormat('dd-MMM-yyyy').format(DateFormat('yyyy-MM-dd').parse(string));*/
-
     return GestureDetector(
       onTap: () {
         Navigator.of(context).push(
@@ -281,7 +280,7 @@ class PaymentListItemState extends State<PaymentListItem> {
                                 BorderRadius.all(Radius.circular(5.0)),
                           ),
                           child: Text(
-                            item['subscriber_payments.status'],
+                            item['subscriber_payments.status'].toString(),
                             style: TextStyle(color: Colors.white),
                           ),
                         )

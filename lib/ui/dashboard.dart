@@ -306,7 +306,7 @@ class _DashboardState extends State<Dashboard> {
             ],
           },
         ];
-        if (dashboardData['reseller'] == "false") {
+        if (dashboardData['reseller'].toString() == "false") {
           accordionList.removeWhere((element) => element['id'] == '008');
         }
         accordionList.removeWhere((element) => element['id'] == '003');

@@ -46,7 +46,7 @@ class NetworkApiService extends BaseService {
         newBaseUrl = AppUrl.baseUrl;
       } else {
         var keySelectedUserLocation2 = SharedPrefs().selectedUserLocation;
-        newBaseUrl = "https://" +
+        newBaseUrl = "http://" +
             keySelectedUserLocation2!.subdomain! +
             "." +
             keySelectedUserLocation2!.domain! +
@@ -89,7 +89,7 @@ class NetworkApiService extends BaseService {
         newBaseUrl = AppUrl.baseUrl;
       } else {
         var keySelectedUserLocation2 = SharedPrefs().selectedUserLocation;
-        newBaseUrl = "https://" +
+        newBaseUrl = "http://" +
             keySelectedUserLocation2!.subdomain! +
             "." +
             keySelectedUserLocation2!.domain! +

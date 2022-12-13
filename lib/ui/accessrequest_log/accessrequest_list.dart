@@ -1,86 +1,119 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
+import 'package:xceednet/ui/accessrequest_log/access_request_list_item.dart';
 import 'package:xceednet/ui/common_widgets/headToolbar.dart';
 import 'package:xceednet/ui/common_widgets/menuDrawer.dart';
-import 'package:xceednet/ui/profile/confirmation.dart';
+import 'package:xceednet/view_model/access_request_view_model.dart';
+
+import '../../utils/FsListWithSearchWidget.dart';
 
 class AccessRequestList extends StatefulWidget {
-
-  
   @override
   State<AccessRequestList> createState() => _AccessRequestListState();
 }
 
-class _AccessRequestListState extends State<AccessRequestList> {
+class _AccessRequestListState extends State<AccessRequestList>
+    implements PageLoadSearchListener {
+/*List subscribersList = [
+  {
+    "id": "101",
+    "status" : "John Doe",
 
+    "name" : "John Doe",
+    "mobile" : "9876543210",
 
-List accessLogList = [
-  {
-    "id": "001",
-    "requestedon" : "01 Sep, 2022",
-    "username" : "john310",
-    "nasipaddress" : "192.168.1.1",
-    "clientmacaddress" : "123.123.123.123.001",
-    "clientipaddress" : "192.168.1.1",
-    "replytype" : "Lorem Ipsum",
-    "replymessage" : "Lorem Ipsum Dolor Sit amet is simply dummy text used for typesetting",
-  },
-  {
-    "id": "002",
-    "requestedon" : "01 Sep, 2022",
-    "username" : "john310",
-    "nasipaddress" : "192.168.1.1",
-    "clientmacaddress" : "123.123.123.123.001",
-    "clientipaddress" : "192.168.1.1",
-    "replytype" : "Lorem Ipsum",
-    "replymessage" : "Lorem Ipsum Dolor Sit amet is simply dummy text used for typesetting",
-  },
-  {
-    "id": "003",
-    "requestedon" : "01 Sep, 2022",
-    "username" : "john310",
-    "nasipaddress" : "192.168.1.1",
-    "clientmacaddress" : "123.123.123.123.001",
-    "clientipaddress" : "192.168.1.1",
-    "replytype" : "Lorem Ipsum",
-    "replymessage" : "Lorem Ipsum Dolor Sit amet is simply dummy text used for typesetting",
-  },
-  {
-    "id": "004",
-    "requestedon" : "01 Sep, 2022",
-    "username" : "john310",
-    "nasipaddress" : "192.168.1.1",
-    "clientmacaddress" : "123.123.123.123.001",
-    "clientipaddress" : "192.168.1.1",
-    "replytype" : "Lorem Ipsum",
-    "replymessage" : "Lorem Ipsum Dolor Sit amet is simply dummy text used for typesetting",
-  },
-  {
-    "id": "005",
-    "requestedon" : "01 Sep, 2022",
-    "username" : "john310",
-    "nasipaddress" : "192.168.1.1",
-    "clientmacaddress" : "123.123.123.123.001",
-    "clientipaddress" : "192.168.1.1",
-    "replytype" : "Lorem Ipsum",
-    "replymessage" : "Lorem Ipsum Dolor Sit amet is simply dummy text used for typesetting",
-  },
-  {
-    "id": "006",
-    "requestedon" : "01 Sep, 2022",
-    "username" : "john310",
-    "nasipaddress" : "192.168.1.1",
-    "clientmacaddress" : "123.123.123.123.001",
-    "clientipaddress" : "192.168.1.1",
-    "replytype" : "Lorem Ipsum",
-    "replymessage" : "Lorem Ipsum Dolor Sit amet is simply dummy text used for typesetting",
-  },
-];
+    "createdon" : "01 Sep, 2022",
+    "assignedto" : "Johnson Doe",
 
+    "ticket" : "-",
+
+  },
+  {
+    "id": "102",
+    "name" : "John Doe",
+    "mobile" : "9876543210",
+    "createdon" : "01 Sep, 2022",
+    "assignedto" : "Johnson Doe",
+    "ticket" : "-",
+    "status" : "John Doe",
+  },
+  {
+    "id": "103",
+    "name" : "John Doe",
+    "mobile" : "9876543210",
+    "createdon" : "01 Sep, 2022",
+    "assignedto" : "Johnson Doe",
+    "ticket" : "-",
+    "status" : "John Doe",
+  },
+
+];*/
+  List invoicesList = [];
+  late AccessRequestViewModel accessRequestViewModel;
+
+  late FsListWithSearchState listListner;
+  String searchText = "";
+  int currentPage = 1;
+
+  @override
+  void initState() {
+    widget1 = FsListWithSearchWidget(
+      pageLoadListner: this,
+      title: false,
+      message: null,
+      itemBuilder: (BuildContext context, int index, var item) {
+        return AccessRequestListItem(item);
+      },
+      afterView: (FsListWithSearchState v) {
+        listListner = v;
+      },
+      showError: false,
+      // errorWidget: errorWidget(),
+    );
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      await getSubscriberListApi();
+    });
+  }
+
+  Future<void> getSubscriberListApi({String next = "0"}) async {
+    bool status = await accessRequestViewModel.getAccessRequestListData(
+        search: searchText, nextIndex: next);
+    if (status) {
+      invoicesList = [];
+      if (accessRequestViewModel.accessRequestListData!.length == 0) {
+        listListner.addListList({
+          "current_page": currentPage,
+          "last_page": currentPage,
+        }, invoicesList);
+        setState(() {});
+      } else {
+        invoicesList.addAll(accessRequestViewModel.accessRequestListData!);
+        listListner.addListList({
+          "current_page": currentPage,
+          "last_page": 1000,
+        }, invoicesList);
+        setState(() {});
+      }
+      //subscribersList = subscriberViewModel.subscriberData!;
+    }
+  }
+
+  Widget? widget1;
+
+  @override
+  lastPage(int page) {}
+
+  @override
+  loadNextPage(String page) {
+    int total = int.parse(page) * 10;
+    int cal = total - 10;
+    getSubscriberListApi(next: "$cal");
+  }
 
   @override
   Widget build(BuildContext context) {
+    accessRequestViewModel = context.watch<AccessRequestViewModel>();
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.surface,
       drawer: MenuDrawer(),
@@ -88,9 +121,9 @@ List accessLogList = [
         title: Text("Access Request Log"),
         actions: [
           IconButton(
-            onPressed: (){}, 
+            onPressed: () {},
             tooltip: 'Delete All Access Request Log',
-            icon: Icon(Icons.delete_forever_outlined), 
+            icon: Icon(Icons.delete_forever_outlined),
             style: IconButton.styleFrom(
               shape: RoundedRectangleBorder(),
               // backgroundColor: Theme.of(context).colorScheme.tertiary.withOpacity(0.1),
@@ -101,243 +134,16 @@ List accessLogList = [
           ),
         ],
       ),
-      body: ListView(
+      body: Column(
         children: [
-          HeadToolbar(),
-
-          Padding(
-            padding: EdgeInsets.symmetric(vertical: 5),
-            child: ListView.separated(
-              
-              primary: false,
-              physics: NeverScrollableScrollPhysics(),
-              shrinkWrap: true,
-              itemCount: accessLogList == null ? 0 : accessLogList.length,
-              separatorBuilder: (BuildContext context, int index) {
-                return SizedBox(height: 5);
-              },
-              itemBuilder: (BuildContext context, int index) {
-                Map item = accessLogList[index];
-                return Card(
-                  margin: EdgeInsets.zero,
-                  shape: RoundedRectangleBorder(
-                    side: BorderSide(width: 1, color: Theme.of(context).dividerColor)
-                  ),
-                  child: Column(
-                    children: [
-                      Container(
-                        padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                        decoration: BoxDecoration(
-                          border: Border(
-                            bottom: BorderSide(width: 1, color: Theme.of(context).dividerColor)
-                          )
-                        ),
-                        
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Expanded(
-                              flex: 5,
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text('Requested on : '.toLowerCase(),
-                                  style: GoogleFonts.roboto(
-                                    textStyle: Theme.of(context).textTheme.labelMedium,
-                                    letterSpacing: 1.5
-                                  ),
-                                  ),
-                                  SizedBox(height: 3),
-                                  Text('${item["requestedon"]}',
-                                  style: GoogleFonts.roboto(
-                                    textStyle: Theme.of(context).textTheme.bodyMedium,
-                                    fontSize: 13,
-                                    fontWeight: FontWeight.w500,
-                                    letterSpacing: 1.2
-                                  ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Expanded(
-                              flex: 5,
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text('Username : '.toLowerCase(),
-                                  style: GoogleFonts.roboto(
-                                    textStyle: Theme.of(context).textTheme.labelMedium,
-                                    letterSpacing: 1.5
-                                  ),
-                                  ),
-                                  SizedBox(height: 3),
-                                  Text('${item["username"]}',
-                                  style: GoogleFonts.roboto(
-                                    textStyle: Theme.of(context).textTheme.bodyMedium,
-                                    fontSize: 13,
-                                    fontWeight: FontWeight.w500,
-                                    letterSpacing: 1.2
-                                  ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      SizedBox(height : 10),
-                      Container(
-                        padding: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Expanded(
-                              flex: 5,
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text('Client MAC Address : '.toLowerCase(),
-                                  style: GoogleFonts.roboto(
-                                    textStyle: Theme.of(context).textTheme.labelMedium,
-                                    letterSpacing: 1.5
-                                  ),
-                                  ),
-                                  SizedBox(height: 3),
-                                  Text('${item["clientmacaddress"]}',
-                                  style: GoogleFonts.roboto(
-                                    textStyle: Theme.of(context).textTheme.bodyMedium,
-                                    fontSize: 13,
-                                    fontWeight: FontWeight.w500,
-                                    letterSpacing: 1.2
-                                  ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Expanded(
-                              flex: 5,
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text('Client IP Address : '.toLowerCase(),
-                                  style: GoogleFonts.roboto(
-                                    textStyle: Theme.of(context).textTheme.labelMedium,
-                                    letterSpacing: 1.5
-                                  ),
-                                  ),
-                                  SizedBox(height: 3),
-                                  Text('${item["clientipaddress"]}',
-                                  style: GoogleFonts.roboto(
-                                    textStyle: Theme.of(context).textTheme.bodyMedium,
-                                    fontSize: 13,
-                                    fontWeight: FontWeight.w500,
-                                    letterSpacing: 1.2
-                                  ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-
-                      Container(
-                        padding: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Expanded(
-                              flex: 5,
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text('NAS IP Address : '.toLowerCase(),
-                                  style: GoogleFonts.roboto(
-                                    textStyle: Theme.of(context).textTheme.labelMedium,
-                                    letterSpacing: 1.5
-                                  ),
-                                  ),
-                                  SizedBox(height: 3),
-                                  Text('${item["nasipaddress"]}',
-                                  style: GoogleFonts.roboto(
-                                    textStyle: Theme.of(context).textTheme.bodyMedium,
-                                    fontSize: 13,
-                                    fontWeight: FontWeight.w500,
-                                    letterSpacing: 1.2
-                                  ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Expanded(
-                              flex: 5,
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text('Reply Type : '.toLowerCase(),
-                                  style: GoogleFonts.roboto(
-                                    textStyle: Theme.of(context).textTheme.labelMedium,
-                                    letterSpacing: 1.5
-                                  ),
-                                  ),
-                                  SizedBox(height: 3),
-                                  Text('${item["replytype"]}',
-                                  style: GoogleFonts.roboto(
-                                    textStyle: Theme.of(context).textTheme.bodyMedium,
-                                    fontSize: 13,
-                                    fontWeight: FontWeight.w500,
-                                    letterSpacing: 1.2
-                                  ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      
-                      Container(
-                        padding: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Expanded(
-                              flex: 5,
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text('Reply Message : '.toLowerCase(),
-                                  style: GoogleFonts.roboto(
-                                    textStyle: Theme.of(context).textTheme.labelMedium,
-                                    letterSpacing: 1.5
-                                  ),
-                                  ),
-                                  SizedBox(height: 3),
-                                  Text('${item["replymessage"]}',
-                                  style: GoogleFonts.roboto(
-                                    textStyle: Theme.of(context).textTheme.bodyMedium,
-                                    fontSize: 13,
-                                    fontWeight: FontWeight.w500,
-                                    letterSpacing: 1.2
-                                  ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            
-                          ],
-                        ),
-                      ),
-
-                      SizedBox(height : 10),
-                    ],
-                  ),
-                );
-              }
-            ),
-            ),
-        
-          
+          HeadToolbar(onChange: (value) {
+            setState(() {
+              searchText = value;
+              listListner.clearAllState();
+              getSubscriberListApi(next: "0");
+            });
+          }),
+          Flexible(child: widget1!),
         ],
       ),
     );
