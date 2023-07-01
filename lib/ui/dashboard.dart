@@ -1,22 +1,19 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:xceednet/ui/profile/confirmation.dart';
 import 'package:xceednet/view_model/dashboard_view_model.dart';
 
 import 'common_widgets/menuDrawer.dart';
 
 class Dashboard extends StatefulWidget {
-
-
-
-  
   @override
   State<Dashboard> createState() => _DashboardState();
 }
 
 class _DashboardState extends State<Dashboard> {
-
   late DashboardViewModel dashboardViewModel;
   late Map dashboardData;
 
@@ -76,12 +73,22 @@ class _DashboardState extends State<Dashboard> {
                 "label": "Expiring Today:",
                 "value": "${dashboardData['expiring_today_subscribers_count']}",
               },
+              /*{
+                "id": "001-12",
+                "label": "Without Adv. Renewal:",
+                "value": "Key Required",
+              },*/
               {
                 "id": "001-9",
                 "label": "Expiring In Next 4 Days :",
                 "value":
                     "${dashboardData['expiring_next_4_days_subscribers_count']}",
               } /*,
+              {
+                "id": "001-13",
+                "label": "Without Adv. Renewal :",
+                "value": "Key Required",
+              } */ /*,
               {
                 "id": "001-10",
                 "label": "Without Adv. Renewal: :",
@@ -322,125 +329,172 @@ class _DashboardState extends State<Dashboard> {
   @override
   Widget build(BuildContext context) {
     dashboardViewModel = context.watch<DashboardViewModel>();
-    return Scaffold(
-      drawer: MenuDrawer(),
-      appBar: AppBar(
-        title: Text("Dashboard"),
-        actions: [],
-      ),
-      body : dashboardViewModel.isLoading ? Center(
-        child: CircularProgressIndicator(color: Theme.of(context).primaryColor,),
-      ): ListView(
-        padding: EdgeInsets.all(15),
-        children: [
-        ListView.separated(
-          primary: false,
-          physics: NeverScrollableScrollPhysics(),
-          shrinkWrap: true,
-          itemCount: accordionList == null ? 0 : accordionList.length,
-          separatorBuilder: (BuildContext context, int index) {
-            return SizedBox(height: 10);
-          },
-          itemBuilder: (BuildContext context, int index) {
-              Map item = accordionList[index];
-              return 
-              Card(
-                elevation: 5,
-                clipBehavior: Clip.hardEdge,
-                shadowColor: Theme.of(context).shadowColor.withOpacity(0.35),  
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
-                  side: BorderSide(width: 1, color: Theme.of(context).colorScheme.outline.withOpacity(0.1))
-                ),      
-                color: Theme.of(context).colorScheme.background,      
-                child: Theme(
-                  data: ThemeData(
-                    dividerColor: Colors.transparent,
-                    expansionTileTheme: ExpansionTileThemeData(
-                      collapsedBackgroundColor: Theme.of(context).colorScheme.background,
-                      backgroundColor: Theme.of(context).colorScheme.surface
-                    ),
-                  ),
-                  child: ExpansionTile(    
-                  initiallyExpanded : index==selected,     
-                  tilePadding: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
-                  iconColor: Theme.of(context).colorScheme.secondary,
-                  collapsedIconColor: Theme.of(context).colorScheme.secondary,
-                  leading: Container(
-                    height: 36, width: 36,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(4),
-                      color: Theme.of(context).colorScheme.primary.withOpacity(0.1),
-                      border: Border.all(width: 1, color: Theme.of(context).colorScheme.primary.withOpacity(0.3))
-                    ),
-                    child: Icon(item["icon"], color: Theme.of(context).colorScheme.primary),
-                  ),
-                  
-                  title: Text('${item["title"]}',
-                  style: GoogleFonts.robotoCondensed(
-                    textStyle: Theme.of(context).textTheme.titleMedium,
-                    fontWeight: FontWeight.bold,
-                    letterSpacing: 1.5,
-                    fontSize: 15
-                  ),
-                  ),
-                  children: [
-                    Container(
-                      decoration: BoxDecoration(
-                        color: Theme.of(context).colorScheme.background,
-                        border: Border(
-                          top: BorderSide(width: 1, color: Theme.of(context).dividerColor)
-                        )
-                      ),
-                      padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
-                      child: Column(
-                        children: 
-                          item["content"].map((subitem) =>
-                            Container(
-                              decoration: BoxDecoration(
-                                border: Border(
-                                  bottom: BorderSide(width: 1, 
-                                    color: 
-                                    item["content"].length -1 == item["content"].indexOf(subitem) ?
-                                    Colors.transparent :
-                                    Theme.of(context).dividerColor
-                                  )
-                                )
-                              ),
-                              child: ListTile(
-                                dense: true,
-                                // contentPadding: EdgeInsets.zero,
-                                horizontalTitleGap: 0,
-                                title: Text('${subitem["label"]}',
-                                  style: GoogleFonts.robotoCondensed(
-                                    textStyle: Theme.of(context).textTheme.labelMedium,
-                                    letterSpacing: 1.5,
-                                    fontSize: 13
-                                  ),
-                                ),
-                                trailing: Text('${subitem["value"]}',
-                                  style: GoogleFonts.roboto(
-                                    textStyle: Theme.of(context).textTheme.titleSmall,
-                                    letterSpacing: 1,
-                                    fontWeight: FontWeight.bold
-                                  ),
-                                ),
-                              ),
-                            )
-                          ).toList().cast<Widget>(),
-                      ),
-                    )
-                    
-                  ],
-                  ),
+    return WillPopScope(
+      onWillPop: () async {
+        await confirmationCloseAlertDialog(context, () {
+          SystemNavigator.pop();
+          return Future(() => true);
+        });
+        return Future(() => false);
+      },
+      child: Scaffold(
+        drawer: MenuDrawer(isDashboard: true),
+        appBar: AppBar(
+          title: Text("Dashboard"),
+          actions: [],
+        ),
+        body: dashboardViewModel.isLoading
+            ? Center(
+                child: CircularProgressIndicator(
+                  color: Theme.of(context).primaryColor,
                 ),
               )
-              ;
-            },
-          ),
-
-        ],
-    ),
+            : ListView(
+                padding: EdgeInsets.all(15),
+                children: [
+                  ListView.separated(
+                    primary: false,
+                    physics: NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                    itemCount: accordionList == null ? 0 : accordionList.length,
+                    separatorBuilder: (BuildContext context, int index) {
+                      return SizedBox(height: 10);
+                    },
+                    itemBuilder: (BuildContext context, int index) {
+                      Map item = accordionList[index];
+                      return Card(
+                        elevation: 5,
+                        clipBehavior: Clip.hardEdge,
+                        shadowColor:
+                            Theme.of(context).shadowColor.withOpacity(0.35),
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                            side: BorderSide(
+                                width: 1,
+                                color: Theme.of(context)
+                                    .colorScheme
+                                    .outline
+                                    .withOpacity(0.1))),
+                        color: Theme.of(context).colorScheme.background,
+                        child: Theme(
+                          data: ThemeData(
+                            dividerColor: Colors.transparent,
+                            expansionTileTheme: ExpansionTileThemeData(
+                                collapsedBackgroundColor:
+                                    Theme.of(context).colorScheme.background,
+                                backgroundColor:
+                                    Theme.of(context).colorScheme.surface),
+                          ),
+                          child: ExpansionTile(
+                            initiallyExpanded: index == selected,
+                            tilePadding: EdgeInsets.symmetric(
+                                horizontal: 15, vertical: 5),
+                            iconColor: Theme.of(context).colorScheme.secondary,
+                            collapsedIconColor:
+                                Theme.of(context).colorScheme.secondary,
+                            leading: Container(
+                              height: 36,
+                              width: 36,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(4),
+                                  color: Theme.of(context)
+                                      .colorScheme
+                                      .primary
+                                      .withOpacity(0.1),
+                                  border: Border.all(
+                                      width: 1,
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .primary
+                                          .withOpacity(0.3))),
+                              child: Icon(item["icon"],
+                                  color: Theme.of(context).colorScheme.primary),
+                            ),
+                            title: Text(
+                              '${item["title"]}',
+                              style: GoogleFonts.robotoCondensed(
+                                  textStyle:
+                                      Theme.of(context).textTheme.titleMedium,
+                                  fontWeight: FontWeight.bold,
+                                  letterSpacing: 1.5,
+                                  fontSize: 15),
+                            ),
+                            children: [
+                              Container(
+                                decoration: BoxDecoration(
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .background,
+                                    border: Border(
+                                        top: BorderSide(
+                                            width: 1,
+                                            color: Theme.of(context)
+                                                .dividerColor))),
+                                padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
+                                child: Column(
+                                  children: item["content"]
+                                      .map((subitem) => Container(
+                                            decoration: BoxDecoration(
+                                                border: Border(
+                                                    bottom: BorderSide(
+                                                        width: 1,
+                                                        color: item["content"]
+                                                                        .length -
+                                                                    1 ==
+                                                                item["content"]
+                                                                    .indexOf(
+                                                                        subitem)
+                                                            ? Colors.transparent
+                                                            : Theme.of(context)
+                                                                .dividerColor))),
+                                            child: ListTile(
+                                              dense: true,
+                                              // contentPadding: EdgeInsets.zero,
+                                              horizontalTitleGap: 0,
+                                              title: Text(
+                                                '${subitem["label"]}',
+                                                style:
+                                                    GoogleFonts.robotoCondensed(
+                                                        textStyle:
+                                                            Theme.of(context)
+                                                                .textTheme
+                                                                .labelMedium,
+                                                        letterSpacing: 1.5,
+                                                        fontSize: 13),
+                                              ),
+                                              trailing: Text(
+                                                '${subitem["value"]}',
+                                                style: GoogleFonts.roboto(
+                                                    textStyle: Theme.of(context)
+                                                        .textTheme
+                                                        .titleSmall,
+                                                    color: item["title"] ==
+                                                            "Subscriber Billing"
+                                                        ? subitem["value"]
+                                                                .toString()
+                                                                .contains("-")
+                                                            ? Colors.redAccent
+                                                            : Colors.green
+                                                        : Colors.black,
+                                                    letterSpacing: 1,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                            ),
+                                          ))
+                                      .toList()
+                                      .cast<Widget>(),
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                ],
+              ),
+      ),
     );
   }
 }

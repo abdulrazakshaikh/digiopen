@@ -77,10 +77,12 @@ class _InvoicesListState extends State<InvoicesList>
     });
   }
 
-  Future<void> getSubscriberListApi({String next = "0"}) async {
+  Future<void> getSubscriberListApi(
+      {String next = "0", String cuPage = "1"}) async {
     bool status = await invoiceViewModel.getInvoiceListData(
         search: searchText, nextIndex: next);
     if (status) {
+      currentPage = int.parse(cuPage);
       invoicesList = [];
       if (invoiceViewModel.invoiceListData!.length == 0) {
         listListner.addListList({
@@ -109,7 +111,7 @@ class _InvoicesListState extends State<InvoicesList>
   loadNextPage(String page) {
     int total = int.parse(page) * 10;
     int cal = total - 10;
-    getSubscriberListApi(next: "$cal");
+    getSubscriberListApi(next: "$cal", cuPage: page);
   }
 
   @override
@@ -119,20 +121,23 @@ class _InvoicesListState extends State<InvoicesList>
       backgroundColor: Theme.of(context).colorScheme.surface,
       drawer: MenuDrawer(),
       appBar: AppBar(
-        title: Text("Invoices"),
+        title: Text("Invoices \n count :${invoiceViewModel.incoiceCount}"),
         actions: [
-          IconButton(
-            onPressed: () {
-              Navigator.of(context).push(
-                PageRouteBuilder(
-                  pageBuilder: (context, animation, secondaryAnimation) =>
-                      FadeTransition(opacity: animation, child: InvoiceAdd()),
-                ),
-              );
-            },
-            icon: Icon(Icons.add),
-            style: IconButton.styleFrom(
-              shape: RoundedRectangleBorder(),
+          true
+              ? Container()
+              : IconButton(
+                  onPressed: () {
+                    Navigator.of(context).push(
+                      PageRouteBuilder(
+                        pageBuilder: (context, animation, secondaryAnimation) =>
+                            FadeTransition(
+                                opacity: animation, child: InvoiceAdd()),
+                      ),
+                    );
+                  },
+                  icon: Icon(Icons.add),
+                  style: IconButton.styleFrom(
+                    shape: RoundedRectangleBorder(),
               foregroundColor: Theme.of(context).colorScheme.primary,
               minimumSize: Size(54, 54),
               fixedSize: Size(54, 54),

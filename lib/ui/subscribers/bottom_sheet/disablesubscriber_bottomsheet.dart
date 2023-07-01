@@ -4,32 +4,32 @@ import 'package:flutter/painting.dart';
 import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'package:xceednet/utils/AppUtils.dart';
 
-import '../../view_model/package_view_model.dart';
+import '../../../utils/AppUtils.dart';
+import '../../../view_model/subscriber_view_model.dart';
 
-class DisablePackageBottomSheet extends StatefulWidget {
+class DisableSubscriberBottomSheet extends StatefulWidget {
+  String subscriberId;
   String status;
-  String packageId;
-  Function updateDetail;
+  var updatedSubscriberDetail;
 
-  DisablePackageBottomSheet(this.packageId, this.status, this.updateDetail);
+  DisableSubscriberBottomSheet(this.subscriberId,
+      {this.status = "disable", this.updatedSubscriberDetail});
 
   @override
-  _DisablePackageBottomSheetState createState() =>
-      _DisablePackageBottomSheetState();
+  _DisableSubscriberBottomSheetState createState() =>
+      _DisableSubscriberBottomSheetState();
 }
 
-class _DisablePackageBottomSheetState extends State<DisablePackageBottomSheet>
-    with TickerProviderStateMixin {
-  TextEditingController noteController = TextEditingController();
-  late PackageViewModel packageViewModel;
+class _DisableSubscriberBottomSheetState extends State<DisableSubscriberBottomSheet> with TickerProviderStateMixin {
+  TextEditingController _textEditingController = TextEditingController();
+  late SubscriberViewModel subscriberViewModel;
 
   @override
   Widget build(BuildContext context) {
-    packageViewModel = context.watch<PackageViewModel>();
+    subscriberViewModel = context.watch<SubscriberViewModel>();
     return Container(
-      height: 350,
+      height: 285,
       decoration: BoxDecoration(
         color: Theme.of(context).colorScheme.background,
         borderRadius: BorderRadius.only(
@@ -42,7 +42,9 @@ class _DisablePackageBottomSheetState extends State<DisablePackageBottomSheet>
           Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(15), topRight: Radius.circular(15)),
+                  topLeft: Radius.circular(15),
+                  topRight: Radius.circular(15)
+              ),
               color: Theme.of(context).colorScheme.surface,
             ),
             padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
@@ -50,7 +52,7 @@ class _DisablePackageBottomSheetState extends State<DisablePackageBottomSheet>
               children: [
                 Expanded(
                   child: Text(
-                    widget.status,
+                    '${widget.status} Subscribers'.toUpperCase(),
                     style: GoogleFonts.roboto(
                       textStyle: Theme.of(context).textTheme.bodyMedium,
                       fontWeight: FontWeight.w600,
@@ -59,10 +61,11 @@ class _DisablePackageBottomSheetState extends State<DisablePackageBottomSheet>
                   ),
                 ),
                 IconButton(
-                    onPressed: () {
+                    onPressed: (){
                       Navigator.pop(context);
                     },
-                    icon: Icon(Icons.close))
+                    icon: Icon(Icons.close)
+                )
               ],
             ),
           ),
@@ -74,8 +77,8 @@ class _DisablePackageBottomSheetState extends State<DisablePackageBottomSheet>
                   children: [
                     Container(
                         child: Column(
-                      children: [
-                        Container(
+                          children: [
+                            Container(
                           alignment: Alignment.topLeft,
                           padding: EdgeInsets.symmetric(vertical: 5),
                           child: Text(
@@ -88,7 +91,7 @@ class _DisablePackageBottomSheetState extends State<DisablePackageBottomSheet>
                           ),
                         ),
                         TextFormField(
-                          controller: noteController,
+                          controller: _textEditingController,
                           style: GoogleFonts.roboto(
                             textStyle: Theme.of(context).textTheme.bodyMedium,
                             fontWeight: FontWeight.w600,
@@ -99,23 +102,21 @@ class _DisablePackageBottomSheetState extends State<DisablePackageBottomSheet>
                             floatingLabelBehavior: FloatingLabelBehavior.never,
                             hintText: 'Enter Comment'.toLowerCase(),
                             hintStyle: GoogleFonts.roboto(
-                                textStyle:
-                                    Theme.of(context).textTheme.bodyMedium,
-                                letterSpacing: 1.8,
-                                fontWeight: FontWeight.w300),
-                            enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: Theme.of(context).colorScheme.outline),
+                                textStyle: Theme.of(context).textTheme.bodyMedium,
+                                    letterSpacing: 1.8,
+                                    fontWeight: FontWeight.w300),
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(color: Theme.of(context).colorScheme.outline),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(color: Theme.of(context).colorScheme.primary, width: 1),
+                                ),
+                              ),
                             ),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: Theme.of(context).colorScheme.primary,
-                                  width: 1),
-                            ),
-                          ),
-                        ),
-                      ],
-                    )),
+                          ],
+                        )
+                    ),
+
                   ],
                 ),
               ),
@@ -130,7 +131,7 @@ class _DisablePackageBottomSheetState extends State<DisablePackageBottomSheet>
               ),
             ),
             padding: EdgeInsets.all(15),
-            child: packageViewModel.isUpdateLoading
+            child: subscriberViewModel.isUpdateLoading
                 ? CircularProgressIndicator()
                 : Row(
                     children: [
@@ -147,53 +148,34 @@ class _DisablePackageBottomSheetState extends State<DisablePackageBottomSheet>
                             padding: EdgeInsets.symmetric(
                                 horizontal: 15, vertical: 15),
                             alignment: Alignment.center,
-                          ),
-                          child: Text(
-                            'Cancel',
-                          ),
-                        ),
+                    ),
+                    child: Text('Cancel',
+                    ),
+                  ),
                 ),
                 SizedBox(width: 10),
                 Expanded(
-                        child: ElevatedButton(
+                  child: ElevatedButton(
                           onPressed: () async {
-                            if (widget.status == "Delete Package") {
-                              bool a = await packageViewModel
-                                  .deletePackage(widget.packageId, {});
-                              if (a) {
-                                packageViewModel.getPackageDetailData(
-                                    packageId: widget.packageId);
-                                AppUtils.appToast("Package Delete");
-                                widget.updateDetail();
-                                Navigator.pop(context);
-                              } else {
-                                AppUtils.appToast(
-                                    "Failed to update : ${packageViewModel.error}");
-                              }
+                            /*if (_textEditingController.text.isEmpty) {
+                      AppUtils.appToast("Please add some comment.");
+                      return;
+                    }*/
+                            bool status = await subscriberViewModel
+                                .updateSubscriber(widget.subscriberId, {
+                              "status_event": "${widget.status}",
+                              "comment": "${_textEditingController.text}"
+                            });
+                            if (status) {
+                              //disable enable
+                              //disabled enabled
+                              widget.updatedSubscriberDetail();
+                              AppUtils.appToast(
+                                  "Subscriber ${widget.status}d successfully");
+                              Navigator.pop(context);
                             } else {
-                              String s = "";
-                              if (widget.status == "Publish Package") {
-                                s = 'publish';
-                              } else if (widget.status == "Unpublish Package") {
-                                s = 'unpublish';
-                              } else if (widget.status == "Disable Package") {
-                                s = 'disable';
-                              } else if (widget.status == "Enable Package") {
-                                s = 'enable';
-                              }
-                              bool a = await packageViewModel
-                                  .updatePackage(widget.packageId, {
-                                "status_event": s,
-                              });
-                              if (a) {
-                                packageViewModel.getPackageDetailData(
-                                    packageId: widget.packageId);
-                                AppUtils.appToast("Package Updated");
-                                Navigator.pop(context);
-                              } else {
-                                AppUtils.appToast(
-                                    "Failed to update : ${packageViewModel.error}");
-                              }
+                              AppUtils.appToast(
+                                  "Failed to ${widget.status} reset: ${subscriberViewModel.error}");
                             }
                           },
                           style: ElevatedButton.styleFrom(
@@ -205,14 +187,18 @@ class _DisablePackageBottomSheetState extends State<DisablePackageBottomSheet>
                                 horizontal: 15, vertical: 15),
                             alignment: Alignment.center,
                           ),
-                          child: Text(widget.status),
+                          child: Text(
+                              '${widget.status.replaceFirst(widget.status[0], widget.status[0].toUpperCase())} Subscriber'),
                         ),
-                      ),
-                    ],
-                  ),
+                ),
+              ],
+            ),
           ),
         ],
       ),
+
+
     );
   }
+
 }

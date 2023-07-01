@@ -19,4 +19,17 @@ class PaymentRepository {
     // var newAPIResponse = NewAPIResponse.fromJson(response);
     return response!;
   }
+
+  Future<NewAPIResponse> addPaymentDetailData(Map map) async {
+    NewAPIResponse response =
+        await _netoworkService.post(AppUrl.payment_details, map);
+    return response!;
+  }
+
+  Future<NewAPIResponse> updatePaymentDetailData(
+      String subscriberId, Map map) async {
+    NewAPIResponse response = await _netoworkService.patch(
+        AppUrl.payment_details + "/$subscriberId", map);
+    return response!;
+  }
 }

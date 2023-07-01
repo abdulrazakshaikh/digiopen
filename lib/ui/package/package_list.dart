@@ -15,18 +15,7 @@ class PackageList extends StatefulWidget {
 }
 
 class _PackageListState extends State<PackageList> {
-  List packageList = [
-    {
-      "id": "101",
-      "name": "John Doe",
-      "priceofsubscriber": "100",
-      "datalimited": false,
-      "timelimited": false,
-      "hotspotsubscriber": false,
-      "onlinepayment": false,
-      "status": "published",
-    },
-  ];
+  List packageList = [];
   late PackageViewModel packageViewModel;
 
   @override
@@ -34,12 +23,16 @@ class _PackageListState extends State<PackageList> {
     // TODO: implement initState
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      bool a = await packageViewModel.getPackageListData();
-      if (a) {
-        packageList = packageViewModel.packageListData!;
-        setState(() {});
-      }
+      await callAPIs();
     });
+  }
+
+  Future<void> callAPIs() async {
+    bool a = await packageViewModel.getPackageListData();
+    if (a) {
+      packageList = packageViewModel.packageListData!;
+      setState(() {});
+    }
   }
 
   @override
@@ -50,7 +43,7 @@ class _PackageListState extends State<PackageList> {
       backgroundColor: Theme.of(context).colorScheme.surface,
       drawer: MenuDrawer(),
       appBar: AppBar(
-        title: Text("Packages"),
+        title: Text("Packages\n count :${packageViewModel.incoiceCount}"),
         actions: [
           packageViewModel.isLoading
               ? Container()
@@ -60,7 +53,12 @@ class _PackageListState extends State<PackageList> {
                       PageRouteBuilder(
                         pageBuilder: (context, animation, secondaryAnimation) =>
                             FadeTransition(
-                                opacity: animation, child: PackageAdd()),
+                                opacity: animation,
+                                child: PackageAdd(
+                                  onChange: () {
+                                    callAPIs();
+                                  },
+                                )),
                       ),
                     );
                   },
@@ -83,12 +81,14 @@ class _PackageListState extends State<PackageList> {
                     packageList = packageViewModel.packageListData!;
                     setState(() {});
                   } else {
-                    packageList = packageViewModel.packageListData!
-                        .where((element) => element['name']
-                            .toString()
-                            .toUpperCase()
-                            .contains(value))
-                        .toList();
+                    packageList =
+                        packageViewModel.packageListData!.where((element) {
+                      print(element['name'].toString());
+                      return element['name']
+                          .toString()
+                          .toUpperCase()
+                          .contains(value.toString().toUpperCase());
+                    }).toList();
                     setState(() {});
                   }
                 }),
@@ -103,16 +103,18 @@ class _PackageListState extends State<PackageList> {
                         return SizedBox(height: 5);
                       },
                       itemBuilder: (BuildContext context, int index) {
-                  Map item = packageList[index];
-                  return InkWell(
-                    onTap: () {
+                        Map item = packageList[index];
+                        return InkWell(
+                          onTap: () {
                             Navigator.of(context).push(
                               PageRouteBuilder(
                                 pageBuilder:
                                     (context, animation, secondaryAnimation) =>
                                         FadeTransition(
                                             opacity: animation,
-                                            child: PackageDetails(item)),
+                                            child: PackageDetails(item, () {
+                                              callAPIs();
+                                            })),
                               ),
                             );
                           },
@@ -146,7 +148,7 @@ class _PackageListState extends State<PackageList> {
                                                   CrossAxisAlignment.start,
                                               children: [
                                                 Text(
-                                                  'Name : '.toLowerCase(),
+                                                  'Name : ',
                                                   style: GoogleFonts.roboto(
                                                       textStyle:
                                                           Theme.of(context)
@@ -177,8 +179,7 @@ class _PackageListState extends State<PackageList> {
                                                   CrossAxisAlignment.start,
                                               children: [
                                                 Text(
-                                                  'Price for Subscriber : '
-                                                      .toLowerCase(),
+                                                  'Price for Subscriber : ',
                                                   style: GoogleFonts.roboto(
                                                       textStyle:
                                                           Theme.of(context)
@@ -219,8 +220,7 @@ class _PackageListState extends State<PackageList> {
                                                   CrossAxisAlignment.start,
                                               children: [
                                                 Text(
-                                                  'Data Limited : '
-                                                      .toLowerCase(),
+                                                  'Data Limited : ',
                                                   style: GoogleFonts.roboto(
                                                       textStyle:
                                                           Theme.of(context)
@@ -253,8 +253,7 @@ class _PackageListState extends State<PackageList> {
                                                   CrossAxisAlignment.start,
                                               children: [
                                                 Text(
-                                                  'Time Limited : '
-                                                      .toLowerCase(),
+                                                  'Time Limited : ',
                                                   style: GoogleFonts.roboto(
                                                       textStyle:
                                                           Theme.of(context)
@@ -297,8 +296,7 @@ class _PackageListState extends State<PackageList> {
                                                   CrossAxisAlignment.start,
                                               children: [
                                                 Text(
-                                                  'Hotspot Subscriber : '
-                                                      .toLowerCase(),
+                                                  'Hotspot Subscriber : ',
                                                   style: GoogleFonts.roboto(
                                                       textStyle:
                                                           Theme.of(context)
@@ -332,8 +330,7 @@ class _PackageListState extends State<PackageList> {
                                                   CrossAxisAlignment.start,
                                               children: [
                                                 Text(
-                                                  'Online Payment: '
-                                                      .toLowerCase(),
+                                                  'Online Payment: ',
                                                   style: GoogleFonts.roboto(
                                                       textStyle:
                                                           Theme.of(context)
@@ -377,7 +374,7 @@ class _PackageListState extends State<PackageList> {
                                                   CrossAxisAlignment.start,
                                               children: [
                                                 Text(
-                                                  'Status : '.toLowerCase(),
+                                                  'Status : ',
                                                   style: GoogleFonts.roboto(
                                                       textStyle:
                                                           Theme.of(context)
@@ -415,7 +412,7 @@ class _PackageListState extends State<PackageList> {
                       }),
                 ),
               ],
-      ),
+            ),
     );
   }
 }

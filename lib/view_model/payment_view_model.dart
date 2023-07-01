@@ -6,6 +6,13 @@ class PaymentViewModel extends ChangeNotifier {
   String? _error;
   List<Map>? paymentListData;
   Map? paymentDetail;
+  String incoiceCount = "0";
+
+  bool _isUpdateLoading = false;
+
+  bool get isUpdateLoading {
+    return _isUpdateLoading;
+  }
 
   String? get error {
     return _error;
@@ -37,6 +44,8 @@ class PaymentViewModel extends ChangeNotifier {
         List keys = _userdata.data['columns'];
         print("object");
         List dataa = _userdata.data['data'] as List;
+        incoiceCount = _userdata.data['recordsTotal'].toString();
+
         print("object1");
         dataa.forEach((element) {
           print("dataa");
@@ -87,6 +96,58 @@ class PaymentViewModel extends ChangeNotifier {
       print("getSubscriberListData");
       print(e);
       _isLoading = false;
+      _error = e.toString();
+      notifyListeners();
+      return false;
+    }
+  }
+
+  Future<bool> addSubscriber(Map map) async {
+    try {
+      //map['status_event'] = 'create_new';
+      _isLoading = true;
+      notifyListeners();
+      paymentListData = [];
+      var _userdata = await new PaymentRepository()
+          .addPaymentDetailData({"subscriber_payment": map});
+      print(_userdata);
+      _isLoading = false;
+      notifyListeners();
+      if (_userdata.isSuccess) {
+        return true;
+      } else {
+        _error = _userdata.message;
+        return false;
+      }
+    } catch (e) {
+      print("addSubscriber");
+      print(e);
+      _isLoading = false;
+      _error = e.toString();
+      notifyListeners();
+      return false;
+    }
+  }
+
+  Future<bool> updateSubscriber(String subscriberId, Map map) async {
+    try {
+      //map['status_event'] = 'create_new';
+      _isUpdateLoading = true;
+      notifyListeners();
+      var _userdata = await new PaymentRepository()
+          .updatePaymentDetailData(subscriberId, {"subscriber_payment": map});
+      _isUpdateLoading = false;
+      notifyListeners();
+      if (_userdata.isSuccess) {
+        return true;
+      } else {
+        _error = _userdata.message;
+        return false;
+      }
+    } catch (e) {
+      print("updateSubscriber");
+      print(e);
+      _isUpdateLoading = false;
       _error = e.toString();
       notifyListeners();
       return false;

@@ -2,13 +2,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:xceednet/ui/payment/payment_add.dart';
 import 'package:xceednet/ui/payment/payment_details_card.dart';
 import 'package:xceednet/ui/payment/payment_tab_details.dart';
 import 'package:xceednet/ui/profile/changepassword_bottomsheet.dart';
+import 'package:xceednet/ui/subscribers/bottom_sheet/disablesubscriber_bottomsheet.dart';
+import 'package:xceednet/ui/subscribers/bottom_sheet/resetmacaddress_bottomsheet.dart';
 import 'package:xceednet/ui/subscribers/datausage.dart';
-import 'package:xceednet/ui/subscribers/disablesubscriber_bottomsheet.dart';
-import 'package:xceednet/ui/subscribers/resetmacaddress_bottomsheet.dart';
-import 'package:xceednet/ui/subscribers/tab_audittrail.dart';
 import 'package:xceednet/view_model/payment_view_model.dart';
 
 class PaymentDetails extends StatefulWidget {
@@ -61,10 +61,10 @@ class _PaymentDetailsState extends State<PaymentDetails>
             ),
             context: context,
             builder: (BuildContext context) {
-              return choice == 'Reset Mac Address'
-                  ? ResetMacAddressBottomSheet()
+              return choice == 'Reset MAC Address'
+                  ? ResetMacAddressBottomSheet("")
                   : choice == 'Disable Subscriber'
-                      ? DisableSubscriberBottomSheet()
+                      ? DisableSubscriberBottomSheet("")
                       : choice == 'Change Password'
                           ? ChangePasswordBottomSheet()
                           : Container();
@@ -77,12 +77,24 @@ class _PaymentDetailsState extends State<PaymentDetails>
     paymentViewModel = context.watch<PaymentViewModel>();
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
-      floatingActionButton: _tabController.index == 2
+      floatingActionButton: _tabController.index == 0
           ? null
           : FloatingActionButton(
               isExtended: true,
               mini: true,
-              onPressed: () {},
+              onPressed: () {
+                Navigator.of(context).push(
+                  PageRouteBuilder(
+                    pageBuilder: (context, animation, secondaryAnimation) =>
+                        FadeTransition(
+                            opacity: animation,
+                            child: PaymentAdd(
+                              isEdit: true,
+                              paymentDetails: invoiceDetail,
+                            )),
+                  ),
+                );
+              },
               tooltip: 'Edit',
               backgroundColor: Theme.of(context).colorScheme.primary,
               foregroundColor: Theme.of(context).colorScheme.onPrimary,
@@ -142,18 +154,20 @@ class _PaymentDetailsState extends State<PaymentDetails>
                 ),
               ),
               actions: [
-                Container(
-                  width: 54,
-                  height: 54,
-                  child: PopupMenuButton<String>(
-                    shape: RoundedRectangleBorder(),
-                    icon: Icon(Icons.more_vert_outlined),
-                    onSelected: _onChoiceSelected,
-                    color: Theme.of(context).colorScheme.surface,
-                    position: PopupMenuPosition.under,
-                    tooltip: 'Options',
-                    itemBuilder: (BuildContext context) {
-                      return Constants.choices.map((String choice) {
+                true
+                    ? Container()
+                    : Container(
+                        width: 54,
+                        height: 54,
+                        child: PopupMenuButton<String>(
+                          shape: RoundedRectangleBorder(),
+                          icon: Icon(Icons.more_vert_outlined),
+                          onSelected: _onChoiceSelected,
+                          color: Theme.of(context).colorScheme.surface,
+                          position: PopupMenuPosition.under,
+                          tooltip: 'Options',
+                          itemBuilder: (BuildContext context) {
+                            return Constants.choices.map((String choice) {
                         return PopupMenuItem<String>(
                           value: choice,
                           child: Text(choice,
@@ -227,7 +241,7 @@ class _PaymentDetailsState extends State<PaymentDetails>
                         },
                         tabs: [
                           Tab(text: 'Details'),
-                          Tab(text: 'Audit Trail'),
+                          // Tab(text: 'Audit Trail'),
                         ]),
                   ),
                 ];
@@ -237,7 +251,7 @@ class _PaymentDetailsState extends State<PaymentDetails>
                 controller: _tabController,
                 children: [
                   PaymentTabDetails(invoiceDetail!),
-                  TabAuditTrail(),
+                  // TabAuditTrail(),
                 ],
               ),
             ),

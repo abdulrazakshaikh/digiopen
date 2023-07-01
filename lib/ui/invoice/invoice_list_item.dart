@@ -79,7 +79,7 @@ class InvoiceListItemState extends State<InvoiceListItem> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Invoice ID : '.toLowerCase(),
+                          'Invoice ID : ',
                           style: GoogleFonts.roboto(
                               textStyle:
                                   Theme.of(context).textTheme.labelMedium,
@@ -103,7 +103,7 @@ class InvoiceListItemState extends State<InvoiceListItem> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Username : '.toLowerCase(),
+                          'Username : ',
                           style: GoogleFonts.roboto(
                               textStyle:
                                   Theme.of(context).textTheme.labelMedium,
@@ -135,7 +135,7 @@ class InvoiceListItemState extends State<InvoiceListItem> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Name : '.toLowerCase(),
+                          'Name : ',
                           style: GoogleFonts.roboto(
                               textStyle:
                                   Theme.of(context).textTheme.labelMedium,
@@ -159,7 +159,7 @@ class InvoiceListItemState extends State<InvoiceListItem> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Invoice Date : '.toLowerCase(),
+                          'Invoice Date : ',
                           style: GoogleFonts.roboto(
                               textStyle:
                                   Theme.of(context).textTheme.labelMedium,
@@ -191,7 +191,7 @@ class InvoiceListItemState extends State<InvoiceListItem> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Assigned To : '.toLowerCase(),
+                          'Assigned To : ',
                           style: GoogleFonts.roboto(
                               textStyle:
                                   Theme.of(context).textTheme.labelMedium,
@@ -215,7 +215,7 @@ class InvoiceListItemState extends State<InvoiceListItem> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Due By: '.toLowerCase(),
+                          'Due By: ',
                           style: GoogleFonts.roboto(
                               textStyle:
                                   Theme.of(context).textTheme.labelMedium,
@@ -247,7 +247,7 @@ class InvoiceListItemState extends State<InvoiceListItem> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Amount Before Tax : '.toLowerCase(),
+                          'Amount Before Tax : ',
                           style: GoogleFonts.roboto(
                               textStyle:
                                   Theme.of(context).textTheme.labelMedium,
@@ -271,7 +271,7 @@ class InvoiceListItemState extends State<InvoiceListItem> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Total Balance : '.toLowerCase(),
+                          'Total Balance : ',
                           style: GoogleFonts.roboto(
                               textStyle:
                                   Theme.of(context).textTheme.labelMedium,
@@ -303,7 +303,7 @@ class InvoiceListItemState extends State<InvoiceListItem> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Status : '.toLowerCase(),
+                          'Status : ',
                           style: GoogleFonts.roboto(
                               textStyle:
                                   Theme.of(context).textTheme.labelMedium,

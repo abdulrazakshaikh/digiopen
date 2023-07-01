@@ -3,18 +3,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class AccessRequestListItem extends StatefulWidget {
+class CurrentUsageListItem extends StatefulWidget {
   late Map item;
 
-  AccessRequestListItem(this.item);
+  CurrentUsageListItem(this.item);
 
   @override
   State<StatefulWidget> createState() {
-    return AccessRequestListItemState();
+    return CurrentUsageListItemState();
   }
 }
 
-class AccessRequestListItemState extends State<AccessRequestListItem> {
+class CurrentUsageListItemState extends State<CurrentUsageListItem> {
   late Map item;
 
   @override
@@ -70,7 +70,7 @@ class AccessRequestListItemState extends State<AccessRequestListItem> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Requested on : ',
+                          'Requested on : '.toLowerCase(),
                           style: GoogleFonts.roboto(
                               textStyle:
                                   Theme.of(context).textTheme.labelMedium,
@@ -94,7 +94,7 @@ class AccessRequestListItemState extends State<AccessRequestListItem> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Username : ',
+                          'Username : '.toLowerCase(),
                           style: GoogleFonts.roboto(
                               textStyle:
                                   Theme.of(context).textTheme.labelMedium,
@@ -127,7 +127,7 @@ class AccessRequestListItemState extends State<AccessRequestListItem> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Client MAC Address : ',
+                          'Client MAC Address : '.toLowerCase(),
                           style: GoogleFonts.roboto(
                               textStyle:
                                   Theme.of(context).textTheme.labelMedium,
@@ -151,7 +151,7 @@ class AccessRequestListItemState extends State<AccessRequestListItem> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Client IP Address : ',
+                          'Client IP Address : '.toLowerCase(),
                           style: GoogleFonts.roboto(
                               textStyle:
                                   Theme.of(context).textTheme.labelMedium,
@@ -183,7 +183,7 @@ class AccessRequestListItemState extends State<AccessRequestListItem> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'NAS IP Address : ',
+                          'NAS IP Address : '.toLowerCase(),
                           style: GoogleFonts.roboto(
                               textStyle:
                                   Theme.of(context).textTheme.labelMedium,
@@ -209,34 +209,20 @@ class AccessRequestListItemState extends State<AccessRequestListItem> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Reply Type : ',
+                          'Reply Type : '.toLowerCase(),
                           style: GoogleFonts.roboto(
                               textStyle:
                                   Theme.of(context).textTheme.labelMedium,
                               letterSpacing: 1.5),
                         ),
                         SizedBox(height: 3),
-                        Container(
-                          decoration: BoxDecoration(
-                            color:
-                                item["subscriber_access_requests.reply_type"] ==
-                                        "ACCEPT"
-                                    ? Colors.greenAccent.shade700
-                                    : Colors.redAccent.shade700,
-                            borderRadius: BorderRadius.circular(4),
-                          ),
-                          padding:
-                              EdgeInsets.symmetric(horizontal: 10, vertical: 3),
-                          child: Text(
-                            '${item["subscriber_access_requests.reply_type"]}',
-                            style: GoogleFonts.roboto(
-                                textStyle:
-                                    Theme.of(context).textTheme.bodyMedium,
-                                fontSize: 13,
-                                color: Colors.white,
-                                fontWeight: FontWeight.w500,
-                                letterSpacing: 1.2),
-                          ),
+                        Text(
+                          '${item["subscriber_access_requests.reply_type"]}',
+                          style: GoogleFonts.roboto(
+                              textStyle: Theme.of(context).textTheme.bodyMedium,
+                              fontSize: 13,
+                              fontWeight: FontWeight.w500,
+                              letterSpacing: 1.2),
                         ),
                       ],
                     ),
@@ -255,7 +241,7 @@ class AccessRequestListItemState extends State<AccessRequestListItem> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Reply Message : ',
+                          'Reply Message : '.toLowerCase(),
                           style: GoogleFonts.roboto(
                               textStyle:
                                   Theme.of(context).textTheme.labelMedium,
@@ -267,7 +253,6 @@ class AccessRequestListItemState extends State<AccessRequestListItem> {
                           style: GoogleFonts.roboto(
                               textStyle: Theme.of(context).textTheme.bodyMedium,
                               fontSize: 13,
-                              color: Colors.red,
                               fontWeight: FontWeight.w500,
                               letterSpacing: 1.2),
                         ),

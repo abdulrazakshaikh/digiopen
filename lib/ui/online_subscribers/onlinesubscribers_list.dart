@@ -44,10 +44,12 @@ class _OnlineSubscribersListState extends State<OnlineSubscribersList>
     });
   }
 
-  Future<void> getSubscriberListApi({String next = "0"}) async {
+  Future<void> getSubscriberListApi(
+      {String next = "0", String cuPage = "1"}) async {
     bool status = await subscriberViewModel.getOnlineSubscriberListData(
         search: searchText, nextIndex: next);
     if (status) {
+      currentPage = int.parse(cuPage);
       subscribersList = [];
       if (subscriberViewModel.subscriberData!.length == 0) {
         listListner.addListList({
@@ -57,7 +59,6 @@ class _OnlineSubscribersListState extends State<OnlineSubscribersList>
         setState(() {});
       } else {
         subscribersList.addAll(subscriberViewModel.subscriberData!);
-        print("objectobjectobjectobjectobjectobjectobject");
         listListner.addListList({
           "current_page": currentPage,
           "last_page": 1000,
@@ -77,20 +78,23 @@ class _OnlineSubscribersListState extends State<OnlineSubscribersList>
       backgroundColor: Theme.of(context).colorScheme.surface,
       drawer: MenuDrawer(),
       appBar: AppBar(
-        title: Text("Online Subscribers"),
+        title: Text(
+            "Online Subscribers\n count :${subscriberViewModel.incoiceCount}"),
         actions: [
-          subscriberViewModel.isLoading
-              ? Container(
-                  padding: EdgeInsets.only(right: 10),
-                  child: Center(
-                    child: CircularProgressIndicator(),
-                  ),
-                )
-              : IconButton(
-                  onPressed: () {
-                    Navigator.of(context).push(
-                      PageRouteBuilder(
-                        pageBuilder: (context, animation, secondaryAnimation) =>
+          true
+              ? Container()
+              : subscriberViewModel.isLoading
+                  ? Container(
+                      padding: EdgeInsets.only(right: 10),
+                      child: Center(
+                        child: CircularProgressIndicator(),
+                      ),
+                    )
+                  : IconButton(
+                      onPressed: () {
+                        Navigator.of(context).push(
+                          PageRouteBuilder(
+                            pageBuilder: (context, animation, secondaryAnimation) =>
                             FadeTransition(
                                 opacity: animation,
                                 child: SubscribersAdd(title: 'Subscriber Add')),
@@ -144,6 +148,6 @@ class _OnlineSubscribersListState extends State<OnlineSubscribersList>
   loadNextPage(String page) {
     int total = int.parse(page) * 10;
     int cal = total - 10;
-    getSubscriberListApi(next: "$cal");
+    getSubscriberListApi(next: "$cal", cuPage: page);
   }
 }

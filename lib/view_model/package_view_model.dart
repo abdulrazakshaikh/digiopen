@@ -7,9 +7,16 @@ class PackageViewModel extends ChangeNotifier {
   String? _error;
   List? packageListData;
   Map? packageDetail;
+  String incoiceCount = "0";
+
+  bool _isUpdateLoading = false;
 
   String? get error {
     return _error;
+  }
+
+  bool get isUpdateLoading {
+    return _isUpdateLoading;
   }
 
   bool get isLoading {
@@ -36,6 +43,8 @@ class PackageViewModel extends ChangeNotifier {
       } else {
         // List dataa = _userdata.data['data'];
         packageListData = _userdata.data['data'];
+        incoiceCount = packageListData!.length.toString();
+
         _isLoading = false;
         notifyListeners();
         return true;
@@ -72,6 +81,83 @@ class PackageViewModel extends ChangeNotifier {
       print("getPackageDetailData");
       print(e);
       _isLoading = false;
+      _error = e.toString();
+      notifyListeners();
+      return false;
+    }
+  }
+
+  Future<bool> addPackage(Map map) async {
+    try {
+      //map['status_event'] = 'create_new';
+      _isLoading = true;
+      notifyListeners();
+      packageDetail = {};
+      var _userdata = await new PackageRepository()
+          .addPackageDetailData({"location_package": map});
+      print(_userdata);
+      _isLoading = false;
+      notifyListeners();
+      if (_userdata.isSuccess) {
+        return true;
+      } else {
+        _error = _userdata.message;
+        return false;
+      }
+    } catch (e) {
+      print("addSubscriber");
+      print(e);
+      _isLoading = false;
+      _error = e.toString();
+      notifyListeners();
+      return false;
+    }
+  }
+
+  Future<bool> updatePackage(String subscriberId, Map map) async {
+    try {
+      //map['status_event'] = 'create_new';
+      _isUpdateLoading = true;
+      notifyListeners();
+      var _userdata = await new PackageRepository()
+          .updatePackageDetailData(subscriberId, {"location_package": map});
+      _isUpdateLoading = false;
+      notifyListeners();
+      if (_userdata.isSuccess) {
+        return true;
+      } else {
+        _error = _userdata.message;
+        return false;
+      }
+    } catch (e) {
+      print("updateSubscriber");
+      print(e);
+      _isUpdateLoading = false;
+      _error = e.toString();
+      notifyListeners();
+      return false;
+    }
+  }
+
+  Future<bool> deletePackage(String subscriberId, Map map) async {
+    try {
+      //map['status_event'] = 'create_new';
+      _isUpdateLoading = true;
+      notifyListeners();
+      var _userdata = await new PackageRepository()
+          .deletePackageDetailData(subscriberId, {"location_package": map});
+      _isUpdateLoading = false;
+      notifyListeners();
+      if (_userdata.isSuccess) {
+        return true;
+      } else {
+        _error = _userdata.message;
+        return false;
+      }
+    } catch (e) {
+      print("updateSubscriber");
+      print(e);
+      _isUpdateLoading = false;
       _error = e.toString();
       notifyListeners();
       return false;

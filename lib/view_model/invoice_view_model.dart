@@ -5,6 +5,7 @@ class InvoiceViewModel extends ChangeNotifier {
   bool _isLoading = false;
   String? _error;
   List<Map>? invoiceListData;
+  String incoiceCount = "0";
   Map? invoiceDetail;
 
   String? get error {
@@ -36,6 +37,7 @@ class InvoiceViewModel extends ChangeNotifier {
       } else {
         Map keys = _userdata.data['columns'];
         List dataa = _userdata.data['data'];
+        incoiceCount = _userdata.data['recordsTotal'].toString();
         dataa.forEach((element) {
           Map item = {};
           int i = 0;

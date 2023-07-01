@@ -43,7 +43,7 @@ class _PackageTabDetailsState extends State<PackageTabDetails> {
           "label": "Tax",
           "value": "${packageDetail['do_not_charge_tax']}"
         },
-        {
+        /*{
           "id": "005",
           "label": "Bandwidth (Upload)",
           "value": "${packageDetail['phone1'] ?? "Key Required"}"
@@ -52,7 +52,7 @@ class _PackageTabDetailsState extends State<PackageTabDetails> {
           "id": "006",
           "label": "Bandwidth (Download)",
           "value": "${packageDetail['mobile1'] ?? "Key Required"}"
-        },
+        },*/
         {
           "id": "008",
           "label": "Description",

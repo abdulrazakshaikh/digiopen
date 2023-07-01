@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 
 class TabDetails extends StatefulWidget {
   Map subscriberDetail;
@@ -25,7 +26,7 @@ class _TabDetailsState extends State<TabDetails> {
     detailsList = [
       {
         "id": "001",
-        "label": "customerid",
+        "label": "ID",
         "value": "${subscriberDetail['subscriberid']}"
       },
       {
@@ -42,7 +43,7 @@ class _TabDetailsState extends State<TabDetails> {
       {
         "id": "005",
         "label": "Phone",
-        "value": "${subscriberDetail['phone1'] ?? "Key Required"}"
+        "value": "${subscriberDetail['phone1'] ?? ""}"
       },
       {
         "id": "006",
@@ -85,6 +86,12 @@ class _TabDetailsState extends State<TabDetails> {
         "value": '${subscriberDetail['auto_renew']}',
       },
       {
+        "id": "022",
+        "label": "Auto Renew For",
+        "value":
+            '${subscriberDetail['auto_renew_for'] == 0 ? "Indefinately" : subscriberDetail['auto_renew_for']}',
+      },
+      {
         "id": "016",
         "label": "Sticky Password",
         "value": '${subscriberDetail['sticky_password']}',
@@ -92,7 +99,8 @@ class _TabDetailsState extends State<TabDetails> {
       {
         "id": "017",
         "label": "Subscriber Since",
-        "value": "${subscriberDetail['subscriber_since']}"
+        "value":
+            "${DateFormat('dd-MMM-yyyy').format(DateFormat("yyyy-MM-dd").parse(widget.subscriberDetail['subscriber_since']))}"
       },
       {
         "id": "018",
@@ -110,16 +118,24 @@ class _TabDetailsState extends State<TabDetails> {
         "value": "${subscriberDetail['note'] ?? ""}"
       },
       {
+        "id": "022",
+        "label": "Aadhar Card",
+        "value": "${subscriberDetail['aadhar_no'] ?? ""}"
+      },
+      {
         "id": "021",
         "label": "GST Number",
         "value": "${subscriberDetail['gst_no'] ?? ""}"
       },
     ];
+    if (!subscriberDetail['auto_renew']) {
+      detailsList.removeWhere((element) => element['id'] == "022");
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    return  ListView(
+    return ListView(
       children: [
         Padding(
           padding: EdgeInsets.all(15),
@@ -139,34 +155,41 @@ class _TabDetailsState extends State<TabDetails> {
                     children: [
                       Expanded(
                         flex: 35,
-                        child: Text('${item["label"]} : ',
+                        child: Text(
+                          '${item["label"]} : ',
                           textAlign: TextAlign.end,
                           style: GoogleFonts.roboto(
-                              textStyle: Theme.of(context).textTheme.labelMedium,
-                              letterSpacing: 1.5
-                          ),
+                              textStyle:
+                                  Theme.of(context).textTheme.labelMedium,
+                              letterSpacing: 1.5),
                         ),
                       ),
                       SizedBox(width: 5),
                       Expanded(
                         flex: 65,
                         child: Text(
-                          item["value"] == false ? 'No' : item["value"] == true ? 'Yes' : '${item["value"]}',
+                          item["value"] == "false"
+                              ? 'No'
+                              : item["value"] == "true"
+                                  ? 'Yes'
+                                  : '${item["value"]}',
                           style: GoogleFonts.roboto(
                             textStyle: Theme.of(context).textTheme.bodyLarge,
                             fontSize: 13,
                             fontWeight: FontWeight.w500,
                             letterSpacing: 1.2,
-                            color:
-                            item["value"] == false ? Colors.red : item["value"] == true ? Colors.green.shade700 : null,
+                            color: item["value"] == "false"
+                                ? Colors.red
+                                : item["value"] == "true"
+                                    ? Colors.green.shade700
+                                    : null,
                           ),
                         ),
                       )
                     ],
                   ),
                 );
-              }
-          ),
+              }),
         ),
       ],
     );

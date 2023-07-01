@@ -111,29 +111,32 @@ class _HeadToolbarState extends State<HeadToolbar> {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(20),
-                      topRight: Radius.circular(20),
-                    ),
+                            topRight: Radius.circular(20),
+                          ),
+                        ),
+                        context: context,
+                        builder: (BuildContext context) {
+                          return FilterBottomSheet();
+                        },
+                      );
+                    },
                   ),
-                  context: context, builder: (BuildContext context) { 
-                    return FilterBottomSheet();
-                  }, 
-                );
-              }, 
-            ),
-          ),
-          SizedBox(width: 10),
-          Container(
-            width: 48,
-            height: 48,
-            decoration: BoxDecoration(
-              color: Theme.of(context).colorScheme.background,
-              border: Border.all(width: 1, color: Theme.of(context).colorScheme.outline),
-              borderRadius: BorderRadius.circular(4)
-            ),
-            child: PopupMenuButton<String>(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(4)
-              ),
+                ),
+          true ? Container() : SizedBox(width: 10),
+          true
+              ? Container()
+              : Container(
+                  width: 48,
+                  height: 48,
+                  decoration: BoxDecoration(
+                      color: Theme.of(context).colorScheme.background,
+                      border: Border.all(
+                          width: 1,
+                          color: Theme.of(context).colorScheme.outline),
+                      borderRadius: BorderRadius.circular(4)),
+                  child: PopupMenuButton<String>(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(4)),
               icon: Icon(Icons.shortcut_outlined),
               // onSelected: choiceAction,
               color: Theme.of(context).colorScheme.surface,

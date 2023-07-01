@@ -133,9 +133,52 @@ class NetworkApiService extends BaseService {
   }
 
   @override
-  Future delete(String url, data) {
-    // TODO: implement delete
-    throw UnimplementedError();
+  Future delete(String url, data) async {
+    if (!await checkInternetConnection()) {
+      return NewAPIResponse(
+          status: "FAILURE", message: "No internet connection! ", data: {});
+    }
+    dynamic responseJson;
+    try {
+      var header = {
+        "content-type": "application/json",
+        "accept": "application/json"
+      };
+
+      var newBaseUrl;
+      if (url == AppUrl.login) {
+        newBaseUrl = AppUrl.baseUrl;
+      } else {
+        var keySelectedUserLocation2 = SharedPrefs().selectedUserLocation;
+        newBaseUrl = "http://" +
+            keySelectedUserLocation2!.subdomain! +
+            "." +
+            keySelectedUserLocation2!.domain! +
+            "/";
+        if (SharedPrefs().authTokenn != null &&
+            SharedPrefs().authTokenn!.isNotEmpty) {
+          header['Authentication'] = SharedPrefs().authTokenn!;
+        }
+      }
+      var parse = Uri.parse(newBaseUrl + url);
+      AppUrl.debugPrint("*********API Call Started************");
+      AppUrl.debugPrint("API Request Type:POST");
+      AppUrl.debugPrint("API Call URL :" + parse.toString());
+      AppUrl.debugPrint("API Header :" + header.toString());
+      AppUrl.debugPrint("Request Data : " + data.toString());
+      AppUrl.debugPrint("Request Data : " + json.encode(data).toString());
+      final response =
+          await http.delete(parse, body: json.encode(data), headers: header);
+      AppUrl.debugPrint(
+          " Response  Status : " + response.statusCode.toString());
+      AppUrl.debugPrint("Response  Body: " + response.body);
+      responseJson = returnResponse(response);
+      // AppUrl.debugPrint("Dencrypted Response  : " + responseJson);
+      AppUrl.debugPrint("*********API Call End************");
+      return responseJson;
+    } catch (e) {
+      print(e);
+    }
   }
 
   @visibleForTesting
@@ -145,17 +188,40 @@ class NetworkApiService extends BaseService {
       case 200:
         dynamic responseJson = jsonDecode(response.body);
         return NewAPIResponse.fromJson(responseJson);
+      case 201:
+        dynamic responseJson = jsonDecode(response.body);
+        return NewAPIResponse.fromJson(responseJson);
       case 400:
         //throw BadRequestException(response.body.toString());
         return NewAPIResponse(
             status: "FAILURE", message: "Invalid Request: ", data: null);
       case 401:
       case 404:
+      case 422:
+        {
+          dynamic responseJson = jsonDecode(response.body);
+          if (responseJson['error'] == null) {
+            return NewAPIResponse(
+                status: responseJson['error_status'],
+                message: responseJson['error_message'],
+                data: responseJson);
+          } else {
+            return NewAPIResponse(
+                status: "FAILURE", message: responseJson['error'], data: null);
+          }
+        }
       case 403:
         //throw UnauthorisedException(response.body.toString());
         {
           dynamic responseJson = jsonDecode(response.body);
-          if (responseJson['error'] == null) {
+          if (responseJson['error_message'] != null &&
+              responseJson['error_message'] == 'ISP User Disabled') {
+            SharedPrefs().logout(isDisableUser: true);
+            return NewAPIResponse(
+                status: "FAILURE",
+                message: "Unauthorised Request: ",
+                data: null);
+          } else if (responseJson['error'] == null) {
             return NewAPIResponse(
                 status: "FAILURE",
                 message: "Unauthorised Request: ",
@@ -211,6 +277,55 @@ class NetworkApiService extends BaseService {
       AppUrl.debugPrint(
           " Response  Status : " + response.statusCode.toString());
       AppUrl.debugPrint("Response  Body: ${response.body}");
+      responseJson = returnResponse(response);
+      // AppUrl.debugPrint("Dencrypted Response  : " + responseJson);
+      AppUrl.debugPrint("*********API Call End************");
+      return responseJson;
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  @override
+  Future patch(String url, data) async {
+    if (!await checkInternetConnection()) {
+      return NewAPIResponse(
+          status: "FAILURE", message: "No internet connection! ", data: {});
+    }
+    dynamic responseJson;
+    try {
+      var header = {
+        "content-type": "application/json",
+        "accept": "application/json"
+      };
+
+      var newBaseUrl;
+      if (url == AppUrl.login) {
+        newBaseUrl = AppUrl.baseUrl;
+      } else {
+        var keySelectedUserLocation2 = SharedPrefs().selectedUserLocation;
+        newBaseUrl = "http://" +
+            keySelectedUserLocation2!.subdomain! +
+            "." +
+            keySelectedUserLocation2!.domain! +
+            "/";
+        if (SharedPrefs().authTokenn != null &&
+            SharedPrefs().authTokenn!.isNotEmpty) {
+          header['Authentication'] = SharedPrefs().authTokenn!;
+        }
+      }
+      var parse = Uri.parse(newBaseUrl + url);
+      AppUrl.debugPrint("*********API Call Started************");
+      AppUrl.debugPrint("API Request Type:POST");
+      AppUrl.debugPrint("API Call URL :" + parse.toString());
+      AppUrl.debugPrint("API Header :" + header.toString());
+      AppUrl.debugPrint("Request Data : " + data.toString());
+      AppUrl.debugPrint("Request Data : " + json.encode(data).toString());
+      final response =
+          await http.patch(parse, body: json.encode(data), headers: header);
+      AppUrl.debugPrint(
+          " Response  Status : " + response.statusCode.toString());
+      AppUrl.debugPrint("Response  Body: " + response.body);
       responseJson = returnResponse(response);
       // AppUrl.debugPrint("Dencrypted Response  : " + responseJson);
       AppUrl.debugPrint("*********API Call End************");

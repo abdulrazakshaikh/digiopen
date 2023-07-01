@@ -4,6 +4,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:xceednet/utils/AppUtils.dart';
 
+import '../../model/storage/shared_prefs.dart';
+
 class InvoiceDetailsCard extends StatefulWidget {
   Map subscriberDetail;
 
@@ -113,7 +115,14 @@ class _InvoiceDetailsCardState extends State<InvoiceDetailsCard>
                     Container(
                       child: TextButton(
                           onPressed: () {
-                            AppUtils.appToast("Coming soon");
+                            try {
+                              AppUtils.launchURL(
+                                ""
+                                "${SharedPrefs().getDomainUrl()}/subscriber_invoices/${widget.subscriberDetail["id"]}.pdf",
+                              );
+                            } catch (e) {
+                              AppUtils.appToast(e.toString());
+                            }
                           },
                           child: Row(
                             children: [

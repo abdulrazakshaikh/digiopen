@@ -69,7 +69,7 @@ class PaymentListItemState extends State<PaymentListItem> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Payment ID : '.toLowerCase(),
+                          'Payment ID : ',
                           style: GoogleFonts.roboto(
                               textStyle:
                                   Theme.of(context).textTheme.labelMedium,
@@ -93,7 +93,7 @@ class PaymentListItemState extends State<PaymentListItem> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Username : '.toLowerCase(),
+                          'Username : ',
                           style: GoogleFonts.roboto(
                               textStyle:
                                   Theme.of(context).textTheme.labelMedium,
@@ -125,7 +125,7 @@ class PaymentListItemState extends State<PaymentListItem> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Name : '.toLowerCase(),
+                          'Name : ',
                           style: GoogleFonts.roboto(
                               textStyle:
                                   Theme.of(context).textTheme.labelMedium,
@@ -149,7 +149,7 @@ class PaymentListItemState extends State<PaymentListItem> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Payment Date : '.toLowerCase(),
+                          'Payment Date : ',
                           style: GoogleFonts.roboto(
                               textStyle:
                                   Theme.of(context).textTheme.labelMedium,
@@ -181,7 +181,7 @@ class PaymentListItemState extends State<PaymentListItem> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Receipt #: '.toLowerCase(),
+                          'Receipt #: ',
                           style: GoogleFonts.roboto(
                               textStyle:
                                   Theme.of(context).textTheme.labelMedium,
@@ -205,7 +205,7 @@ class PaymentListItemState extends State<PaymentListItem> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Amount : '.toLowerCase(),
+                          'Amount : ',
                           style: GoogleFonts.roboto(
                               textStyle:
                                   Theme.of(context).textTheme.labelMedium,
@@ -237,7 +237,7 @@ class PaymentListItemState extends State<PaymentListItem> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Received By : '.toLowerCase(),
+                          'Received By : ',
                           style: GoogleFonts.roboto(
                               textStyle:
                                   Theme.of(context).textTheme.labelMedium,
@@ -261,7 +261,7 @@ class PaymentListItemState extends State<PaymentListItem> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Status : '.toLowerCase(),
+                          'Status : ',
                           style: GoogleFonts.roboto(
                               textStyle:
                                   Theme.of(context).textTheme.labelMedium,

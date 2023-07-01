@@ -24,7 +24,7 @@ class _TabConnectionState extends State<TabConnection> {
     connectionList = [
       {
         "id": "001",
-        "label": "zone",
+        "label": "Zone",
         "value": "${subscriberDetail['location_zone_id'] ?? ""}"
       },
       {
@@ -48,6 +48,11 @@ class _TabConnectionState extends State<TabConnection> {
         "value": "${subscriberDetail['bind_mac_address']}",
       },
       {
+        "id": "005",
+        "label": "Allow Device",
+        "value": "${subscriberDetail['allow_devices']}",
+      },
+      {
         "id": "006",
         "label": "MAC Address",
         "value": "${subscriberDetail['mac_address'] ?? ""}"
@@ -63,6 +68,19 @@ class _TabConnectionState extends State<TabConnection> {
         "value": "${subscriberDetail['leased_line_subscriber']}"
       },
     ];
+    if (subscriberDetail['fix_ip']) {
+      var index = connectionList
+              .indexWhere((element) => element['label'] == "Fix IP Address")
+              .toInt() +
+          1;
+      var string = subscriberDetail['subscriber_ip_addresses'][0]
+              ['fix_ip_address']
+          .toString();
+      print("$string");
+
+      connectionList.insert(index,
+          {"id": "009", "label": "Fix IP Address", "value": "${string}"});
+    }
   }
 
   @override
@@ -87,12 +105,13 @@ class _TabConnectionState extends State<TabConnection> {
                     children: [
                       Expanded(
                         flex: 35,
-                        child: Text('${item["label"]} : '.toLowerCase(),
+                        child: Text(
+                          '${item["label"]} : ',
                           textAlign: TextAlign.end,
                           style: GoogleFonts.roboto(
-                              textStyle: Theme.of(context).textTheme.labelMedium,
-                              letterSpacing: 1.5
-                          ),
+                              textStyle:
+                                  Theme.of(context).textTheme.labelMedium,
+                              letterSpacing: 1.5),
                         ),
                       ),
                       SizedBox(width: 5),

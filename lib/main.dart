@@ -11,6 +11,7 @@ import 'package:xceednet/view_model/invoice_view_model.dart';
 import 'package:xceednet/view_model/package_view_model.dart';
 import 'package:xceednet/view_model/payment_view_model.dart';
 import 'package:xceednet/view_model/subscriber_view_model.dart';
+import 'package:xceednet/view_model/utils_view_model.dart';
 
 import 'model/storage/shared_prefs.dart';
 
@@ -33,6 +34,7 @@ Future<void> main() async {
           ChangeNotifierProvider(create: (_) => InvoiceViewModel()),
           ChangeNotifierProvider(create: (_) => PaymentViewModel()),
           ChangeNotifierProvider(create: (_) => AccessRequestViewModel()),
+          ChangeNotifierProvider(create: (_) => UtilsViewModel()),
           ChangeNotifierProvider(create: (_) => SharedPrefs()),
         ],
         child: MyApp(darkModeOn: darkModeOn),

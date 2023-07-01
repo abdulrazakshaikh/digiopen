@@ -34,6 +34,7 @@ class SharedPrefs extends ChangeNotifier {
   set userdata(UserData? value) {
     _sharedPrefs.setString(keyUserData, json.encode(value));
   }
+
   UserLocationAccess? get selectedUserLocation {
     String uD = _sharedPrefs.getString(keySelectedUserLocation) ?? "";
     if (uD == "null" || uD.isEmpty) {
@@ -41,6 +42,15 @@ class SharedPrefs extends ChangeNotifier {
     } else {
       return UserLocationAccess.fromJson(json.decode(uD));
     }
+  }
+
+  String getDomainUrl() {
+    var keySelectedUserLocation2 = SharedPrefs().selectedUserLocation!;
+    String s = "http://" +
+        keySelectedUserLocation2!.subdomain! +
+        "." +
+        keySelectedUserLocation2!.domain!;
+    return s;
   }
 
   set selectedUserLocation(UserLocationAccess? value) {
@@ -69,15 +79,18 @@ class SharedPrefs extends ChangeNotifier {
     return _sharedPrefs.getString(keySelectedUserId);
   }
 
-  void logout() {
+  void logout({bool isDisableUser = false}) {
     SharedPrefs().isLogin = false;
     SharedPrefs().selectedUserLocation = null;
     SharedPrefs().userdata = null;
     SharedPrefs().authToken = "";
     //  Navigator.pop(navigatorKey.currentContext);
     Navigator.pushAndRemoveUntil(
-        navigatorKey.currentContext!,
-      MaterialPageRoute(builder: (BuildContext context) => Login()),
+      navigatorKey.currentContext!,
+      MaterialPageRoute(
+          builder: (BuildContext context) => Login(
+                isDisableUser: isDisableUser,
+              )),
       (Route<dynamic> route) => false,
     );
   }

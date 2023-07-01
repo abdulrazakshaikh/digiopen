@@ -3,16 +3,19 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:xceednet/ui/profile/changepassword_bottomsheet.dart';
+import 'package:xceednet/ui/subscribers/bottom_sheet/disablesubscriber_bottomsheet.dart';
+import 'package:xceednet/ui/subscribers/bottom_sheet/instantsms_bottomsheet.dart';
+import 'package:xceednet/ui/subscribers/bottom_sheet/resetmacaddress_bottomsheet.dart';
 import 'package:xceednet/ui/subscribers/datausage.dart';
-import 'package:xceednet/ui/subscribers/disablesubscriber_bottomsheet.dart';
-import 'package:xceednet/ui/subscribers/instantsms_bottomsheet.dart';
-import 'package:xceednet/ui/subscribers/resetmacaddress_bottomsheet.dart';
+import 'package:xceednet/ui/subscribers/subscribers_add.dart';
 import 'package:xceednet/ui/subscribers/subscribers_details_card.dart';
-import 'package:xceednet/ui/subscribers/tab_audittrail.dart';
 import 'package:xceednet/ui/subscribers/tab_connection.dart';
 import 'package:xceednet/ui/subscribers/tab_details.dart';
 
 import '../../view_model/subscriber_view_model.dart';
+import '../accessrequest_log/accessrequest_list.dart';
+import 'bottom_sheet/delete_bottomsheet.dart';
+import 'bottom_sheet/migration_to_other_bottomsheet.dart';
 
 class SubscribersDetails extends StatefulWidget {
   String subscriberId;
@@ -33,11 +36,7 @@ class _SubscribersDetailsState extends State<SubscribersDetails>
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      bool a = await subscriberViewModel.getSubscriberDetailData(
-          subscriberId: widget.subscriberId);
-      if (a) {
-        subscriberDetail = subscriberViewModel.subscriberDetail;
-      }
+      await callAPI();
     });
     _tabController = TabController(
       initialIndex: 0,
@@ -46,14 +45,31 @@ class _SubscribersDetailsState extends State<SubscribersDetails>
     );
   }
 
+  Future<void> callAPI() async {
+    bool a = await subscriberViewModel.getSubscriberDetailData(
+        subscriberId: widget.subscriberId);
+    if (a) {
+      subscriberDetail = subscriberViewModel.subscriberDetail;
+      setState(() {});
+    }
+  }
+
   bool _isPlanActive = true;
 
   void _onChoiceSelected(String choice) {
+    if (choice == "Refresh") {
+      callAPI();
+      return;
+    }
     choice == 'Data Usage'
-        ? Navigator.pushReplacement<void, void>(context,
-            MaterialPageRoute(builder: (BuildContext context) => DataUsage()))
+        ? Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (BuildContext context) =>
+                    DataUsage(subscriberDetail: subscriberDetail)))
         : showModalBottomSheet(
             elevation: 2,
+            isScrollControlled: true,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(20),
@@ -62,15 +78,57 @@ class _SubscribersDetailsState extends State<SubscribersDetails>
             ),
             context: context,
             builder: (BuildContext context) {
-              return choice == 'Reset Mac Address'
-                  ? ResetMacAddressBottomSheet()
-                  : choice == 'Disable Subscriber'
-                      ? DisableSubscriberBottomSheet()
-                      : choice == 'Change Password'
-                          ? ChangePasswordBottomSheet()
-                          : Container();
+              return Padding(
+                  padding: EdgeInsets.only(
+                      bottom: MediaQuery.of(context).viewInsets.bottom),
+                  child: choice == 'Reset MAC Address' ||
+                          choice == 'terminate' ||
+                          choice == 'Cancel Package'
+                      ? ResetMacAddressBottomSheet(
+                          widget.subscriberId,
+                          type: choice,
+                          updatedSubscriberDetail: () {
+                            callAPI();
+                          },
+                        )
+                      : choice == 'Delete Subscriber'
+                          ? DeleteBottomSheet(
+                              widget.subscriberId.toString(),
+                              () {
+                                Navigator.pop(context);
+                              },
+                            )
+                          : choice == 'Disable Subscriber'
+                              ? DisableSubscriberBottomSheet(
+                                  widget.subscriberId,
+                                  status:
+                                      subscriberDetail!['status'] != "disabled"
+                                          ? "disable"
+                                          : "enable",
+                                  updatedSubscriberDetail: () {
+                                    callAPI();
+                                  },
+                                )
+                              : choice == 'Change Password'
+                                  ? ChangePasswordBottomSheet(
+                                      subscriberId: widget.subscriberId,
+                                    )
+                                  : choice == 'Migrate to other location'
+                                      ? MigrateSubscriberBottomSheet(
+                                          widget.subscriberId,
+                                        )
+                                      : DisableSubscriberBottomSheet(
+                                          widget.subscriberId,
+                                          status: subscriberDetail!['status'] !=
+                                                  "disabled"
+                                              ? "disable"
+                                              : "enable",
+                                          updatedSubscriberDetail: () {
+                                            callAPI();
+                                          },
+                                        ));
             },
-          );
+    );
   }
 
   @override
@@ -81,9 +139,23 @@ class _SubscribersDetailsState extends State<SubscribersDetails>
       floatingActionButton: _tabController.index == 2
           ? null
           : FloatingActionButton(
-              isExtended: true,
+        isExtended: true,
               mini: true,
-              onPressed: () {},
+              onPressed: () async {
+                bool a = await Navigator.of(context).push(
+                  PageRouteBuilder(
+                    pageBuilder: (context, animation, secondaryAnimation) =>
+                        FadeTransition(
+                            opacity: animation,
+                            child: SubscribersAdd(
+                              title: 'Edit Subscriber',
+                              isEdit: true,
+                              subscriberDetails: subscriberDetail,
+                            )),
+                  ),
+                );
+                callAPI();
+              },
               tooltip: 'Edit',
               backgroundColor: Theme.of(context).colorScheme.primary,
               foregroundColor: Theme.of(context).colorScheme.onPrimary,
@@ -112,10 +184,10 @@ class _SubscribersDetailsState extends State<SubscribersDetails>
                         radius: 60,
                       ),
                     ),
-              SizedBox(width: 10),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
+                    SizedBox(width: 10),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
                         Text(
                           '${subscriberDetail!['name']}',
                           style: GoogleFonts.roboto(
@@ -144,9 +216,12 @@ class _SubscribersDetailsState extends State<SubscribersDetails>
                                   left: 3, right: 3, top: 1, bottom: 1),
                               alignment: Alignment.center,
                               decoration: BoxDecoration(
-                                color: subscriberDetail!['status'] == "expired"
-                                    ? Colors.red
-                                    : Colors.green,
+                                color:
+                                    subscriberDetail!['status'] == "expired" ||
+                                            subscriberDetail!['status'] ==
+                                                "disabled"
+                                        ? Colors.red
+                                        : Colors.green,
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(5.0)),
                               ),
@@ -158,66 +233,80 @@ class _SubscribersDetailsState extends State<SubscribersDetails>
                           ],
                         ),
                       ],
-              )
-            ],
-          ),
-        ),
-        actions: [
-          IconButton(
-            tooltip: 'Instant SMS',
-            onPressed: () {
-                    showModalBottomSheet(
-                      elevation: 2,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(20),
-                          topRight: Radius.circular(20),
-                        ),
+                    )
+                  ],
+                ),
+              ),
+              actions: [
+                IconButton(
+                  tooltip: 'Access Log',
+                  onPressed: () {
+                    Navigator.of(context).push(
+                      PageRouteBuilder(
+                        pageBuilder: (context, animation, secondaryAnimation) =>
+                            FadeTransition(
+                                opacity: animation,
+                                child: AccessRequestList(
+                                  name: subscriberDetail!['name'],
+                                  subscriber_id:
+                                      subscriberDetail!['id'].toString(),
+                                )),
                       ),
-                      context: context,
-                      builder: (BuildContext context) {
-                        return InstantSmsBottomSheet();
-                      },
                     );
                   },
-                  icon: Icon(Icons.sms_outlined),
+                  icon: Icon(Icons.description_outlined),
                   style: IconButton.styleFrom(
                     shape: RoundedRectangleBorder(),
-                    // foregroundColor: Theme.of(context).colorScheme.primary,
-                    minimumSize: Size(54, 54),
-                    fixedSize: Size(54, 54),
+                    foregroundColor: Theme.of(context).colorScheme.primary,
+                    minimumSize: Size(40, 40),
+                    fixedSize: Size(40, 40),
                   ),
                 ),
-          Container(
-            width: 54,
-            height: 54,
-            child: PopupMenuButton<String>(
-              shape: RoundedRectangleBorder(),
-              icon: Icon(Icons.more_vert_outlined),
-              onSelected: _onChoiceSelected,
-              color: Theme.of(context).colorScheme.surface,
-              position: PopupMenuPosition.under,
-              tooltip: 'Options',
-              itemBuilder: (BuildContext context) {
-                return Constants.choices.map((String choice) {
-                  return PopupMenuItem<String>(
-                    value: choice,
+                true
+                    ? Container()
+                    : IconButton(
+                        tooltip: 'Instant SMS',
+                        onPressed: () {
+                          showModalBottomSheet(
+                            elevation: 2,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(20),
+                                topRight: Radius.circular(20),
+                              ),
+                            ),
+                            context: context,
+                            builder: (BuildContext context) {
+                              return InstantSmsBottomSheet();
+                            },
+                          );
+                        },
+                        icon: Icon(Icons.sms_outlined),
+                        style: IconButton.styleFrom(
+                          shape: RoundedRectangleBorder(),
+                          // foregroundColor: Theme.of(context).colorScheme.primary,
+                          minimumSize: Size(54, 54),
+                          fixedSize: Size(54, 54),
+                        ),
+                      ),
+                Container(
+                  width: 54,
+                  height: 54,
+                  child: PopupMenuButton<String>(
+                    shape: RoundedRectangleBorder(),
+                    icon: Icon(Icons.more_vert_outlined),
+                    onSelected: _onChoiceSelected,
+                    color: Theme.of(context).colorScheme.surface,
+                    position: PopupMenuPosition.under,
+                    tooltip: 'Options',
+                    itemBuilder: (BuildContext context) {
+                      return Constants(subscriberDetail!['status_events'])
+                          .choices
+                          .map((String choice) {
+                        return PopupMenuItem<String>(
+                          value: choice,
                           child: Text(choice,
                               style: Theme.of(context).textTheme.bodyMedium),
-                          // onTap: (){
-                    //   showModalBottomSheet(
-                    //     elevation: 2,
-                    //     shape: RoundedRectangleBorder(
-                    //       borderRadius: BorderRadius.only(
-                    //         topLeft: Radius.circular(20),
-                    //         topRight: Radius.circular(20),
-                    //       ),
-                    //     ),
-                          //     context: context, builder: (BuildContext context) {
-                          //       return FilterBottomSheet();
-                          //     },
-                          //   );
-                          // },
                         );
                       }).toList();
                     },
@@ -225,70 +314,79 @@ class _SubscribersDetailsState extends State<SubscribersDetails>
                 ),
               ],
             ),
-      body: subscriberViewModel.isLoading
-          ? Container(
-              child: Center(
-                child: CircularProgressIndicator(),
-              ),
-            )
-          : NestedScrollView(
-              floatHeaderSlivers: false,
-              headerSliverBuilder: (context, value) {
-                return [
-                  SliverToBoxAdapter(
-                    child: Container(
-                      alignment: Alignment.center,
-                      padding: EdgeInsets.all(10),
-                      color: Theme.of(context)
-                          .colorScheme
-                          .secondary
-                          .withOpacity(0.5),
-                      child: SubscribersDetailsCard(subscriberDetail!),
+      body: RefreshIndicator(
+        onRefresh: () {
+          callAPI();
+          return Future(() => null);
+        },
+        child: subscriberViewModel.isLoading
+            ? Container(
+                child: Center(
+                  child: CircularProgressIndicator(),
+                ),
+              )
+            : NestedScrollView(
+                floatHeaderSlivers: false,
+                headerSliverBuilder: (context, value) {
+                  return [
+                    SliverToBoxAdapter(
+                      child: Container(
+                        alignment: Alignment.center,
+                        padding: EdgeInsets.all(10),
+                        color: Theme.of(context)
+                            .colorScheme
+                            .secondary
+                            .withOpacity(0.5),
+                        child:
+                            SubscribersDetailsCard(subscriberDetail!, () async {
+                          await callAPI();
+                        }),
+                      ),
                     ),
-                  ),
-                  SliverAppBar(
-                    pinned: true,
-                    toolbarHeight: 0,
-                    bottom: TabBar(
-                        indicatorColor: Theme.of(context).colorScheme.primary,
-                        indicatorWeight: 3,
-                        unselectedLabelColor:
-                            Theme.of(context).colorScheme.secondary,
-                        unselectedLabelStyle: GoogleFonts.robotoCondensed(
-                          textStyle: Theme.of(context).textTheme.bodyMedium,
-                          letterSpacing: 1.2,
-                          fontWeight: FontWeight.w600,
-                        ),
-                        labelColor: Theme.of(context).colorScheme.primary,
-                        labelStyle: GoogleFonts.robotoCondensed(
+                    SliverAppBar(
+                      pinned: true,
+                      toolbarHeight: 0,
+                      bottom: TabBar(
+                          indicatorColor: Theme.of(context).colorScheme.primary,
+                          indicatorWeight: 3,
+                          unselectedLabelColor:
+                              Theme.of(context).colorScheme.secondary,
+                          unselectedLabelStyle: GoogleFonts.robotoCondensed(
                             textStyle: Theme.of(context).textTheme.bodyMedium,
                             letterSpacing: 1.2,
-                            fontWeight: FontWeight.w600),
-                        controller: _tabController,
-                        // isScrollable: true,r
-                        onTap: (int value) {
-                          setState(() {
-                            _tabController.index = value;
-                          });
-                        },
-                        tabs: [
-                          Tab(text: 'Details'),
-                          Tab(text: 'Connection'),
-                          Tab(text: 'Audit Trail'),
-                        ]),
-                  ),
-                ];
-              },
-              body: TabBarView(
-                // physics: NeverScrollableScrollPhysics(),
-                controller: _tabController,
-                children: [
-                  TabDetails(subscriberDetail!),
-                  TabConnection(subscriberDetail!),
-                  TabAuditTrail(),
-                ],
+                            fontWeight: FontWeight.w600,
+                          ),
+                          labelColor: Theme.of(context).colorScheme.primary,
+                          labelStyle: GoogleFonts.robotoCondensed(
+                              textStyle: Theme.of(context).textTheme.bodyMedium,
+                              letterSpacing: 1.2,
+                              fontWeight: FontWeight.w600),
+                          controller: _tabController,
+                          // isScrollable: true,r
+                          onTap: (int value) {
+                            setState(() {
+                              _tabController.index = value;
+                            });
+                          },
+                          tabs: [
+                            Tab(text: 'Details'),
+                            Tab(text: 'Connection'),
+                            // Tab(text: 'Audit Trail'),
+                          ]),
+                    ),
+                  ];
+                },
+                body: TabBarView(
+                  // physics: NeverScrollableScrollPhysics(),
+                  controller: _tabController,
+                  children: [
+                    TabDetails(subscriberDetail!),
+                    TabConnection(subscriberDetail!),
+                    //TabAuditTrail(),
+                  ],
+                ),
               ),
-            ),
+      ),
 
       // CustomScrollView(
       //   slivers: [
@@ -344,14 +442,43 @@ class _SubscribersDetailsState extends State<SubscribersDetails>
 }
 
 class Constants {
-  static const String FirstItem = 'Reset Mac Address';
-  static const String SecondItem = 'Disable Subscriber';
-  static const String ThirdItem = 'Change Password';
-  static const String FourthItem = 'Data Usage';
-  static const List<String> choices = <String>[
-    FirstItem,
-    SecondItem,
-    ThirdItem,
-    FourthItem
-  ];
+  List status;
+
+  Constants(this.status) {
+    choices = <String>[];
+    if (status.contains("reset_mac")) {
+      choices.add(FirstItem);
+    }
+    if (status.contains('disable')) {
+      SecondItem = 'Disable Subscriber';
+      choices.add(SecondItem);
+    }
+    if (status.contains('enable')) {
+      SecondItem = 'Enable Subscriber';
+      choices.add(SecondItem);
+    }
+    if (status.contains("change_password")) {
+      choices.add(ThirdItem);
+    }
+    /*if (status.contains("cancel_package")) {
+      choices.add(CancelPackageItem);
+    }*/
+    if (status.contains("set_delete")) {
+      choices.add(DeteleItem);
+    }
+    choices.add(FourthItem);
+    /*if (status.contains("migrate")) {
+      choices.add(FivthItem);
+    }*/
+    choices.insert(0, "Refresh");
+  }
+
+  static String FirstItem = 'Reset MAC Address';
+  static String SecondItem = "";
+  static String ThirdItem = 'Change Password';
+  static String FourthItem = 'Data Usage';
+  static String FivthItem = 'Migrate to other location';
+  static String DeteleItem = 'Delete Subscriber';
+  static String CancelPackageItem = 'Cancel Package';
+  late List<String> choices;
 }

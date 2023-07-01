@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:xceednet/ui/package/disablepackage_bottomsheet.dart';
+import 'package:xceednet/ui/package/package_add.dart';
 import 'package:xceednet/ui/package/packagetab_addresslist.dart';
 import 'package:xceednet/ui/package/packagetab_burstable.dart';
 import 'package:xceednet/ui/package/packagetab_details.dart';
@@ -14,8 +15,9 @@ import '../../view_model/package_view_model.dart';
 
 class PackageDetails extends StatefulWidget {
   Map packageDetails;
+  Function updateList;
 
-  PackageDetails(this.packageDetails);
+  PackageDetails(this.packageDetails, this.updateList);
 
   @override
   State<PackageDetails> createState() => _PackageDetailsState();
@@ -31,18 +33,22 @@ class _PackageDetailsState extends State<PackageDetails>
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      bool a = await packageViewModel.getPackageDetailData(
-          packageId: widget.packageDetails['id'].toString());
-      if (a) {
-        packageDetails = packageViewModel.packageDetail!;
-        setState(() {});
-      }
+      await callAPI();
     });
     _tabController = TabController(
       initialIndex: 0,
       length: 7,
       vsync: this,
     );
+  }
+
+  Future<void> callAPI() async {
+    bool a = await packageViewModel.getPackageDetailData(
+        packageId: widget.packageDetails['id'].toString());
+    if (a) {
+      packageDetails = packageViewModel.packageDetail!;
+      setState(() {});
+    }
   }
 
   bool _isVoucherAvailable = false;
@@ -58,9 +64,15 @@ class _PackageDetailsState extends State<PackageDetails>
       ),
       context: context,
       builder: (BuildContext context) {
-        return choice == 'Disable Subscriber'
-            ? DisablePackageBottomSheet()
-            : Container();
+        return Padding(
+          padding:
+              EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+          child: DisablePackageBottomSheet(
+              packageDetails['id'].toString(), choice, () {
+            widget.updateList();
+            Navigator.pop(context);
+          }),
+        );
       },
     );
   }
@@ -73,9 +85,24 @@ class _PackageDetailsState extends State<PackageDetails>
       floatingActionButton: _tabController.index == 6
           ? null
           : FloatingActionButton(
-              isExtended: true,
+        isExtended: true,
               mini: true,
-              onPressed: () {},
+              onPressed: () {
+                Navigator.of(context).push(
+                  PageRouteBuilder(
+                    pageBuilder: (context, animation, secondaryAnimation) =>
+                        FadeTransition(
+                            opacity: animation,
+                            child: PackageAdd(
+                              isEdit: true,
+                              packageDetaill: packageDetails,
+                              onChange: () {
+                                callAPI();
+                              },
+                            )),
+                  ),
+                );
+              },
               tooltip: 'Edit',
               backgroundColor: Theme.of(context).colorScheme.primary,
               foregroundColor: Theme.of(context).colorScheme.onPrimary,
@@ -84,6 +111,19 @@ class _PackageDetailsState extends State<PackageDetails>
       appBar: AppBar(
         title: Text('Packages Details'),
         scrolledUnderElevation: 0,
+        actions: [
+          GestureDetector(
+            onTap: () {
+              callAPI();
+            },
+            child: Container(
+                margin: EdgeInsets.only(right: 10),
+                child: Icon(
+                  Icons.refresh,
+                  color: Theme.of(context).primaryColor,
+                )),
+          )
+        ],
       ),
       body: packageViewModel.isLoading
           ? Center(
@@ -124,7 +164,7 @@ class _PackageDetailsState extends State<PackageDetails>
                                             CrossAxisAlignment.start,
                                         children: [
                                           Text(
-                                            '${widget.packageDetails['name']}',
+                                            '${packageDetails['name']}',
                                             style: GoogleFonts.robotoCondensed(
                                               textStyle: Theme.of(context)
                                                   .textTheme
@@ -134,10 +174,21 @@ class _PackageDetailsState extends State<PackageDetails>
                                             ),
                                           ),
                                           SizedBox(height: 5),
+                                          Text(
+                                            'Price(${packageDetails['price_to_subscriber_currency']})'
+                                            ' :  ${packageDetails['price_to_subscriber_human']}',
+                                            style: GoogleFonts.robotoCondensed(
+                                              textStyle: Theme.of(context)
+                                                  .textTheme
+                                                  .headline6,
+                                              fontWeight: FontWeight.w800,
+                                              letterSpacing: 1,
+                                            ),
+                                          ),
+                                          SizedBox(height: 5),
                                           Container(
                                             decoration: BoxDecoration(
-                                              color: widget.packageDetails[
-                                                          'status'] ==
+                                              color: packageDetails['status'] ==
                                                       "enabled"
                                                   ? Colors.greenAccent.shade700
                                                   : Colors.redAccent.shade700,
@@ -147,7 +198,7 @@ class _PackageDetailsState extends State<PackageDetails>
                                             padding: EdgeInsets.symmetric(
                                                 horizontal: 10, vertical: 3),
                                             child: Text(
-                                              widget.packageDetails['status'] ==
+                                              packageDetails['status'] ==
                                                       "enabled"
                                                   ? 'Enabled'.toUpperCase()
                                                   : 'Disabled'.toUpperCase(),
@@ -178,6 +229,22 @@ class _PackageDetailsState extends State<PackageDetails>
                                         position: PopupMenuPosition.under,
                                         tooltip: 'Options',
                                         itemBuilder: (BuildContext context) {
+                                          if (packageDetails['status'] ==
+                                              "enabled") {
+                                            Constants.choices = <String>[
+                                              Constants.SecondItem
+                                            ];
+                                          } else {
+                                            Constants.choices = <String>[
+                                              Constants.FirstItem,
+                                              Constants.SecondItem
+                                            ];
+                                          }
+                                          if (packageDetails['status_events']
+                                              .contains("edit")) {
+                                            Constants.choices
+                                                .add('Delete Package');
+                                          }
                                           return Constants.choices
                                               .map((String choice) {
                                             return PopupMenuItem<String>(
@@ -361,7 +428,28 @@ class _PackageDetailsState extends State<PackageDetails>
 }
 
 class Constants {
-  static const String FirstItem = 'Unpublished Package';
-  static const String SecondItem = 'Disable Package';
-  static const List<String> choices = <String>[FirstItem, SecondItem];
+  List list;
+
+  Constants(this.list) {
+    choices = [];
+    if (list.contains("publish")) {
+      choices.add('Publish Package');
+    }
+    if (list.contains("unpublish")) {
+      choices.add('Unpublished Package');
+    }
+    if (list.contains("disable")) {
+      choices.add('Disable Package');
+    }
+    if (list.contains("enable")) {
+      choices.add('Enable Package');
+    }
+    if (list.contains("edit")) {
+      choices.add('Delete Package');
+    }
+  }
+
+  static String FirstItem = 'Unpublished Package';
+  static String SecondItem = 'Disable Package';
+  static List<String> choices = <String>[FirstItem, SecondItem];
 }

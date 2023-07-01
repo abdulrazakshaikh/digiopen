@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:xceednet/ui/common_widgets/headToolbar.dart';
 import 'package:xceednet/ui/common_widgets/menuDrawer.dart';
-import 'package:xceednet/ui/invoice/invoice_add.dart';
+import 'package:xceednet/ui/payment/payment_add.dart';
 import 'package:xceednet/ui/payment/payment_list_item.dart';
 import 'package:xceednet/view_model/payment_view_model.dart';
 
@@ -77,10 +77,13 @@ class _PaymentListState extends State<PaymentList>
     });
   }
 
-  Future<void> getSubscriberListApi({String next = "0"}) async {
+  Future<void> getSubscriberListApi(
+      {String next = "0", String cuPage = "1"}) async {
     bool status = await paymentViewModel.getPaymentListData(
         search: searchText, nextIndex: next);
     if (status) {
+      currentPage = int.parse(cuPage);
+
       invoicesList = [];
       if (paymentViewModel.paymentListData!.length == 0) {
         listListner.addListList({
@@ -109,7 +112,7 @@ class _PaymentListState extends State<PaymentList>
   loadNextPage(String page) {
     int total = int.parse(page) * 10;
     int cal = total - 10;
-    getSubscriberListApi(next: "$cal");
+    getSubscriberListApi(next: "$cal", cuPage: page);
   }
 
   @override
@@ -119,20 +122,23 @@ class _PaymentListState extends State<PaymentList>
       backgroundColor: Theme.of(context).colorScheme.surface,
       drawer: MenuDrawer(),
       appBar: AppBar(
-        title: Text("Payment"),
+        title: Text("Payment \n count :${paymentViewModel.incoiceCount}"),
         actions: [
-          IconButton(
-            onPressed: () {
-              Navigator.of(context).push(
-                PageRouteBuilder(
-                  pageBuilder: (context, animation, secondaryAnimation) =>
-                      FadeTransition(opacity: animation, child: InvoiceAdd()),
-                ),
-              );
-            },
-            icon: Icon(Icons.add),
-            style: IconButton.styleFrom(
-              shape: RoundedRectangleBorder(),
+          true
+              ? Container()
+              : IconButton(
+                  onPressed: () {
+                    Navigator.of(context).push(
+                      PageRouteBuilder(
+                        pageBuilder: (context, animation, secondaryAnimation) =>
+                            FadeTransition(
+                                opacity: animation, child: PaymentAdd()),
+                      ),
+                    );
+                  },
+                  icon: Icon(Icons.add),
+                  style: IconButton.styleFrom(
+                    shape: RoundedRectangleBorder(),
               foregroundColor: Theme.of(context).colorScheme.primary,
               minimumSize: Size(54, 54),
               fixedSize: Size(54, 54),

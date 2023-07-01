@@ -18,7 +18,6 @@ import 'package:xceednet/ui/online_subscribers/onlinesubscribers_list.dart';
 import 'package:xceednet/ui/package/package_list.dart';
 import 'package:xceednet/ui/package/package_sales_list.dart';
 import 'package:xceednet/ui/payment/payments_list.dart';
-import 'package:xceednet/ui/profile/profile.dart';
 import 'package:xceednet/ui/reports/reports.dart';
 import 'package:xceednet/ui/subscribers/subscribers_list.dart';
 import 'package:xceednet/ui/theme/color_schemes.g.dart';
@@ -28,11 +27,13 @@ import 'package:xceednet/ui/vouchers/vouchers_list.dart';
 import 'package:xceednet/ui/zones/zones_list.dart';
 
 import '../../model/storage/shared_prefs.dart';
+import '../profile/confirmation.dart';
 
 class MenuDrawer extends StatefulWidget {
   var onChange;
+  var isDashboard = false;
 
-  MenuDrawer({this.onChange});
+  MenuDrawer({this.onChange, this.isDashboard = false});
 
   @override
   State<MenuDrawer> createState() => _MenuDrawerState();
@@ -196,7 +197,12 @@ class _MenuDrawerState extends State<MenuDrawer> {
       "title": "New Updates",
       "submenu": "",
     },
-    /*{
+    {
+      "id": "logout",
+      "icon": Icons.logout_outlined,
+      "title": "Logout",
+      "submenu": "",
+    }, /*{
       "id": "018",
       "icon": Icons.change_circle_outlined,
       "title": "Change Location",
@@ -220,7 +226,7 @@ class _MenuDrawerState extends State<MenuDrawer> {
           children: [
             GestureDetector(
               onTap: () {
-                Navigator.pop(context);
+                /*Navigator.pop(context);
                 Navigator.push(
                     context,
                     PageRouteBuilder(
@@ -228,7 +234,7 @@ class _MenuDrawerState extends State<MenuDrawer> {
                           FadeTransition(
                               opacity: animation,
                               child: Profile(title: 'Profile')),
-                    ));
+                    ));*/
               },
               child: Container(
                   width: double.infinity,
@@ -335,29 +341,32 @@ class _MenuDrawerState extends State<MenuDrawer> {
                           letterSpacing: 1.5,
                         ),
                       ),
-                children: [
-                  Container(
-                    decoration: BoxDecoration(
-                        border: Border(
-                      top: BorderSide(
-                          width: 1, color: Theme.of(context).dividerColor),
-                      // bottom: BorderSide(width: 1, color: Theme.of(context).dividerColor),
-                    )),
-                    child: ListView.builder(
-                      primary: false,
-                      physics: AlwaysScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      itemCount:
-                          adminmenuList == null ? 0 : adminmenuList.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        Map item = adminmenuList[index];
-                        return ListTile(
-                          trailing: Icon(Icons.chevron_right_outlined),
-                          title: Text(
-                            '${item["title"]}',
-                            style: GoogleFonts.robotoCondensed(
-                              textStyle: Theme.of(context).textTheme.titleSmall,
-                              letterSpacing: 1.5,
+                      children: [
+                        Container(
+                          decoration: BoxDecoration(
+                              border: Border(
+                            top: BorderSide(
+                                width: 1,
+                                color: Theme.of(context).dividerColor),
+                            // bottom: BorderSide(width: 1, color: Theme.of(context).dividerColor),
+                          )),
+                          child: ListView.builder(
+                            primary: false,
+                            physics: AlwaysScrollableScrollPhysics(),
+                            shrinkWrap: true,
+                            itemCount: adminmenuList == null
+                                ? 0
+                                : adminmenuList.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              Map item = adminmenuList[index];
+                              return ListTile(
+                                trailing: Icon(Icons.chevron_right_outlined),
+                                title: Text(
+                                  '${item["title"]}',
+                                  style: GoogleFonts.robotoCondensed(
+                                    textStyle:
+                                        Theme.of(context).textTheme.titleSmall,
+                                    letterSpacing: 1.5,
                                   ),
                                 ),
                                 onTap: () {},
@@ -383,7 +392,7 @@ class _MenuDrawerState extends State<MenuDrawer> {
                         letterSpacing: 2.5,
                       ),
                     ),
-            ),
+                  ),
             Expanded(
               child: ListView.separated(
                 primary: false,
@@ -523,70 +532,83 @@ class _MenuDrawerState extends State<MenuDrawer> {
   }
 
   void callPage(BuildContext context, Map<dynamic, dynamic> item) {
+    if (item["id"] == "logout") {
+      //  Navigator.pop(context);
+      confirmationAlertDialog(context);
+      return;
+    }
     if (item['id'] == "018") {
       Navigator.of(context)
           .push(MaterialPageRoute(builder: (context) => SelectLocation()));
     } else if (item['id'] == "017") {
       Navigator.of(context)
           .push(MaterialPageRoute(builder: (context) => NewUpdateScreen()));
-    } else
-      Navigator.of(context).pushAndRemoveUntil(
-        PageRouteBuilder(
-          pageBuilder: (context, animation, secondaryAnimation) =>
-              FadeTransition(
-            opacity: animation,
-            child: item["id"] == "001"
-                ? Dashboard()
-                : item["id"] == "002"
-                    ? SubscribersList()
-                    : item["id"] == "003"
-                        ? OnlineSubscribersList()
-                        : item["id"] == "004"
-                            ? AccessRequestList()
-                            : item["id"] == "005"
-                                ? Reports()
-                                : item["id"] == "006"
-                                    ? TicketsList()
-                                    : item["id"] == "007"
-                                        ? LeadsList()
-                                        : item["id"] == "008"
-                                            ? PackageSalesList()
-                                            : item["id"] == "009"
-                                                ? InvoicesList()
-                                                : item["id"] == "010"
-                                                    ? PaymentList()
-                                                    : item["id"] == "011-1"
-                                                        ? SalesList()
-                                                        : item["id"] == "011-2"
-                                                            ? PurchaseList()
-                                                            : item["id"] ==
-                                                                    "011-3"
-                                                                ? ProductList()
-                                                                : item["id"] ==
-                                                                        "011-4"
-                                                                    ? SupplierList()
-                                                                    : item["id"] ==
-                                                                            "011-5"
-                                                                        ? LogList()
-                                                                        : item["id"] ==
-                                                                                "012"
-                                                                            ? ZonesList()
-                                                                            : item["id"] == "013"
-                                                                                ? NodesList()
-                                                                                : item["id"] == "014"
-                                                                                    ? PackageList()
-                                                                                    : item["id"] == "015"
-                                                                                        ? VouchersList()
-                                                                                        : item["id"] == "016"
-                                                                                            ? VouchersBatchesList()
-                                                                                            : item["id"] == "017"
-                                                                                                ? NewUpdateScreen()
-                                                                                                : item["id"] == "018"
-                                                                                                    ? SelectLocation()
-                                                                                                    : Dashboard(),
-          ),
+    } else {
+      Navigator.pop(context);
+      var pageRouteBuilder = PageRouteBuilder(
+        pageBuilder: (context, animation, secondaryAnimation) => FadeTransition(
+          opacity: animation,
+          child: item["id"] == "001"
+              ? Dashboard()
+              : item["id"] == "002"
+                  ? SubscribersList()
+                  : item["id"] == "003"
+                      ? OnlineSubscribersList()
+                      : item["id"] == "004"
+                          ? AccessRequestList()
+                          : item["id"] == "005"
+                              ? Reports()
+                              : item["id"] == "006"
+                                  ? TicketsList()
+                                  : item["id"] == "007"
+                                      ? LeadsList()
+                                      : item["id"] == "008"
+                                          ? PackageSalesList()
+                                          : item["id"] == "009"
+                                              ? InvoicesList()
+                                              : item["id"] == "010"
+                                                  ? PaymentList()
+                                                  : item["id"] == "011-1"
+                                                      ? SalesList()
+                                                      : item["id"] == "011-2"
+                                                          ? PurchaseList()
+                                                          : item["id"] ==
+                                                                  "011-3"
+                                                              ? ProductList()
+                                                              : item["id"] ==
+                                                                      "011-4"
+                                                                  ? SupplierList()
+                                                                  : item["id"] ==
+                                                                          "011-5"
+                                                                      ? LogList()
+                                                                      : item["id"] ==
+                                                                              "012"
+                                                                          ? ZonesList()
+                                                                          : item["id"] == "013"
+                                                                              ? NodesList()
+                                                                              : item["id"] == "014"
+                                                                                  ? PackageList()
+                                                                                  : item["id"] == "015"
+                                                                                      ? VouchersList()
+                                                                                      : item["id"] == "016"
+                                                                                          ? VouchersBatchesList()
+                                                                                          : item["id"] == "017"
+                                                                                              ? NewUpdateScreen()
+                                                                                              : item["id"] == "018"
+                                                                                                  ? SelectLocation()
+                                                                                                  : Dashboard(),
         ),
-        (Route<dynamic> route) => false,
       );
+      if (widget.isDashboard) {
+        Navigator.of(context).push(
+          pageRouteBuilder,
+        );
+      } else {
+        Navigator.pop(context);
+        Navigator.of(context).push(
+          pageRouteBuilder,
+        );
+      }
+    }
   }
 }

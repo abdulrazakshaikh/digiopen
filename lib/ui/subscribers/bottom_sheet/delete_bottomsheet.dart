@@ -6,30 +6,35 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:xceednet/utils/AppUtils.dart';
 
-import '../../view_model/package_view_model.dart';
+import '../../../view_model/subscriber_view_model.dart';
 
-class DisablePackageBottomSheet extends StatefulWidget {
-  String status;
-  String packageId;
-  Function updateDetail;
+class DeleteBottomSheet extends StatefulWidget {
+  String subscriberId;
+  var updatedSubscriberDetail;
 
-  DisablePackageBottomSheet(this.packageId, this.status, this.updateDetail);
+  DeleteBottomSheet(this.subscriberId, this.updatedSubscriberDetail);
 
   @override
-  _DisablePackageBottomSheetState createState() =>
-      _DisablePackageBottomSheetState();
+  _DeleteBottomSheetState createState() => _DeleteBottomSheetState();
 }
 
-class _DisablePackageBottomSheetState extends State<DisablePackageBottomSheet>
+class _DeleteBottomSheetState extends State<DeleteBottomSheet>
     with TickerProviderStateMixin {
-  TextEditingController noteController = TextEditingController();
-  late PackageViewModel packageViewModel;
+  TextEditingController _textEditingController = TextEditingController();
+  late SubscriberViewModel subscriberViewModel;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _textEditingController.text = "aa";
+  }
 
   @override
   Widget build(BuildContext context) {
-    packageViewModel = context.watch<PackageViewModel>();
+    subscriberViewModel = context.watch<SubscriberViewModel>();
     return Container(
-      height: 350,
+      height: 285,
       decoration: BoxDecoration(
         color: Theme.of(context).colorScheme.background,
         borderRadius: BorderRadius.only(
@@ -50,7 +55,7 @@ class _DisablePackageBottomSheetState extends State<DisablePackageBottomSheet>
               children: [
                 Expanded(
                   child: Text(
-                    widget.status,
+                    'Delete Subscriber',
                     style: GoogleFonts.roboto(
                       textStyle: Theme.of(context).textTheme.bodyMedium,
                       fontWeight: FontWeight.w600,
@@ -79,7 +84,7 @@ class _DisablePackageBottomSheetState extends State<DisablePackageBottomSheet>
                           alignment: Alignment.topLeft,
                           padding: EdgeInsets.symmetric(vertical: 5),
                           child: Text(
-                            'Comment',
+                            'Are you sure you want to delete the subscriber?',
                             style: GoogleFonts.robotoCondensed(
                               textStyle: Theme.of(context).textTheme.labelLarge,
                               letterSpacing: 1.75,
@@ -87,8 +92,8 @@ class _DisablePackageBottomSheetState extends State<DisablePackageBottomSheet>
                             ),
                           ),
                         ),
-                        TextFormField(
-                          controller: noteController,
+                        /*TextFormField(
+                          controller: _textEditingController,
                           style: GoogleFonts.roboto(
                             textStyle: Theme.of(context).textTheme.bodyMedium,
                             fontWeight: FontWeight.w600,
@@ -113,7 +118,7 @@ class _DisablePackageBottomSheetState extends State<DisablePackageBottomSheet>
                                   width: 1),
                             ),
                           ),
-                        ),
+                        ),*/
                       ],
                     )),
                   ],
@@ -130,7 +135,7 @@ class _DisablePackageBottomSheetState extends State<DisablePackageBottomSheet>
               ),
             ),
             padding: EdgeInsets.all(15),
-            child: packageViewModel.isUpdateLoading
+            child: subscriberViewModel.isUpdateLoading
                 ? CircularProgressIndicator()
                 : Row(
                     children: [
@@ -152,48 +157,25 @@ class _DisablePackageBottomSheetState extends State<DisablePackageBottomSheet>
                             'Cancel',
                           ),
                         ),
-                ),
-                SizedBox(width: 10),
-                Expanded(
+                      ),
+                      SizedBox(width: 10),
+                      Expanded(
                         child: ElevatedButton(
                           onPressed: () async {
-                            if (widget.status == "Delete Package") {
-                              bool a = await packageViewModel
-                                  .deletePackage(widget.packageId, {});
-                              if (a) {
-                                packageViewModel.getPackageDetailData(
-                                    packageId: widget.packageId);
-                                AppUtils.appToast("Package Delete");
-                                widget.updateDetail();
-                                Navigator.pop(context);
-                              } else {
-                                AppUtils.appToast(
-                                    "Failed to update : ${packageViewModel.error}");
-                              }
+                            /* if (_textEditingController.text.isEmpty) {
+                              AppUtils.appToast("Please add some comment.");
+                              return;
+                            }*/
+                            bool status = await subscriberViewModel
+                                .updateSubscriber(widget.subscriberId,
+                                    {"status_event": "set_delete"});
+                            if (status) {
+                              widget.updatedSubscriberDetail();
+                              AppUtils.appToast("delete successfully");
+                              Navigator.pop(context);
                             } else {
-                              String s = "";
-                              if (widget.status == "Publish Package") {
-                                s = 'publish';
-                              } else if (widget.status == "Unpublish Package") {
-                                s = 'unpublish';
-                              } else if (widget.status == "Disable Package") {
-                                s = 'disable';
-                              } else if (widget.status == "Enable Package") {
-                                s = 'enable';
-                              }
-                              bool a = await packageViewModel
-                                  .updatePackage(widget.packageId, {
-                                "status_event": s,
-                              });
-                              if (a) {
-                                packageViewModel.getPackageDetailData(
-                                    packageId: widget.packageId);
-                                AppUtils.appToast("Package Updated");
-                                Navigator.pop(context);
-                              } else {
-                                AppUtils.appToast(
-                                    "Failed to update : ${packageViewModel.error}");
-                              }
+                              AppUtils.appToast(
+                                  "Failed to delete: ${subscriberViewModel.error}");
                             }
                           },
                           style: ElevatedButton.styleFrom(
@@ -205,7 +187,7 @@ class _DisablePackageBottomSheetState extends State<DisablePackageBottomSheet>
                                 horizontal: 15, vertical: 15),
                             alignment: Alignment.center,
                           ),
-                          child: Text(widget.status),
+                          child: Text('Delete Subscriber'),
                         ),
                       ),
                     ],

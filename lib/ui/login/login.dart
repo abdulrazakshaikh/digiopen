@@ -14,6 +14,10 @@ import '../../utils/AppUtils.dart';
 import '../../view_model/auth_view_model.dart';
 
 class Login extends StatefulWidget {
+  bool isDisableUser = false;
+
+  Login({this.isDisableUser = false});
+
   @override
   _LoginState createState() => _LoginState();
 }
@@ -22,6 +26,60 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
   bool _passwordVisible = false;
   TextEditingController usernameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    if (widget.isDisableUser) {
+      WidgetsBinding.instance.addPostFrameCallback((_) async {
+        Widget yesButton = ElevatedButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          style: ElevatedButton.styleFrom(
+            padding: EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+            alignment: Alignment.center,
+          ),
+          child: Text('Okay'),
+        );
+        AlertDialog alert = AlertDialog(
+          backgroundColor: Theme.of(context).colorScheme.background,
+          title: Text(
+            "Session Timeout",
+            textAlign: TextAlign.center,
+            style: GoogleFonts.roboto(
+                textStyle: Theme.of(context).textTheme.titleLarge,
+                fontWeight: FontWeight.bold,
+                letterSpacing: 1.5,
+                fontSize: 18),
+          ),
+          content: Text(
+            "Your session timeout please re-login to access app",
+            textAlign: TextAlign.center,
+            style: GoogleFonts.roboto(
+                textStyle: Theme.of(context).textTheme.bodyMedium,
+                letterSpacing: 1.2),
+          ),
+          actions: [
+            Row(
+              children: [
+                SizedBox(width: 10),
+                Expanded(child: yesButton),
+              ],
+            ),
+          ],
+        );
+        // show the dialog
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return alert;
+          },
+        );
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {

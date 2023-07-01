@@ -4,12 +4,11 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:xceednet/ui/invoice/invoice_details_card.dart';
 import 'package:xceednet/ui/profile/changepassword_bottomsheet.dart';
+import 'package:xceednet/ui/subscribers/bottom_sheet/disablesubscriber_bottomsheet.dart';
 import 'package:xceednet/ui/subscribers/datausage.dart';
-import 'package:xceednet/ui/subscribers/disablesubscriber_bottomsheet.dart';
-import 'package:xceednet/ui/subscribers/resetmacaddress_bottomsheet.dart';
-import 'package:xceednet/ui/subscribers/tab_audittrail.dart';
 import 'package:xceednet/view_model/invoice_view_model.dart';
 
+import '../subscribers/bottom_sheet/resetmacaddress_bottomsheet.dart';
 import 'invoice_tab_details.dart';
 
 class InvoiceDetails extends StatefulWidget {
@@ -60,10 +59,10 @@ class _InvoiceDetailsState extends State<InvoiceDetails>
             ),
             context: context,
             builder: (BuildContext context) {
-              return choice == 'Reset Mac Address'
-                  ? ResetMacAddressBottomSheet()
+              return choice == 'Reset MAC Address'
+                  ? ResetMacAddressBottomSheet("")
                   : choice == 'Disable Subscriber'
-                      ? DisableSubscriberBottomSheet()
+                      ? DisableSubscriberBottomSheet("")
                       : choice == 'Change Password'
                           ? ChangePasswordBottomSheet()
                           : Container();
@@ -76,7 +75,7 @@ class _InvoiceDetailsState extends State<InvoiceDetails>
     invoiceViewModel = context.watch<InvoiceViewModel>();
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
-      floatingActionButton: _tabController.index == 2
+      floatingActionButton: _tabController.index == 0
           ? null
           : FloatingActionButton(
               isExtended: true,
@@ -141,18 +140,20 @@ class _InvoiceDetailsState extends State<InvoiceDetails>
                 ),
               ),
               actions: [
-                Container(
-                  width: 54,
-                  height: 54,
-                  child: PopupMenuButton<String>(
-                    shape: RoundedRectangleBorder(),
-                    icon: Icon(Icons.more_vert_outlined),
-                    onSelected: _onChoiceSelected,
-                    color: Theme.of(context).colorScheme.surface,
-                    position: PopupMenuPosition.under,
-                    tooltip: 'Options',
-                    itemBuilder: (BuildContext context) {
-                      return Constants.choices.map((String choice) {
+                true
+                    ? Container()
+                    : Container(
+                        width: 54,
+                        height: 54,
+                        child: PopupMenuButton<String>(
+                          shape: RoundedRectangleBorder(),
+                          icon: Icon(Icons.more_vert_outlined),
+                          onSelected: _onChoiceSelected,
+                          color: Theme.of(context).colorScheme.surface,
+                          position: PopupMenuPosition.under,
+                          tooltip: 'Options',
+                          itemBuilder: (BuildContext context) {
+                            return Constants.choices.map((String choice) {
                         return PopupMenuItem<String>(
                           value: choice,
                           child: Text(choice,
@@ -226,7 +227,7 @@ class _InvoiceDetailsState extends State<InvoiceDetails>
                         },
                         tabs: [
                           Tab(text: 'Details'),
-                          Tab(text: 'Audit Trail'),
+                          //Tab(text: 'Audit Trail'),
                         ]),
                   ),
                 ];
@@ -236,7 +237,7 @@ class _InvoiceDetailsState extends State<InvoiceDetails>
                 controller: _tabController,
                 children: [
                   InvoiceTabDetails(invoiceDetail!),
-                  TabAuditTrail(),
+                  //TabAuditTrail(),
                 ],
               ),
             ),

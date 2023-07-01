@@ -49,6 +49,13 @@ class FsListWithSearchState extends State<FsListWithSearchWidget> {
       // print("ssssssssssssssss");
       if (_scrollController.position.pixels ==
           _scrollController.position.maxScrollExtent) {
+        if (metadata['total_item_count'] != null) {
+          if (metadata['total_item_count'] == receiptList!.length) {
+            return;
+          }
+        }
+        print("metadata");
+        print(metadata);
         if (metadata == null ||
             metadata['last_page'] != metadata['current_page']) {
           print("page no " + metadata.toString());
@@ -56,6 +63,7 @@ class FsListWithSearchState extends State<FsListWithSearchWidget> {
               metadata == null || metadata['current_page'].toString() == null
                   ? '1'
                   : (metadata['current_page'] + 1).toString();
+          print("object  $pageNumber");
           loadMore(pageNumber);
         }
       }
@@ -104,7 +112,7 @@ class FsListWithSearchState extends State<FsListWithSearchWidget> {
                 : Container(
                     margin: EdgeInsets.only(top: 100),
                     child: Text("No search record found")))
-            : ListView.builder(
+            : ListView.separated(
                 primary: false,
                 scrollDirection: Axis.vertical,
                 shrinkWrap: true,
@@ -117,7 +125,11 @@ class FsListWithSearchState extends State<FsListWithSearchWidget> {
                   var childItem =
                       itemBuilder!(context, index, receiptList![index]);
                   return childItem;
-                });
+                },
+                separatorBuilder: (BuildContext context, int index) {
+                  return SizedBox(height: 5);
+                },
+              );
   }
 
   void clearList() {

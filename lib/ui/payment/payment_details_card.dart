@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:xceednet/utils/AppUtils.dart';
 
+import '../../model/storage/shared_prefs.dart';
+
 class PaymentDetailsCard extends StatefulWidget {
   Map subscriberDetail;
 
@@ -99,7 +101,13 @@ class _PaymentDetailsCardState extends State<PaymentDetailsCard>
                     Container(
                       child: TextButton(
                           onPressed: () {
-                            AppUtils.appToast("Coming soon");
+                            try {
+                              AppUtils.launchURL(
+                                  "${SharedPrefs().getDomainUrl()}/subscriber_payments/${widget.subscriberDetail["id"]}.pdf");
+                            } catch (e) {
+                              AppUtils.appToast(e.toString());
+                            }
+                            //AppUtils.appToast("Coming soon");
                           },
                           child: Row(
                             children: [

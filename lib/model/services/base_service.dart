@@ -7,5 +7,7 @@ abstract class BaseService {
 
   Future<dynamic> put(String url, dynamic data);
 
+  Future<dynamic> patch(String url, dynamic data);
+
   Future<dynamic> delete(String url, dynamic data);
 }

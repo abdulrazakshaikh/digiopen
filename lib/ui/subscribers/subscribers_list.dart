@@ -8,6 +8,7 @@ import 'package:xceednet/ui/subscribers/subscribers_add.dart';
 import 'package:xceednet/view_model/subscriber_view_model.dart';
 
 import '../../utils/FsListWithSearchWidget.dart';
+import 'helper_multiple_selection_bottomsheet.dart';
 
 class SubscribersList extends StatefulWidget {
   @override
@@ -43,10 +44,19 @@ class _SubscribersListState extends State<SubscribersList>
     });
   }
 
-  Future<void> getSubscriberListApi({String next = "0"}) async {
+  Future<void> getSubscriberListApi(
+      {String next = "0", String cuPage = "1"}) async {
+    var string = subscriberViewModel.columnsData
+        ?.indexWhere((element) => element.containsKey("subscribers.status"))!
+        .toString();
+
     bool status = await subscriberViewModel.getSubscriberListData(
-        search: searchText, nextIndex: next);
+        search: searchText,
+        nextIndex: next,
+        filter: selectedFilter,
+        columIndex: string);
     if (status) {
+      currentPage = int.parse(cuPage);
       subscribersList = [];
       if (subscriberViewModel.subscriberData!.length == 0) {
         listListner.addListList({
@@ -56,9 +66,14 @@ class _SubscribersListState extends State<SubscribersList>
         setState(() {});
       } else {
         subscribersList.addAll(subscriberViewModel.subscriberData!);
+        var ceil =
+            (subscriberViewModel.apiCompleteResult!['recordsFiltered'] / 10)
+                .ceil();
         listListner.addListList({
           "current_page": currentPage,
-          "last_page": 1000,
+          "last_page": ceil,
+          "total_item_count":
+              subscriberViewModel.apiCompleteResult!['recordsFiltered']
         }, subscribersList);
         setState(() {});
       }
@@ -67,6 +82,7 @@ class _SubscribersListState extends State<SubscribersList>
   }
 
   Widget? widget1;
+  List<String> selectedFilter = [];
 
   @override
   Widget build(BuildContext context) {
@@ -85,13 +101,14 @@ class _SubscribersListState extends State<SubscribersList>
       backgroundColor: Theme.of(context).colorScheme.surface,
       drawer: MenuDrawer(),
       appBar: AppBar(
-        title: Text("Subscribers List"),
-        actions: [
-          subscriberViewModel.isLoading
-              ? Container()
-              : IconButton(
-                  onPressed: () {
-                    Navigator.of(context).push(
+        title: Text(
+            "Subscribers List \ncount :${subscriberViewModel.incoiceCount}"),
+        actions: subscriberViewModel.isLoading
+            ? []
+            : [
+                IconButton(
+                  onPressed: () async {
+                    var a = await Navigator.of(context).push(
                       PageRouteBuilder(
                         pageBuilder: (context, animation, secondaryAnimation) =>
                             FadeTransition(
@@ -99,17 +116,69 @@ class _SubscribersListState extends State<SubscribersList>
                                 child: SubscribersAdd(title: 'Subscriber Add')),
                       ),
                     );
+                    if (a != null) {
+                      listListner.clearAllState();
+                      getSubscriberListApi();
+                    }
                   },
-            icon: Icon(Icons.add),
-            style: IconButton.styleFrom(
-              shape: RoundedRectangleBorder(),
-              // backgroundColor: Theme.of(context).colorScheme.tertiary.withOpacity(0.1),
-              foregroundColor: Theme.of(context).colorScheme.primary,
-              minimumSize: Size(54, 54),
-              fixedSize: Size(54, 54),
-            ),
-          ),
-        ],
+                  icon: Icon(Icons.add),
+                  style: IconButton.styleFrom(
+                    shape: RoundedRectangleBorder(),
+                    // backgroundColor: Theme.of(context).colorScheme.tertiary.withOpacity(0.1),
+                    foregroundColor: Theme.of(context).colorScheme.primary,
+                    minimumSize: Size(54, 54),
+                    fixedSize: Size(54, 54),
+                  ),
+                ),
+                IconButton(
+                  onPressed: () async {
+                    showModalBottomSheet(
+                      elevation: 2,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(20),
+                          topRight: Radius.circular(20),
+                        ),
+                      ),
+                      context: context,
+                      builder: (BuildContext context) {
+                        var list = subscriberViewModel.columnsData
+                            ?.where(
+                              (element) =>
+                                  element.containsKey('subscribers.status'),
+                            )
+                            .toList();
+                        var helperDataList = list![0]['subscribers.status']
+                            ['select_options'] as List;
+                        print(helperDataList);
+                        print(selectedFilter);
+                        if (selectedFilter.length == 0) {
+                          helperDataList.forEach((element) {
+                            selectedFilter.add(element[1]);
+                          });
+                        }
+
+                        return HelperMultipleSelectionBottomSheet(
+                            helperDataList, selectedFilter, (selectedFilter1) {
+                          selectedFilter = selectedFilter1;
+                          listListner.clearAllState();
+                          getSubscriberListApi();
+                        });
+                      },
+                    );
+                    // listListner.clearAllState();
+                    // getSubscriberListApi();
+                  },
+                  icon: Icon(Icons.filter_alt),
+                  style: IconButton.styleFrom(
+                    shape: RoundedRectangleBorder(),
+                    // backgroundColor: Theme.of(context).colorScheme.tertiary.withOpacity(0.1),
+                    foregroundColor: Theme.of(context).colorScheme.primary,
+                    minimumSize: Size(54, 54),
+                    fixedSize: Size(54, 54),
+                  ),
+                ),
+              ],
       ),
       body: Column(
         children: [
@@ -123,18 +192,18 @@ class _SubscribersListState extends State<SubscribersList>
           true
               ? Flexible(child: widget1!)
               : ListView.separated(
-              primary: false,
-              physics: NeverScrollableScrollPhysics(),
-              shrinkWrap: true,
-              itemCount:
-              subscribersList == null ? 0 : subscribersList.length,
-              separatorBuilder: (BuildContext context, int index) {
-                return SizedBox(height: 5);
-              },
-              itemBuilder: (BuildContext context, int index) {
-                Map item = subscribersList[index];
-                return SubscriberListItem(item);
-              }),
+                  primary: false,
+                  physics: NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  itemCount:
+                      subscribersList == null ? 0 : subscribersList.length,
+                  separatorBuilder: (BuildContext context, int index) {
+                    return SizedBox(height: 5);
+                  },
+                  itemBuilder: (BuildContext context, int index) {
+                    Map item = subscribersList[index];
+                    return SubscriberListItem(item);
+                  }),
         ],
       ),
     );
@@ -145,8 +214,9 @@ class _SubscribersListState extends State<SubscribersList>
 
   @override
   loadNextPage(String page) {
+    print("$page");
     int total = int.parse(page) * 10;
     int cal = total - 10;
-    getSubscriberListApi(next: "$cal");
+    getSubscriberListApi(next: "$cal", cuPage: page);
   }
 }

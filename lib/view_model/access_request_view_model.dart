@@ -17,17 +17,23 @@ class AccessRequestViewModel extends ChangeNotifier {
   }
 
   Future<bool> getAccessRequestListData(
-      {String search = "", String nextIndex = "0"}) async {
+      {String search = "",
+      String nextIndex = "0",
+      String subscriber_id = "0"}) async {
     try {
       _isLoading = true;
       notifyListeners();
       accessRequestListData = [];
-      var _userdata =
-          await new AccessRequestRepository().getAccessRequestListData({
+      var map = {
         "start": nextIndex,
         "search": {"value": search},
         "length": "10"
-      });
+      };
+      if (subscriber_id != null && subscriber_id != "0") {
+        map['subscriber_id'] = subscriber_id;
+      }
+      var _userdata =
+          await new AccessRequestRepository().getAccessRequestListData(map);
       accessRequestListData = [];
 
       if (!_userdata.isSuccess) {

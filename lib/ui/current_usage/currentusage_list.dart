@@ -8,19 +8,52 @@ import 'package:xceednet/view_model/access_request_view_model.dart';
 
 import '../../utils/FsListWithSearchWidget.dart';
 
-class AccessRequestList extends StatefulWidget {
+class CurrentUsageList extends StatefulWidget {
   String? subscriber_id = null;
   String? name = null;
 
-  AccessRequestList({this.subscriber_id, this.name});
+  CurrentUsageList({this.subscriber_id, this.name});
 
   @override
-  State<AccessRequestList> createState() => _AccessRequestListState();
+  State<CurrentUsageList> createState() => _CurrentUsageListState();
 }
 
-class _AccessRequestListState extends State<AccessRequestList>
+class _CurrentUsageListState extends State<CurrentUsageList>
     implements PageLoadSearchListener {
+/*List subscribersList = [
+  {
+    "id": "101",
+    "status" : "John Doe",
 
+    "name" : "John Doe",
+    "mobile" : "9876543210",
+
+    "createdon" : "01 Sep, 2022",
+    "assignedto" : "Johnson Doe",
+
+    "ticket" : "-",
+
+  },
+  {
+    "id": "102",
+    "name" : "John Doe",
+    "mobile" : "9876543210",
+    "createdon" : "01 Sep, 2022",
+    "assignedto" : "Johnson Doe",
+    "ticket" : "-",
+    "status" : "John Doe",
+  },
+  {
+    "id": "103",
+    "name" : "John Doe",
+    "mobile" : "9876543210",
+    "createdon" : "01 Sep, 2022",
+    "assignedto" : "Johnson Doe",
+    "ticket" : "-",
+    "status" : "John Doe",
+  },
+
+];*/
   List invoicesList = [];
   late AccessRequestViewModel accessRequestViewModel;
 
@@ -48,14 +81,12 @@ class _AccessRequestListState extends State<AccessRequestList>
     });
   }
 
-  Future<void> getSubscriberListApi(
-      {String next = "0", String cuPage = "1"}) async {
+  Future<void> getSubscriberListApi({String next = "0"}) async {
     bool status = await accessRequestViewModel.getAccessRequestListData(
         search: searchText,
         nextIndex: next,
         subscriber_id: widget.subscriber_id ?? "0");
     if (status) {
-      currentPage = int.parse(cuPage);
       invoicesList = [];
       if (accessRequestViewModel.accessRequestListData!.length == 0) {
         listListner.addListList({
@@ -84,7 +115,7 @@ class _AccessRequestListState extends State<AccessRequestList>
   loadNextPage(String page) {
     int total = int.parse(page) * 10;
     int cal = total - 10;
-    getSubscriberListApi(next: "$cal", cuPage: page);
+    getSubscriberListApi(next: "$cal");
   }
 
   @override
@@ -92,24 +123,10 @@ class _AccessRequestListState extends State<AccessRequestList>
     accessRequestViewModel = context.watch<AccessRequestViewModel>();
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.surface,
-      drawer: widget.name == null ? MenuDrawer() : null,
+      drawer: MenuDrawer(),
       appBar: AppBar(
         title: Text(
-            "Access Request Log ${widget.name == null ? "" : "\nfor ${widget.name}"} "),
-        actions: [
-          IconButton(
-            onPressed: () {},
-            tooltip: 'Delete All Access Request Log',
-            icon: Icon(Icons.delete_forever_outlined),
-            style: IconButton.styleFrom(
-              shape: RoundedRectangleBorder(),
-              // backgroundColor: Theme.of(context).colorScheme.tertiary.withOpacity(0.1),
-              foregroundColor: Colors.red,
-              minimumSize: Size(54, 54),
-              fixedSize: Size(54, 54),
-            ),
-          ),
-        ],
+            "CurrentUsageListItem \n${widget.name == null ? "" : "for ${widget.name}"} "),
       ),
       body: Column(
         children: [

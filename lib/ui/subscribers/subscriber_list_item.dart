@@ -79,18 +79,20 @@ class SubscriberListItemState extends State<SubscriberListItem> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Expanded(
-                    flex: 5,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Customer ID : '.toLowerCase(),
-                          style: GoogleFonts.roboto(
-                              textStyle:
-                                  Theme.of(context).textTheme.labelMedium,
-                              letterSpacing: 1.5),
-                        ),
+                 true
+                      ? Container()
+                      : Expanded(
+                          flex: 5,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Customer ID : '.toLowerCase(),
+                                style: GoogleFonts.roboto(
+                                    textStyle:
+                                        Theme.of(context).textTheme.labelMedium,
+                                    letterSpacing: 1.5),
+                              ),
                         SizedBox(height: 3),
                         Text(
                           '${item["subscribers.subscriberid"]}',
@@ -109,7 +111,7 @@ class SubscriberListItemState extends State<SubscriberListItem> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Username : '.toLowerCase(),
+                          'Username : ',
                           style: GoogleFonts.roboto(
                               textStyle:
                                   Theme.of(context).textTheme.labelMedium,
@@ -127,6 +129,43 @@ class SubscriberListItemState extends State<SubscriberListItem> {
                       ],
                     ),
                   ),
+                  Expanded(
+                    flex: 5,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Online : ',
+                          style: GoogleFonts.roboto(
+                              textStyle:
+                                  Theme.of(context).textTheme.labelMedium,
+                              letterSpacing: 1.5),
+                        ),
+                        SizedBox(height: 3),
+                        Container(
+                          decoration: BoxDecoration(
+                            color:
+                                item["subscribers.online"].toString() != 'false'
+                                    ? Colors.greenAccent.shade700
+                                    : Colors.redAccent.shade700,
+                            borderRadius: BorderRadius.circular(4),
+                          ),
+                          padding:
+                              EdgeInsets.symmetric(horizontal: 10, vertical: 3),
+                          child: Text(
+                            '${item["subscribers.online"].toString() != 'false' ? 'online' : 'offline'}',
+                            style: GoogleFonts.roboto(
+                                textStyle:
+                                    Theme.of(context).textTheme.bodyMedium,
+                                fontSize: 13,
+                                color: Colors.white,
+                                fontWeight: FontWeight.w500,
+                                letterSpacing: 1.2),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -141,7 +180,7 @@ class SubscriberListItemState extends State<SubscriberListItem> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Name : '.toLowerCase(),
+                          'Name : ',
                           style: GoogleFonts.roboto(
                               textStyle:
                                   Theme.of(context).textTheme.labelMedium,
@@ -159,18 +198,20 @@ class SubscriberListItemState extends State<SubscriberListItem> {
                       ],
                     ),
                   ),
-                  Expanded(
-                    flex: 5,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Mobile : '.toLowerCase(),
-                          style: GoogleFonts.roboto(
-                              textStyle:
-                                  Theme.of(context).textTheme.labelMedium,
-                              letterSpacing: 1.5),
-                        ),
+                  true
+                      ? Container()
+                      : Expanded(
+                          flex: 5,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Mobile : '.toLowerCase(),
+                                style: GoogleFonts.roboto(
+                                    textStyle:
+                                        Theme.of(context).textTheme.labelMedium,
+                                    letterSpacing: 1.5),
+                              ),
                         SizedBox(height: 3),
                         Text(
                           '${item["subscribers.mobile"] ?? "Key Required"}',
@@ -186,18 +227,20 @@ class SubscriberListItemState extends State<SubscriberListItem> {
                 ],
               ),
             ),
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Expanded(
-                    flex: 5,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+            true
+                ? Container()
+                : Container(
+                    padding: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
-                          'Zone : '.toLowerCase(),
+                        Expanded(
+                          flex: 5,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Zone : '.toLowerCase(),
                           style: GoogleFonts.roboto(
                               textStyle:
                                   Theme.of(context).textTheme.labelMedium,
@@ -253,7 +296,7 @@ class SubscriberListItemState extends State<SubscriberListItem> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Package : '.toLowerCase(),
+                          'Package : ',
                           style: GoogleFonts.roboto(
                               textStyle:
                                   Theme.of(context).textTheme.labelMedium,
@@ -262,30 +305,6 @@ class SubscriberListItemState extends State<SubscriberListItem> {
                         SizedBox(height: 3),
                         Text(
                           '${item["location_packages.name"]['location_package_name']}',
-                          style: GoogleFonts.roboto(
-                              textStyle: Theme.of(context).textTheme.bodyMedium,
-                              fontSize: 13,
-                              fontWeight: FontWeight.w500,
-                              letterSpacing: 1.2),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Expanded(
-                    flex: 5,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Online : '.toLowerCase(),
-                          style: GoogleFonts.roboto(
-                              textStyle:
-                                  Theme.of(context).textTheme.labelMedium,
-                              letterSpacing: 1.5),
-                        ),
-                        SizedBox(height: 3),
-                        Text(
-                          '${item["subscribers.online"] == 'false' ? 'online' : 'offline'}',
                           style: GoogleFonts.roboto(
                               textStyle: Theme.of(context).textTheme.bodyMedium,
                               fontSize: 13,
@@ -309,7 +328,7 @@ class SubscriberListItemState extends State<SubscriberListItem> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Status : '.toLowerCase(),
+                          'Status : ',
                           style: GoogleFonts.roboto(
                               textStyle:
                                   Theme.of(context).textTheme.labelMedium,
@@ -324,6 +343,33 @@ class SubscriberListItemState extends State<SubscriberListItem> {
                               fontWeight: FontWeight.w500,
                               letterSpacing: 1.2),
                         ),
+                      ],
+                    ),
+                  ),
+                  true
+                      ? Container()
+                      : Expanded(
+                          flex: 5,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Account No : '.toLowerCase(),
+                                style: GoogleFonts.roboto(
+                                    textStyle:
+                                        Theme.of(context).textTheme.labelMedium,
+                                    letterSpacing: 1.5),
+                              ),
+                        SizedBox(height: 3),
+                        Text(
+                          '${item["subscribers.accountno"] ?? "Key Required"}',
+                                style: GoogleFonts.roboto(
+                                    textStyle:
+                                        Theme.of(context).textTheme.bodyMedium,
+                                    fontSize: 13,
+                                    fontWeight: FontWeight.w500,
+                                    letterSpacing: 1.2),
+                              ),
                       ],
                     ),
                   ),
@@ -347,7 +393,7 @@ class SubscriberListItemState extends State<SubscriberListItem> {
                       spacing: 5,
                       children: [
                         Text(
-                          'Renewed at : '.toLowerCase(),
+                          'Renewed at : ',
                           style: GoogleFonts.roboto(
                               textStyle:
                                   Theme.of(context).textTheme.labelMedium,
@@ -373,7 +419,7 @@ class SubscriberListItemState extends State<SubscriberListItem> {
                       spacing: 5,
                       children: [
                         Text(
-                          'Expired at : '.toLowerCase(),
+                          'Expired at : ',
                           style: GoogleFonts.roboto(
                               textStyle:
                                   Theme.of(context).textTheme.labelMedium,

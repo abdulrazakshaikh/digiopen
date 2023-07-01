@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 
 class InvoiceTabDetails extends StatefulWidget {
   Map subscriberDetail;
@@ -32,12 +33,12 @@ class _InvoiceTabDetailsState extends State<InvoiceTabDetails> {
       {
         "id": "002",
         "label": "Invoice Date",
-        "value": "${subscriberDetail['invoice_date'] ?? ""}"
+        "value": "${getDateInSring(subscriberDetail['invoice_date']) ?? ""}"
       },
       {
         "id": "003",
         "label": "Due by",
-        "value": "${subscriberDetail['due_by']}"
+        "value": "${getDateInSring(subscriberDetail['due_by'])}"
       },
       {
         "id": "004",
@@ -48,7 +49,7 @@ class _InvoiceTabDetailsState extends State<InvoiceTabDetails> {
         "id": "005",
         "label": "Period",
         "value":
-            "${subscriberDetail['period_from']}-${subscriberDetail['period_from']}"
+        "${getDateInSring(subscriberDetail['period_from'])}:${getDateInSring(subscriberDetail['period_from'])}"
       },
       {
         "id": "006",
@@ -86,6 +87,13 @@ class _InvoiceTabDetailsState extends State<InvoiceTabDetails> {
         "value": "${subscriberDetail['total_amount_human']}"
       }
     ];
+  }
+
+  String getDateInSring(String data) {
+    var string = data.toString().substring(0, 10).toString();
+    String due_by = DateFormat('dd-MMM-yyyy')
+        .format(DateFormat('yyyy-MM-dd').parse(string));
+    return due_by;
   }
 
   @override

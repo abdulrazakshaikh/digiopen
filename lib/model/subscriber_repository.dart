@@ -13,6 +13,12 @@ class SubscriberRepository {
     return response!;
   }
 
+  Future<NewAPIResponse> getUserListData(dynamic map) async {
+    NewAPIResponse response = await _netoworkService.get(AppUrl.user_list);
+    // var newAPIResponse = NewAPIResponse.fromJson(response);
+    return response!;
+  }
+
   Future<NewAPIResponse> getOnlineSubscriberListData(dynamic map) async {
     NewAPIResponse response =
         await _netoworkService.post(AppUrl.online_subscriber_list, map);
@@ -24,14 +30,19 @@ class SubscriberRepository {
     NewAPIResponse response = await _netoworkService.get(
       AppUrl.subscriber_details + "/${map}",
     );
-    // var newAPIResponse = NewAPIResponse.fromJson(response);
     return response!;
   }
 
   Future<NewAPIResponse> addSubscriberDetailData(Map map) async {
     NewAPIResponse response =
         await _netoworkService.post(AppUrl.subscriber_details, map);
-    // var newAPIResponse = NewAPIResponse.fromJson(response);
+    return response!;
+  }
+
+  Future<NewAPIResponse> updateSubscriberDetailData(
+      String subscriberId, Map map) async {
+    NewAPIResponse response = await _netoworkService.patch(
+        AppUrl.subscriber_details + "/$subscriberId", map);
     return response!;
   }
 }

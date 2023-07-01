@@ -4,6 +4,7 @@ class AppUrl {
   static String listOfLocation = "location_subdomain_and_domains";
   static String dashboard = "location_dashboard";
   static String subscriber_list = "subscribers/search";
+  static String user_list = "location_users";
   static String online_subscriber_list = "subscribers/search_online";
   static String subscriber_details = "subscribers";
   static String invoice_list = "subscriber_invoices/search";

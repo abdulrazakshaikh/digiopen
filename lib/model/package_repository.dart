@@ -20,4 +20,24 @@ class PackageRepository {
     // var newAPIResponse = NewAPIResponse.fromJson(response);
     return response!;
   }
+
+  Future<NewAPIResponse> addPackageDetailData(Map map) async {
+    NewAPIResponse response =
+        await _netoworkService.post(AppUrl.package_details, map);
+    return response!;
+  }
+
+  Future<NewAPIResponse> updatePackageDetailData(
+      String subscriberId, Map map) async {
+    NewAPIResponse response = await _netoworkService.patch(
+        AppUrl.package_details + "/$subscriberId", map);
+    return response!;
+  }
+
+  Future<NewAPIResponse> deletePackageDetailData(
+      String subscriberId, Map map) async {
+    NewAPIResponse response = await _netoworkService.delete(
+        AppUrl.package_details + "/$subscriberId", map);
+    return response!;
+  }
 }

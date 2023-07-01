@@ -47,6 +47,47 @@ class _PackageTabLimitState extends State<PackageTabLimit> {
           "value": "${packageDetail['fair_usage_policy']}"
         },
       ];
+      if (packageDetail['data_limited']) {
+        detailsList.insert(1, {
+          "id": "001",
+          "label": "Data Limited",
+          "value": "${packageDetail['data']} ${packageDetail['data_unit']}"
+        });
+      }
+      if (packageDetail['time_limited']) {
+        detailsList.insert(3, {
+          "id": "001",
+          "label": "Hours",
+          "value": "${packageDetail['hours']}"
+        });
+      }
+      if (packageDetail['has_daily_limit']) {
+        detailsList.insert(5, {
+          "id": "001",
+          "label": "Daily Data",
+          "value":
+              "${packageDetail['daily_data']} ${packageDetail['daily_data_unit']}"
+        });
+        detailsList.insert(6, {
+          "id": "001",
+          "label": "Daily Hours",
+          "value": "${packageDetail['daily_hours']}"
+        });
+      }
+      if (packageDetail['fair_usage_policy']) {
+        detailsList.insert(9, {
+          "id": "001",
+          "label": "Bandwidth (Upload) After Limit",
+          "value":
+              "${packageDetail['bandwidth_up_after_data_limit']} ${packageDetail['bandwidth_up_after_data_limit_unit']}"
+        });
+        detailsList.insert(10, {
+          "id": "001",
+          "label": "Bandwidth (Download) After Limit",
+          "value":
+              "${packageDetail['bandwidth_down_after_data_limit']} ${packageDetail['bandwidth_down_after_data_limit_unit']}"
+        });
+      }
       setState(() {});
     });
   }

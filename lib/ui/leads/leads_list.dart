@@ -5,8 +5,6 @@ import 'package:xceednet/ui/common_widgets/headToolbar.dart';
 import 'package:xceednet/ui/common_widgets/menuDrawer.dart';
 import 'package:xceednet/ui/leads/leads_add.dart';
 import 'package:xceednet/ui/leads/leads_details.dart';
-import 'package:xceednet/ui/subscribers/subscribers_add.dart';
-import 'package:xceednet/ui/subscribers/subscribers_details.dart';
 
 class LeadsList extends StatefulWidget {
 
@@ -134,12 +132,14 @@ List subscribersList = [
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text('Customer ID : '.toLowerCase(),
-                                  style: GoogleFonts.roboto(
-                                    textStyle: Theme.of(context).textTheme.labelMedium,
-                                    letterSpacing: 1.5
-                                  ),
-                                  ),
+                                  Text(
+                                        'Subscriber ID : '.toLowerCase(),
+                                        style: GoogleFonts.roboto(
+                                            textStyle: Theme.of(context)
+                                                .textTheme
+                                                .labelMedium,
+                                            letterSpacing: 1.5),
+                                      ),
                                   SizedBox(height: 3),
                                   Text('${item["id"]}',
                                   style: GoogleFonts.roboto(

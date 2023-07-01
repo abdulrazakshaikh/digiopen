@@ -9,7 +9,7 @@ class NewAPIResponse {
     required this.data,
     required this.message,
   }) {
-    if (status == "SUCCESS" || status == "1") {
+    if (status == "SUCCESS" || status == "1" || message!.contains("success")) {
       isSuccess = true;
     } else {
       isSuccess = false;
@@ -31,10 +31,18 @@ class NewAPIResponse {
           message: "",
         );
       }
-
     } catch (e) {
       print(e);
       return NewAPIResponse(status: "dd", data: null, message: "sdvsd");
     }
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data1 = new Map<String, dynamic>();
+    data1['data'] = data;
+    data1['status'] = status;
+    data1['message'] = message;
+    data1['isSuccess'] = isSuccess;
+    return data1;
   }
 }
