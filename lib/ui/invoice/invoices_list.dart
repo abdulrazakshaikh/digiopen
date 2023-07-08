@@ -123,20 +123,17 @@ class _InvoicesListState extends State<InvoicesList>
       appBar: AppBar(
         title: Text("Invoices \n count :${invoiceViewModel.incoiceCount}"),
         actions: [
-          true
-              ? Container()
-              : IconButton(
-                  onPressed: () {
-                    Navigator.of(context).push(
-                      PageRouteBuilder(
-                        pageBuilder: (context, animation, secondaryAnimation) =>
-                            FadeTransition(
-                                opacity: animation, child: InvoiceAdd()),
-                      ),
-                    );
-                  },
-                  icon: Icon(Icons.add),
-                  style: IconButton.styleFrom(
+          IconButton(
+            onPressed: () {
+              Navigator.of(context).push(
+                PageRouteBuilder(
+                  pageBuilder: (context, animation, secondaryAnimation) =>
+                      FadeTransition(opacity: animation, child: InvoiceAdd()),
+                ),
+              );
+            },
+            icon: Icon(Icons.add),
+            style: IconButton.styleFrom(
                     shape: RoundedRectangleBorder(),
               foregroundColor: Theme.of(context).colorScheme.primary,
               minimumSize: Size(54, 54),
