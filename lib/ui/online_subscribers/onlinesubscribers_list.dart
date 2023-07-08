@@ -44,6 +44,12 @@ class _OnlineSubscribersListState extends State<OnlineSubscribersList>
     });
   }
 
+  @override
+  pullRefresh() {
+    listListner.clearAllState();
+    getSubscriberListApi();
+  }
+
   Future<void> getSubscriberListApi(
       {String next = "0", String cuPage = "1"}) async {
     bool status = await subscriberViewModel.getOnlineSubscriberListData(

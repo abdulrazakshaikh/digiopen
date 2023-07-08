@@ -90,6 +90,10 @@ class FsListWithSearchState extends State<FsListWithSearchWidget> {
   var metadata;
   int? unit_id;
 
+  Future<void> _pullRefresh() async {
+    pageLoadListner!.pullRefresh();
+  }
+
   void loadMore(String pageNumber) {
     pageLoadListner!.loadNextPage(pageNumber);
   }
@@ -97,6 +101,7 @@ class FsListWithSearchState extends State<FsListWithSearchWidget> {
 //  Widget _getShimmeringStoreListLoaderWidget() {
 //     return GroceryUiUtils.getShimmeringStoreListWidget();
 //   }
+
   @override
   Widget build(BuildContext context) {
     return receiptList == null
@@ -112,23 +117,26 @@ class FsListWithSearchState extends State<FsListWithSearchWidget> {
                 : Container(
                     margin: EdgeInsets.only(top: 100),
                     child: Text("No search record found")))
-            : ListView.separated(
-                primary: false,
-                scrollDirection: Axis.vertical,
-                shrinkWrap: true,
-                physics: ScrollPhysics(),
-                controller: _scrollController,
-                itemCount: receiptList == null ? 0 : receiptList!.length,
-                itemBuilder: (BuildContext context, int index) {
-                  /* Padding childItem = getChildItem(index);*/
-                  print("receiptList ${receiptList!.length}");
-                  var childItem =
-                      itemBuilder!(context, index, receiptList![index]);
-                  return childItem;
-                },
-                separatorBuilder: (BuildContext context, int index) {
-                  return SizedBox(height: 5);
-                },
+            : RefreshIndicator(
+                onRefresh: _pullRefresh,
+                child: ListView.separated(
+                  primary: false,
+                  scrollDirection: Axis.vertical,
+                  shrinkWrap: true,
+                  physics: ScrollPhysics(),
+                  controller: _scrollController,
+                  itemCount: receiptList == null ? 0 : receiptList!.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    /* Padding childItem = getChildItem(index);*/
+                    print("receiptList ${receiptList!.length}");
+                    var childItem =
+                        itemBuilder!(context, index, receiptList![index]);
+                    return childItem;
+                  },
+                  separatorBuilder: (BuildContext context, int index) {
+                    return SizedBox(height: 5);
+                  },
+                ),
               );
   }
 
@@ -196,4 +204,6 @@ abstract class PageLoadSearchListener {
   loadNextPage(String page);
 
   lastPage(int page);
+
+  pullRefresh();
 }

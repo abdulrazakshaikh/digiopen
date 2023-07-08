@@ -35,7 +35,7 @@ class _PackageAddState extends State<PackageAdd> {
   var _packageList = [
     "None",
     "Commercial",
-    "Residencial",
+    "Residential",
     "Fiber",
     "Wireless",
   ];

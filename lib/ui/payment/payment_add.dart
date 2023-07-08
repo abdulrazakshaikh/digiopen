@@ -59,7 +59,7 @@ class _PaymentAddState extends State<PaymentAdd> {
   TextEditingController userController = TextEditingController();
   Map? subscriberMap = null;
   Map? subscriberUser = null;
-  Map data = {'mode_of_payment': 'cash'};
+  Map data = {'mode_of_payment': 'cash', "received_by_id": "1"};
 
   @override
   void initState() {
@@ -71,7 +71,7 @@ class _PaymentAddState extends State<PaymentAdd> {
       receiptController.text = widget.paymentDetails!['receipt_no'];
       descriptionController.text = widget.paymentDetails!['description'];
       amountController.text =
-          (widget.paymentDetails!['amount_cents'] / 100).toString();
+          (widget.paymentDetails!['amount_cents'] / 100).toInt().toString();
       selectedPaymentMode = widget.paymentDetails!['mode_of_payment'];
       subscriberMap = {
         'subscribers.subscriberid': widget.paymentDetails!['subscriber_id'],
@@ -86,6 +86,9 @@ class _PaymentAddState extends State<PaymentAdd> {
         chequeBankController.text =
             widget.paymentDetails!['check_issued_by_bank'];
       }
+      data.remove("received_by_id");
+      print(widget.paymentDetails);
+      data['subscriber_id'] = widget.paymentDetails!['subscriber_id'];
     }
   }
 
@@ -213,15 +216,21 @@ class _PaymentAddState extends State<PaymentAdd> {
                           letterSpacing: 1.2,
                         ),
                         validator: (value) {
+                          if (widget.isEdit) {
+                            return null;
+                          }
                           if (value!.isEmpty) {
                             return "please select subscriber";
                           } else {
                             data['subscriber_id'] =
-                                subscriberMap!['subscribers.subscriberid'];
+                                subscriberMap!['subscribers.id'];
                             return null;
                           }
                         },
                         onTap: () async {
+                          if (widget.isEdit) {
+                            return;
+                          }
                           showModalBottomSheet(
                             elevation: 2,
                             shape: RoundedRectangleBorder(
@@ -237,7 +246,7 @@ class _PaymentAddState extends State<PaymentAdd> {
                                 setState(() {
                                   subscriberMap = selectedItem;
                                   subscriberController.text =
-                                      subscriberMap!['subscribers.name'];
+                                  subscriberMap!['subscribers.name'];
                                 });
                               });
                             },
@@ -364,7 +373,8 @@ class _PaymentAddState extends State<PaymentAdd> {
                           keyboardType:
                               TextInputType.numberWithOptions(decimal: true),
                           validator: (value) {
-                            if (value!.isEmpty || int.parse(value) < 0) {
+                            if (value!.isEmpty ||
+                                int.parse(value.toString()) < 0) {
                               return "please enter amount and should be greater than 0";
                             } else {
                               data['amount'] = value;
@@ -651,30 +661,32 @@ class _PaymentAddState extends State<PaymentAdd> {
                         ),
                       ],
                     )),
-                Container(
-                  child: CheckboxListTile(
-                    title: Text(
-                      'Received by me',
-                      style: GoogleFonts.roboto(
-                        textStyle: Theme.of(context).textTheme.bodyMedium,
-                        fontWeight: FontWeight.w600,
-                        letterSpacing: 1.2,
+                true
+                    ? Container()
+                    : Container(
+                        child: CheckboxListTile(
+                          title: Text(
+                            'Received by me',
+                            style: GoogleFonts.roboto(
+                              textStyle: Theme.of(context).textTheme.bodyMedium,
+                              fontWeight: FontWeight.w600,
+                              letterSpacing: 1.2,
+                            ),
+                          ),
+                          checkboxShape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(4)),
+                          dense: true,
+                          contentPadding: EdgeInsets.zero,
+                          activeColor: Theme.of(context).colorScheme.primary,
+                          value: _receivedByMe,
+                          controlAffinity: ListTileControlAffinity.leading,
+                          onChanged: (bool? value) {
+                            setState(() {
+                              _receivedByMe = value!;
+                            });
+                          },
+                        ),
                       ),
-                    ),
-                    checkboxShape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(4)),
-                    dense: true,
-                    contentPadding: EdgeInsets.zero,
-                    activeColor: Theme.of(context).colorScheme.primary,
-                    value: _receivedByMe,
-                    controlAffinity: ListTileControlAffinity.leading,
-                    onChanged: (bool? value) {
-                      setState(() {
-                        _receivedByMe = value!;
-                      });
-                    },
-                  ),
-                ),
                 _receivedByMe == true
                     ? Container()
                     : AnimatedContainer(

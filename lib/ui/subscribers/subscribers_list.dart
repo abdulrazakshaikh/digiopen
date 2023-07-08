@@ -25,6 +25,12 @@ class _SubscribersListState extends State<SubscribersList>
   int currentPage = 1;
 
   @override
+  pullRefresh() {
+    listListner.clearAllState();
+    getSubscriberListApi();
+  }
+
+  @override
   void initState() {
     widget1 = FsListWithSearchWidget(
       pageLoadListner: this,

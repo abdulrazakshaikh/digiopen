@@ -172,4 +172,10 @@ class _InvoicesListState extends State<InvoicesList>
       ),
     );
   }
+
+  @override
+  pullRefresh() {
+    listListner.clearAllState();
+    getSubscriberListApi();
+  }
 }

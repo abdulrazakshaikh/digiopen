@@ -125,4 +125,7 @@ class _AccessRequestListState extends State<AccessRequestList>
       ),
     );
   }
+
+  @override
+  pullRefresh() {}
 }

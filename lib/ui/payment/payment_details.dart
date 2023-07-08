@@ -5,11 +5,9 @@ import 'package:provider/provider.dart';
 import 'package:xceednet/ui/payment/payment_add.dart';
 import 'package:xceednet/ui/payment/payment_details_card.dart';
 import 'package:xceednet/ui/payment/payment_tab_details.dart';
-import 'package:xceednet/ui/profile/changepassword_bottomsheet.dart';
-import 'package:xceednet/ui/subscribers/bottom_sheet/disablesubscriber_bottomsheet.dart';
-import 'package:xceednet/ui/subscribers/bottom_sheet/resetmacaddress_bottomsheet.dart';
-import 'package:xceednet/ui/subscribers/datausage.dart';
 import 'package:xceednet/view_model/payment_view_model.dart';
+
+import 'close_cancel_bottomsheet.dart';
 
 class PaymentDetails extends StatefulWidget {
   Map invoiceId;
@@ -30,13 +28,7 @@ class _PaymentDetailsState extends State<PaymentDetails>
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      bool a = await paymentViewModel.getPaymentDetailData(
-          invoiceId: widget.invoiceId['subscriber_payments.id'].toString());
-      if (a) {
-        invoiceDetail = paymentViewModel.paymentDetail;
-        invoiceDetail!['user_profiles.name'] =
-            widget.invoiceId['user_profiles.name'];
-      }
+      await getPaymentDetails();
     });
     _tabController = TabController(
       initialIndex: 0,
@@ -45,31 +37,36 @@ class _PaymentDetailsState extends State<PaymentDetails>
     );
   }
 
+  Future<void> getPaymentDetails() async {
+    bool a = await paymentViewModel.getPaymentDetailData(
+        invoiceId: widget.invoiceId['subscriber_payments.id'].toString());
+    if (a) {
+      invoiceDetail = paymentViewModel.paymentDetail;
+      invoiceDetail!['user_profiles.name'] =
+          widget.invoiceId['user_profiles.name'];
+    }
+  }
+
   bool _isPlanActive = true;
 
   void _onChoiceSelected(String choice) {
-    choice == 'Data Usage'
-        ? Navigator.pushReplacement<void, void>(context,
-            MaterialPageRoute(builder: (BuildContext context) => DataUsage()))
-        : showModalBottomSheet(
-            elevation: 2,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(20),
-                topRight: Radius.circular(20),
-              ),
-            ),
-            context: context,
-            builder: (BuildContext context) {
-              return choice == 'Reset MAC Address'
-                  ? ResetMacAddressBottomSheet("")
-                  : choice == 'Disable Subscriber'
-                      ? DisableSubscriberBottomSheet("")
-                      : choice == 'Change Password'
-                          ? ChangePasswordBottomSheet()
-                          : Container();
-            },
-          );
+    showModalBottomSheet(
+      elevation: 2,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(20),
+          topRight: Radius.circular(20),
+        ),
+      ),
+      context: context,
+      builder: (BuildContext context) {
+        return CloseCancelPaymentBottomSheet(
+            widget.invoiceId['subscriber_payments.id'].toString(),
+            status: choice, updatedSubscriberDetail: () {
+          getPaymentDetails();
+        });
+      },
+    );
   }
 
   @override
@@ -77,29 +74,34 @@ class _PaymentDetailsState extends State<PaymentDetails>
     paymentViewModel = context.watch<PaymentViewModel>();
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
-      floatingActionButton: _tabController.index == 0
+      floatingActionButton: paymentViewModel.isLoading
           ? null
-          : FloatingActionButton(
-              isExtended: true,
-              mini: true,
-              onPressed: () {
-                Navigator.of(context).push(
-                  PageRouteBuilder(
-                    pageBuilder: (context, animation, secondaryAnimation) =>
-                        FadeTransition(
-                            opacity: animation,
-                            child: PaymentAdd(
-                              isEdit: true,
-                              paymentDetails: invoiceDetail,
-                            )),
-                  ),
-                );
-              },
-              tooltip: 'Edit',
-              backgroundColor: Theme.of(context).colorScheme.primary,
-              foregroundColor: Theme.of(context).colorScheme.onPrimary,
-              child: Icon(Icons.create_outlined),
-            ),
+          : !invoiceDetail!['status_events']!.toString().contains("edit")
+              ? null
+              : FloatingActionButton(
+                  isExtended: true,
+                  mini: true,
+                  onPressed: () async {
+                    bool a = await Navigator.of(context).push(
+                      PageRouteBuilder(
+                        pageBuilder: (context, animation, secondaryAnimation) =>
+                            FadeTransition(
+                                opacity: animation,
+                                child: PaymentAdd(
+                                  isEdit: true,
+                                  paymentDetails: invoiceDetail,
+                                )),
+                      ),
+                    );
+                    if (a != null) {
+                      getPaymentDetails();
+                    }
+                  },
+                  tooltip: 'Edit',
+                  backgroundColor: Theme.of(context).colorScheme.primary,
+                  foregroundColor: Theme.of(context).colorScheme.onPrimary,
+                  child: Icon(Icons.create_outlined),
+                ),
       appBar: paymentViewModel.isLoading
           ? AppBar(
               title: Text(
@@ -135,7 +137,8 @@ class _PaymentDetailsState extends State<PaymentDetails>
                                   left: 3, right: 3, top: 1, bottom: 1),
                               alignment: Alignment.center,
                               decoration: BoxDecoration(
-                                color: invoiceDetail!['status'] != "open"
+                                color: invoiceDetail!['status'] != "open" &&
+                                        invoiceDetail!['status'] != "reopened"
                                     ? Colors.red
                                     : Colors.green,
                                 borderRadius:
@@ -154,20 +157,30 @@ class _PaymentDetailsState extends State<PaymentDetails>
                 ),
               ),
               actions: [
-                true
-                    ? Container()
-                    : Container(
-                        width: 54,
-                        height: 54,
-                        child: PopupMenuButton<String>(
-                          shape: RoundedRectangleBorder(),
-                          icon: Icon(Icons.more_vert_outlined),
-                          onSelected: _onChoiceSelected,
-                          color: Theme.of(context).colorScheme.surface,
-                          position: PopupMenuPosition.under,
-                          tooltip: 'Options',
-                          itemBuilder: (BuildContext context) {
-                            return Constants.choices.map((String choice) {
+                Container(
+                  width: 54,
+                  height: 54,
+                  child: PopupMenuButton<String>(
+                    shape: RoundedRectangleBorder(),
+                    icon: Icon(Icons.more_vert_outlined),
+                    onSelected: _onChoiceSelected,
+                    color: Theme.of(context).colorScheme.surface,
+                    position: PopupMenuPosition.under,
+                    tooltip: 'Options',
+                    itemBuilder: (BuildContext context) {
+                      List<String> a = [
+                        'Close Payment',
+                        'Cancel Payment',
+                        'Reopen Payment'
+                      ];
+                      if (invoiceDetail!['status'] == 'open' ||
+                          invoiceDetail!['status'] == 'reopened') {
+                        a.remove("Reopen Payment");
+                      } else if (invoiceDetail!['status'] == 'closed') {
+                        a.remove("Close Payment");
+                        a.remove("Cancel Payment");
+                      }
+                      return a.map((String choice) {
                         return PopupMenuItem<String>(
                           value: choice,
                           child: Text(choice,
@@ -240,8 +253,7 @@ class _PaymentDetailsState extends State<PaymentDetails>
                           });
                         },
                         tabs: [
-                          Tab(text: 'Details'),
-                          // Tab(text: 'Audit Trail'),
+                          Tab(text: 'Details'), // Tab(text: 'Audit Trail'),
                         ]),
                   ),
                 ];
@@ -250,8 +262,7 @@ class _PaymentDetailsState extends State<PaymentDetails>
                 // physics: NeverScrollableScrollPhysics(),
                 controller: _tabController,
                 children: [
-                  PaymentTabDetails(invoiceDetail!),
-                  // TabAuditTrail(),
+                  PaymentTabDetails(invoiceDetail!), // TabAuditTrail(),
                 ],
               ),
             ),
@@ -311,6 +322,6 @@ class _PaymentDetailsState extends State<PaymentDetails>
 
 class Constants {
   static const String FirstItem = 'Cancel Payment';
-  static const String FourthItem = 'Close Invoice';
+  static const String FourthItem = 'Close Payment';
   static const List<String> choices = <String>[FirstItem, FourthItem];
 }

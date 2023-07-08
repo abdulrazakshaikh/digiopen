@@ -124,21 +124,22 @@ class _PaymentListState extends State<PaymentList>
       appBar: AppBar(
         title: Text("Payment \n count :${paymentViewModel.incoiceCount}"),
         actions: [
-          true
-              ? Container()
-              : IconButton(
-                  onPressed: () {
-                    Navigator.of(context).push(
-                      PageRouteBuilder(
-                        pageBuilder: (context, animation, secondaryAnimation) =>
-                            FadeTransition(
-                                opacity: animation, child: PaymentAdd()),
-                      ),
-                    );
-                  },
-                  icon: Icon(Icons.add),
-                  style: IconButton.styleFrom(
-                    shape: RoundedRectangleBorder(),
+          IconButton(
+            onPressed: () async {
+              var a = await Navigator.of(context).push(
+                PageRouteBuilder(
+                  pageBuilder: (context, animation, secondaryAnimation) =>
+                      FadeTransition(opacity: animation, child: PaymentAdd()),
+                ),
+              );
+              if (a != null) {
+                listListner.clearAllState();
+                getSubscriberListApi();
+              }
+            },
+            icon: Icon(Icons.add),
+            style: IconButton.styleFrom(
+              shape: RoundedRectangleBorder(),
               foregroundColor: Theme.of(context).colorScheme.primary,
               minimumSize: Size(54, 54),
               fixedSize: Size(54, 54),
@@ -159,5 +160,11 @@ class _PaymentListState extends State<PaymentList>
         ],
       ),
     );
+  }
+
+  @override
+  pullRefresh() {
+    listListner.clearAllState();
+    getSubscriberListApi(next: "0");
   }
 }
