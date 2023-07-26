@@ -25,21 +25,21 @@ class PackageAdd extends StatefulWidget {
 
 class _PackageAddState extends State<PackageAdd> {
   late PackageViewModel packageViewModel;
-  var _validityList = [
+  final _validityList = [
     "Hour/s",
     "Day/s",
     "Week/s",
     "Month/s",
     "Year/s",
   ];
-  var _packageList = [
+  final _packageList = [
     "None",
     "Commercial",
-    "Residencial",
+    "Residential",
     "Fiber",
     "Wireless",
   ];
-  var _SpeedList = [
+  final _SpeedList = [
     "Kbps",
     "Mbps",
   ];

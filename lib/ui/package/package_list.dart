@@ -48,19 +48,22 @@ class _PackageListState extends State<PackageList> {
           packageViewModel.isLoading
               ? Container()
               : IconButton(
-                  onPressed: () {
-                    Navigator.of(context).push(
-                      PageRouteBuilder(
-                        pageBuilder: (context, animation, secondaryAnimation) =>
-                            FadeTransition(
-                                opacity: animation,
-                                child: PackageAdd(
-                                  onChange: () {
-                                    callAPIs();
-                                  },
-                                )),
-                      ),
-                    );
+                  onPressed: () async {
+                    await Navigator.of(context)
+                        .push(
+                          PageRouteBuilder(
+                            pageBuilder:
+                                (context, animation, secondaryAnimation) =>
+                                    FadeTransition(
+                                        opacity: animation,
+                                        child: PackageAdd(
+                                          onChange: () {
+                                            callAPIs();
+                                          },
+                                        )),
+                          ),
+                        )
+                        .then((value) => {callAPIs()});
                   },
                   icon: Icon(Icons.add),
                   style: IconButton.styleFrom(
@@ -106,17 +109,19 @@ class _PackageListState extends State<PackageList> {
                         Map item = packageList[index];
                         return InkWell(
                           onTap: () {
-                            Navigator.of(context).push(
-                              PageRouteBuilder(
-                                pageBuilder:
-                                    (context, animation, secondaryAnimation) =>
+                            Navigator.of(context)
+                                .push(
+                                  PageRouteBuilder(
+                                    pageBuilder: (context, animation,
+                                            secondaryAnimation) =>
                                         FadeTransition(
                                             opacity: animation,
                                             child: PackageDetails(item, () {
                                               callAPIs();
                                             })),
-                              ),
-                            );
+                                  ),
+                                )
+                                .then((value) => {callAPIs()});
                           },
                           child: Card(
                               margin: EdgeInsets.zero,

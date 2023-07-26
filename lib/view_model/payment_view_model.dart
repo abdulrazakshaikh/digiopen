@@ -22,17 +22,41 @@ class PaymentViewModel extends ChangeNotifier {
     return _isLoading;
   }
 
+  List<Map<String, dynamic>>? columnsData;
+
   Future<bool> getPaymentListData(
-      {String search = "", String nextIndex = "0"}) async {
+      {String search = "",
+      String nextIndex = "0",
+      String? columIndex = "",
+      String perPage = "10",
+      List<String>? filter}) async {
     try {
       _isLoading = true;
       notifyListeners();
       paymentListData = [];
-      var _userdata = await new PaymentRepository().getPaymentListData({
-        "start": nextIndex,
-        "search": {"value": search},
-        "length": "10"
-      });
+      Map sFilter = {};
+      var map;
+      if (filter != null && filter.length > 0) {
+        String sfilter = filter.join('|');
+        sFilter = {
+          "9": {
+            "search": {"value": "$sfilter"}
+          }
+        };
+        map = {
+          "start": nextIndex,
+          "search": {"value": search},
+          "length": "$perPage",
+          "columns": sFilter
+        };
+      } else {
+        map = {
+          "start": nextIndex,
+          "search": {"value": search},
+          "length": "$perPage",
+        };
+      }
+      var _userdata = await new PaymentRepository().getPaymentListData(map);
       paymentListData = [];
 
       if (!_userdata.isSuccess) {
@@ -41,15 +65,23 @@ class PaymentViewModel extends ChangeNotifier {
         notifyListeners();
         return false;
       } else {
+        // Map keys1 = _userdata.data['columns'];
         List keys = _userdata.data['columns'];
-        print("object");
-        List dataa = _userdata.data['data'] as List;
-        incoiceCount = _userdata.data['recordsTotal'].toString();
+        columnsData = [];
+        columnsData?.add({
+          "subscriber_payments.status".toString(): {
+            "select_options": [
+              ["Open", "open"],
+              ["Canceled", "canceled"],
+              ["Reopened", "reopened"],
+              ["Closed", "closed"]
+            ]
+          }
+        });
 
-        print("object1");
+        List dataa = _userdata.data['data'] as List;
+        incoiceCount = _userdata.data['recordsFiltered'].toString();
         dataa.forEach((element) {
-          print("dataa");
-          print(element);
           Map item = {};
           int i = 0;
           keys.forEach((value) {

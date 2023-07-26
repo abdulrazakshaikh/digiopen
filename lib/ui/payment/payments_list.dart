@@ -8,6 +8,7 @@ import 'package:xceednet/ui/payment/payment_list_item.dart';
 import 'package:xceednet/view_model/payment_view_model.dart';
 
 import '../../utils/FsListWithSearchWidget.dart';
+import '../subscribers/helper_multiple_selection_bottomsheet.dart';
 
 class PaymentList extends StatefulWidget {
   @override
@@ -50,6 +51,8 @@ class _PaymentListState extends State<PaymentList>
   },
 
 ];*/
+  List<String> selectedFilter = [];
+
   List invoicesList = [];
   late PaymentViewModel paymentViewModel;
 
@@ -77,10 +80,21 @@ class _PaymentListState extends State<PaymentList>
     });
   }
 
-  Future<void> getSubscriberListApi(
-      {String next = "0", String cuPage = "1"}) async {
+  List<Map<String, dynamic>>? columnsData;
+
+  Future<void> getSubscriberListApi({
+    String next = "0",
+    String cuPage = "1",
+  }) async {
+    var string = paymentViewModel.columnsData
+        ?.indexWhere(
+            (element) => element.containsKey("subscriber_payments.status"))!
+        .toString();
     bool status = await paymentViewModel.getPaymentListData(
-        search: searchText, nextIndex: next);
+        search: searchText,
+        nextIndex: next,
+        filter: selectedFilter,
+        columIndex: string);
     if (status) {
       currentPage = int.parse(cuPage);
 
@@ -127,11 +141,11 @@ class _PaymentListState extends State<PaymentList>
           true
               ? Container()
               : IconButton(
-                  onPressed: () {
-                    Navigator.of(context).push(
-                      PageRouteBuilder(
-                        pageBuilder: (context, animation, secondaryAnimation) =>
-                            FadeTransition(
+            onPressed: () {
+              Navigator.of(context).push(
+                PageRouteBuilder(
+                  pageBuilder: (context, animation, secondaryAnimation) =>
+                      FadeTransition(
                                 opacity: animation, child: PaymentAdd()),
                       ),
                     );
@@ -139,6 +153,54 @@ class _PaymentListState extends State<PaymentList>
                   icon: Icon(Icons.add),
                   style: IconButton.styleFrom(
                     shape: RoundedRectangleBorder(),
+                    foregroundColor: Theme.of(context).colorScheme.primary,
+                    minimumSize: Size(54, 54),
+                    fixedSize: Size(54, 54),
+                  ),
+                ),
+          IconButton(
+            onPressed: () async {
+              showModalBottomSheet(
+                elevation: 2,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(20),
+                    topRight: Radius.circular(20),
+                  ),
+                ),
+                context: context,
+                builder: (BuildContext context) {
+                  var list = paymentViewModel.columnsData
+                      ?.where(
+                        (element) =>
+                            element.containsKey('subscriber_payments.status'),
+                      )
+                      .toList();
+                  var helperDataList = list![0]['subscriber_payments.status']
+                      ['select_options'] as List;
+                  print(helperDataList);
+                  print(selectedFilter);
+                  if (selectedFilter.length == 0) {
+                    helperDataList.forEach((element) {
+                      selectedFilter.add(element[1]);
+                    });
+                  }
+
+                  return HelperMultipleSelectionBottomSheet(
+                      helperDataList, selectedFilter, (selectedFilter1) {
+                    selectedFilter = selectedFilter1;
+                    listListner.clearAllState();
+                    getSubscriberListApi();
+                  });
+                },
+              );
+              // listListner.clearAllState();
+              // getSubscriberListApi();
+            },
+            icon: Icon(Icons.filter_alt),
+            style: IconButton.styleFrom(
+              shape: RoundedRectangleBorder(),
+              // backgroundColor: Theme.of(context).colorScheme.tertiary.withOpacity(0.1),
               foregroundColor: Theme.of(context).colorScheme.primary,
               minimumSize: Size(54, 54),
               fixedSize: Size(54, 54),

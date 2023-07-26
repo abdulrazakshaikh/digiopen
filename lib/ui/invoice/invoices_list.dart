@@ -7,6 +7,7 @@ import 'package:xceednet/ui/invoice/invoice_add.dart';
 import 'package:xceednet/view_model/invoice_view_model.dart';
 
 import '../../utils/FsListWithSearchWidget.dart';
+import '../subscribers/helper_multiple_selection_bottomsheet.dart';
 import 'invoice_list_item.dart';
 
 class InvoicesList extends StatefulWidget {
@@ -79,8 +80,16 @@ class _InvoicesListState extends State<InvoicesList>
 
   Future<void> getSubscriberListApi(
       {String next = "0", String cuPage = "1"}) async {
+    var string = invoiceViewModel.columnsData
+        ?.indexWhere(
+            (element) => element.containsKey("subscriber_invoices.status"))!
+        .toString();
     bool status = await invoiceViewModel.getInvoiceListData(
-        search: searchText, nextIndex: next);
+        search: searchText,
+        filter: selectedFilter,
+        nextIndex: next,
+        columIndex: string);
+
     if (status) {
       currentPage = int.parse(cuPage);
       invoicesList = [];
@@ -114,6 +123,8 @@ class _InvoicesListState extends State<InvoicesList>
     getSubscriberListApi(next: "$cal", cuPage: page);
   }
 
+  List<String> selectedFilter = [];
+
   @override
   Widget build(BuildContext context) {
     invoiceViewModel = context.watch<InvoiceViewModel>();
@@ -138,6 +149,54 @@ class _InvoicesListState extends State<InvoicesList>
                   icon: Icon(Icons.add),
                   style: IconButton.styleFrom(
                     shape: RoundedRectangleBorder(),
+                    foregroundColor: Theme.of(context).colorScheme.primary,
+                    minimumSize: Size(54, 54),
+                    fixedSize: Size(54, 54),
+                  ),
+                ),
+          IconButton(
+            onPressed: () async {
+              showModalBottomSheet(
+                elevation: 2,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(20),
+                    topRight: Radius.circular(20),
+                  ),
+                ),
+                context: context,
+                builder: (BuildContext context) {
+                  var list = invoiceViewModel.columnsData
+                      ?.where(
+                        (element) =>
+                            element.containsKey('subscriber_invoices.status'),
+                      )
+                      .toList();
+                  var helperDataList = list![0]['subscriber_invoices.status']
+                      ['select_options'] as List;
+                  print(helperDataList);
+                  print(selectedFilter);
+                  if (selectedFilter.length == 0) {
+                    helperDataList.forEach((element) {
+                      selectedFilter.add(element[1]);
+                    });
+                  }
+
+                  return HelperMultipleSelectionBottomSheet(
+                      helperDataList, selectedFilter, (selectedFilter1) {
+                    selectedFilter = selectedFilter1;
+                    listListner.clearAllState();
+                    getSubscriberListApi();
+                  });
+                },
+              );
+              // listListner.clearAllState();
+              // getSubscriberListApi();
+            },
+            icon: Icon(Icons.filter_alt),
+            style: IconButton.styleFrom(
+              shape: RoundedRectangleBorder(),
+              // backgroundColor: Theme.of(context).colorScheme.tertiary.withOpacity(0.1),
               foregroundColor: Theme.of(context).colorScheme.primary,
               minimumSize: Size(54, 54),
               fixedSize: Size(54, 54),

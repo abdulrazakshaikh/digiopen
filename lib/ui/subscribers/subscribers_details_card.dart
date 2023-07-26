@@ -384,7 +384,7 @@ class _SubscribersDetailsCardState extends State<SubscribersDetailsCard>
                                           fontWeight: FontWeight.w600),
                                     ),
                                   ),
-                                  child: Text('Assign Peckage'),
+                                  child: Text('Assign Package'),
                                 ),
                               ),
                             ],

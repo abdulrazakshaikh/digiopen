@@ -7,6 +7,7 @@ class InvoiceViewModel extends ChangeNotifier {
   List<Map>? invoiceListData;
   String incoiceCount = "0";
   Map? invoiceDetail;
+  List<Map<String, dynamic>>? columnsData;
 
   String? get error {
     return _error;
@@ -17,16 +18,38 @@ class InvoiceViewModel extends ChangeNotifier {
   }
 
   Future<bool> getInvoiceListData(
-      {String search = "", String nextIndex = "0"}) async {
+      {String search = "",
+      String nextIndex = "0",
+      String perPage = "10",
+      String? columIndex = "",
+      List<String>? filter}) async {
     try {
       _isLoading = true;
       notifyListeners();
       invoiceListData = [];
-      var _userdata = await new InvoiceRepository().getInvoiceListData({
-        "start": nextIndex,
-        "search": {"value": search},
-        "length": "10"
-      });
+      Map sFilter = {};
+      var map;
+      if (filter != null && filter.length > 0) {
+        String sfilter = filter.join('|');
+        sFilter = {
+          "$columIndex": {
+            "search": {"value": "$sfilter"}
+          }
+        };
+        map = {
+          "start": nextIndex,
+          "search": {"value": search},
+          "length": "$perPage",
+          "columns": sFilter
+        };
+      } else {
+        map = {
+          "start": nextIndex,
+          "search": {"value": search},
+          "length": "$perPage",
+        };
+      }
+      var _userdata = await new InvoiceRepository().getInvoiceListData(map);
       invoiceListData = [];
 
       if (!_userdata.isSuccess) {
@@ -38,6 +61,10 @@ class InvoiceViewModel extends ChangeNotifier {
         Map keys = _userdata.data['columns'];
         List dataa = _userdata.data['data'];
         incoiceCount = _userdata.data['recordsTotal'].toString();
+        columnsData = [];
+        keys.forEach((key, value) {
+          columnsData?.add({key.toString(): value});
+        });
         dataa.forEach((element) {
           Map item = {};
           int i = 0;

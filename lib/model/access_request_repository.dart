@@ -12,6 +12,12 @@ class AccessRequestRepository {
     return response!;
   }
 
+  Future<NewAPIResponse> getDeleteAllAccessRequestListData(dynamic map) async {
+    NewAPIResponse response = await _netoworkService.delete(
+        AppUrl.delete_all_access_request_list, map);
+    return response!;
+  }
+
 /*Future<NewAPIResponse> getAccessRequestDetailData(String map) async {
     NewAPIResponse response = await _netoworkService.get(
       AppUrl.payment_details + "/${map}",

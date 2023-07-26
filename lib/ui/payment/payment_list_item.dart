@@ -273,9 +273,12 @@ class PaymentListItemState extends State<PaymentListItem> {
                           padding: EdgeInsets.all(3),
                           alignment: Alignment.center,
                           decoration: BoxDecoration(
-                            color: item['subscriber_payments.status'] == 'open'
-                                ? Colors.green
-                                : Colors.red,
+                            color:
+                                item['subscriber_payments.status'] == 'open' ||
+                                        item['subscriber_payments.status'] ==
+                                            'reopened'
+                                    ? Colors.green
+                                    : Colors.red,
                             borderRadius:
                                 BorderRadius.all(Radius.circular(5.0)),
                           ),

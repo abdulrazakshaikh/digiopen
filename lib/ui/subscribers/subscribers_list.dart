@@ -144,12 +144,13 @@ class _SubscribersListState extends State<SubscribersList>
                       builder: (BuildContext context) {
                         var list = subscriberViewModel.columnsData
                             ?.where(
-                              (element) =>
-                                  element.containsKey('subscribers.status'),
+                              (element) => element
+                                  .containsKey('subscriber_payments.status'),
                             )
                             .toList();
-                        var helperDataList = list![0]['subscribers.status']
-                            ['select_options'] as List;
+                        var helperDataList = list![0]
+                                ['subscriber_payments.status']['select_options']
+                            as List;
                         print(helperDataList);
                         print(selectedFilter);
                         if (selectedFilter.length == 0) {
