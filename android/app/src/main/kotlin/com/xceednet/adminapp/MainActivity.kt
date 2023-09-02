@@ -1,4 +1,4 @@
-package com.xceednet.admin
+package com.xceednet.adminapp
 
 import io.flutter.embedding.android.FlutterActivity
 

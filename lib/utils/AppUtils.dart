@@ -4,7 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:open_file/open_file.dart';
+import 'package:open_filex/open_filex.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 import '../model/storage/shared_prefs.dart';
@@ -91,7 +91,7 @@ class AppUtils {
 
             }
           });
-          OpenFile.open(savePath);
+          OpenFilex.open(savePath);
           print("File is saved to download folder.");
         } on DioError catch (e) {
           print(e.message);
