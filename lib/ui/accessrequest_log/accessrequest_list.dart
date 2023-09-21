@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:xceednet/ui/accessrequest_log/access_request_list_item.dart';
 import 'package:xceednet/ui/common_widgets/headToolbar.dart';
 import 'package:xceednet/ui/common_widgets/menuDrawer.dart';
+import 'package:xceednet/utils/AppUtils.dart';
 import 'package:xceednet/view_model/access_request_view_model.dart';
 
 import '../../utils/FsListWithSearchWidget.dart';
@@ -20,7 +21,6 @@ class AccessRequestList extends StatefulWidget {
 
 class _AccessRequestListState extends State<AccessRequestList>
     implements PageLoadSearchListener {
-
   List invoicesList = [];
   late AccessRequestViewModel accessRequestViewModel;
 
@@ -98,7 +98,18 @@ class _AccessRequestListState extends State<AccessRequestList>
             "Access Request Log ${widget.name == null ? "" : "\nfor ${widget.name}"} "),
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () async {
+              bool a = await accessRequestViewModel
+                  .getDeleteAllAccessRequestListData(
+                      subscriber_id: widget.subscriber_id ?? "0");
+              if (a) {
+                listListner.clearAllState();
+                getSubscriberListApi();
+                AppUtils.appToast("Deleted Successfully");
+              } else {
+                AppUtils.appToast("Failed Delete");
+              }
+            },
             tooltip: 'Delete All Access Request Log',
             icon: Icon(Icons.delete_forever_outlined),
             style: IconButton.styleFrom(

@@ -12,6 +12,8 @@ class AppUrl {
   static String payment_list = "subscriber_payments/search";
   static String payment_details = "subscriber_payments";
   static String access_request_list = "subscriber_access_requests/search";
+  static String delete_all_access_request_list =
+      "subscriber_access_requests/delete_all";
   static String access_request_details = "subscriber_payments";
   static String package_list = "location_packages";
   static String package_details = "location_packages";

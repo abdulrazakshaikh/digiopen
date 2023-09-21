@@ -67,6 +67,37 @@ class AccessRequestViewModel extends ChangeNotifier {
     }
   }
 
+  Future<bool> getDeleteAllAccessRequestListData(
+      {String subscriber_id = "0"}) async {
+    try {
+      _isLoading = true;
+      notifyListeners();
+      var map = {};
+      if (subscriber_id != null && subscriber_id != "0") {
+        map['subscriber_id'] = subscriber_id;
+      }
+      var _userdata = await new AccessRequestRepository()
+          .getDeleteAllAccessRequestListData(map);
+      if (!_userdata.isSuccess) {
+        _error = _userdata.message;
+        _isLoading = false;
+        notifyListeners();
+        return false;
+      } else {
+        _isLoading = false;
+        notifyListeners();
+        return true;
+      }
+    } catch (e) {
+      print("getDeleteAllAccessRequestListData");
+      print(e);
+      _isLoading = false;
+      _error = e.toString();
+      notifyListeners();
+      return false;
+    }
+  }
+
 /* Future<bool> getAccessRequestDetailData({required String accessRequestId}) async {
     try {
       _isLoading = true;

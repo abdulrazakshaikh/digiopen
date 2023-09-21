@@ -463,9 +463,9 @@ class Constants {
     /*if (status.contains("cancel_package")) {
       choices.add(CancelPackageItem);
     }*/
-    if (status.contains("set_delete")) {
+    /* if (status.contains("set_delete")) {
       choices.add(DeteleItem);
-    }
+    }*/
     choices.add(FourthItem);
     /*if (status.contains("migrate")) {
       choices.add(FivthItem);

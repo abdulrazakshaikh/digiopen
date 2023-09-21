@@ -242,8 +242,8 @@ class _PackageDetailsState extends State<PackageDetails>
                                           }
                                           if (packageDetails['status_events']
                                               .contains("edit")) {
-                                            Constants.choices
-                                                .add('Delete Package');
+                                            /* Constants.choices
+                                                .add('Delete Package');*/
                                           }
                                           return Constants.choices
                                               .map((String choice) {
@@ -444,9 +444,9 @@ class Constants {
     if (list.contains("enable")) {
       choices.add('Enable Package');
     }
-    if (list.contains("edit")) {
+    /* if (list.contains("edit")) {
       choices.add('Delete Package');
-    }
+    }*/
   }
 
   static String FirstItem = 'Unpublished Package';

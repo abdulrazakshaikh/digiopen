@@ -1,4 +1,4 @@
-package com.example.digiopeners
+package com.xceednet.adminapp
 
 import io.flutter.embedding.android.FlutterActivity
 

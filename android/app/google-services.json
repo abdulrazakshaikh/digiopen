@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "561248260059",
+    "project_id": "xceednet-apps",
+    "storage_bucket": "xceednet-apps.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:561248260059:android:41de72e74e52478e0521fe",
+        "android_client_info": {
+          "package_name": "com.xceednet.adminapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "561248260059-l45al6h9i5mebiv147e4jbu2f2p838cg.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.xceednet.adminapp",
+            "certificate_hash": "8ee4c859d9cb938fdf8ad6d2f1ee67e136b75335"
+          }
+        },
+        {
+          "client_id": "561248260059-7irrgm6m11n11gro08qd583h3jqqnsrb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDjfOWwP50_nhBrLWLOwALEPYBBbgPZ3Gk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "561248260059-7irrgm6m11n11gro08qd583h3jqqnsrb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

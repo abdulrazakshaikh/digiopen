@@ -214,18 +214,23 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
                             ),
                           ),
                         ),
-                        Container(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              TextButton(
-                                style: TextButton.styleFrom(
-                                  padding: EdgeInsets.fromLTRB(15, 15, 15, 15),
-                                  foregroundColor:
-                                      Theme.of(context).colorScheme.primary,
-                                ),
-                                onPressed: () {
+                       true
+                            ? Container()
+                            : Container(
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    TextButton(
+                                      style: TextButton.styleFrom(
+                                        padding:
+                                            EdgeInsets.fromLTRB(15, 15, 15, 15),
+                                        foregroundColor: Theme.of(context)
+                                            .colorScheme
+                                            .primary,
+                                      ),
+                                      onPressed: () {
                                   showDialog(
                                       context: context,
                                       builder: (BuildContext context) {
@@ -284,7 +289,8 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
                             ],
                           ),
                         ),
-                       authUserDataNotifier.isLoading ? CircularProgressIndicator(color: Theme.of(context).primaryColor,): Container(
+
+                        authUserDataNotifier.isLoading ? CircularProgressIndicator(color: Theme.of(context).primaryColor,): Container(
                           margin: EdgeInsets.symmetric(vertical: 15),
                           child: Row(
                             children: [

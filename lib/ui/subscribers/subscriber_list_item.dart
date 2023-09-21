@@ -135,7 +135,7 @@ class SubscriberListItemState extends State<SubscriberListItem> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Online : ',
+                          'Status : ',
                           style: GoogleFonts.roboto(
                               textStyle:
                                   Theme.of(context).textTheme.labelMedium,

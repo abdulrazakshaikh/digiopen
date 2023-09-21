@@ -1,3 +1,5 @@
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -13,12 +15,23 @@ import 'package:xceednet/view_model/payment_view_model.dart';
 import 'package:xceednet/view_model/subscriber_view_model.dart';
 import 'package:xceednet/view_model/utils_view_model.dart';
 
+import 'firebase_api.dart';
 import 'model/storage/shared_prefs.dart';
+
+Future<void> handleBackgroundNotification(RemoteMessage remoteMessage) async {
+  print("Title :${remoteMessage.notification?.title}");
+  print("Body :${remoteMessage.notification?.body}");
+  print("Payload :${remoteMessage.data}");
+}
 
 Future<void> main() async {
   Provider.debugCheckInvalidValueType = null;
 
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  await FirebaseApi().initNotification();
+  FirebaseMessaging.onBackgroundMessage(handleBackgroundNotification);
+
   SystemChrome.setEnabledSystemUIOverlays(
       [SystemUiOverlay.top, SystemUiOverlay.bottom]).then((_) {
     SharedPreferences.getInstance().then((prefs) {
