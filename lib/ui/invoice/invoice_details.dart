@@ -1,14 +1,11 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:xceednet/ui/invoice/invoice_add.dart';
 import 'package:xceednet/ui/invoice/invoice_details_card.dart';
-import 'package:xceednet/ui/profile/changepassword_bottomsheet.dart';
-import 'package:xceednet/ui/subscribers/bottom_sheet/disablesubscriber_bottomsheet.dart';
-import 'package:xceednet/ui/subscribers/datausage.dart';
 import 'package:xceednet/view_model/invoice_view_model.dart';
 
-import '../subscribers/bottom_sheet/resetmacaddress_bottomsheet.dart';
+import 'close_cancel_invoice_bottomsheet.dart';
 import 'invoice_tab_details.dart';
 
 class InvoiceDetails extends StatefulWidget {
@@ -30,11 +27,7 @@ class _InvoiceDetailsState extends State<InvoiceDetails>
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      bool a = await invoiceViewModel.getInvoiceDetailData(
-          invoiceId: widget.invoiceId);
-      if (a) {
-        invoiceDetail = invoiceViewModel.invoiceDetail;
-      }
+      await getInvoiceList();
     });
     _tabController = TabController(
       initialIndex: 0,
@@ -43,31 +36,38 @@ class _InvoiceDetailsState extends State<InvoiceDetails>
     );
   }
 
+  Future<void> getInvoiceList() async {
+    bool a = await invoiceViewModel.getInvoiceDetailData(
+        invoiceId: widget.invoiceId);
+    if (a) {
+      invoiceDetail = invoiceViewModel.invoiceDetail;
+    }
+  }
+
   bool _isPlanActive = true;
 
   void _onChoiceSelected(String choice) {
-    choice == 'Data Usage'
-        ? Navigator.pushReplacement<void, void>(context,
-            MaterialPageRoute(builder: (BuildContext context) => DataUsage()))
-        : showModalBottomSheet(
-            elevation: 2,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(20),
-                topRight: Radius.circular(20),
-              ),
-            ),
-            context: context,
-            builder: (BuildContext context) {
-              return choice == 'Reset MAC Address'
-                  ? ResetMacAddressBottomSheet("")
-                  : choice == 'Disable Subscriber'
-                      ? DisableSubscriberBottomSheet("")
-                      : choice == 'Change Password'
-                          ? ChangePasswordBottomSheet()
-                          : Container();
-            },
-          );
+    showModalBottomSheet(
+      elevation: 2,
+      isScrollControlled: true,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(20),
+          topRight: Radius.circular(20),
+        ),
+      ),
+      context: context,
+      builder: (BuildContext context) {
+        return Padding(
+          padding:
+              EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+          child: CloseCancelInvoiceBottomSheet(widget.invoiceId, status: choice,
+              updatedSubscriberDetail: () {
+            getInvoiceList();
+          }),
+        );
+      },
+    );
   }
 
   @override
@@ -75,17 +75,34 @@ class _InvoiceDetailsState extends State<InvoiceDetails>
     invoiceViewModel = context.watch<InvoiceViewModel>();
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
-      floatingActionButton: _tabController.index == 0
+      floatingActionButton: invoiceDetail == null
           ? null
-          : FloatingActionButton(
-              isExtended: true,
-              mini: true,
-              onPressed: () {},
-              tooltip: 'Edit',
-              backgroundColor: Theme.of(context).colorScheme.primary,
-              foregroundColor: Theme.of(context).colorScheme.onPrimary,
-              child: Icon(Icons.create_outlined),
-            ),
+          : !(invoiceDetail!['status_events'].toString().contains("edit"))
+              ? null
+              : FloatingActionButton(
+                  isExtended: true,
+                  mini: true,
+                  onPressed: () async {
+                    bool a = await Navigator.of(context).push(
+                      PageRouteBuilder(
+                        pageBuilder: (context, animation, secondaryAnimation) =>
+                            FadeTransition(
+                                opacity: animation,
+                                child: InvoiceAdd(
+                                  isEdit: true,
+                                  invoiceDetails: invoiceDetail,
+                                )),
+                      ),
+                    );
+                    if (a != null) {
+                      getInvoiceList();
+                    }
+                  },
+                  tooltip: 'Edit',
+                  backgroundColor: Theme.of(context).colorScheme.primary,
+                  foregroundColor: Theme.of(context).colorScheme.onPrimary,
+                  child: Icon(Icons.create_outlined),
+                ),
       appBar: invoiceViewModel.isLoading
           ? AppBar(
               title: Text(
@@ -106,7 +123,7 @@ class _InvoiceDetailsState extends State<InvoiceDetails>
                         Row(
                           children: [
                             Text(
-                              'Invoice #${invoiceDetail!['invoiceid']}',
+                              'Invoice #${invoiceDetail!['invoiceid'] ?? ""}',
                               style: GoogleFonts.roboto(
                                   textStyle: Theme.of(context)
                                       .appBarTheme
@@ -140,20 +157,52 @@ class _InvoiceDetailsState extends State<InvoiceDetails>
                 ),
               ),
               actions: [
-                true
-                    ? Container()
-                    : Container(
-                        width: 54,
-                        height: 54,
-                        child: PopupMenuButton<String>(
-                          shape: RoundedRectangleBorder(),
-                          icon: Icon(Icons.more_vert_outlined),
-                          onSelected: _onChoiceSelected,
-                          color: Theme.of(context).colorScheme.surface,
-                          position: PopupMenuPosition.under,
-                          tooltip: 'Options',
-                          itemBuilder: (BuildContext context) {
-                            return Constants.choices.map((String choice) {
+                Container(
+                  width: 54,
+                  height: 54,
+                  child: PopupMenuButton<String>(
+                    shape: RoundedRectangleBorder(),
+                    icon: Icon(
+                      Icons.more_vert_outlined,
+                      color:
+                          Theme.of(context).iconTheme.color!.withOpacity(0.75),
+                    ),
+                    onSelected: _onChoiceSelected,
+                    color: Theme.of(context).colorScheme.surface,
+                    position: PopupMenuPosition.under,
+                    tooltip: 'Options',
+                    itemBuilder: (BuildContext context) {
+                      List<String> a = [
+                        'Reassign Invoice',
+                        'Assign Invoice',
+                        'Close Invoice',
+                        'Cancel Invoice',
+                        //'Receive Payment',
+                        'Reopen Invoice'
+                      ];
+                      var event_list =
+                          invoiceDetail!['status_events'].toString();
+                      if (!event_list.contains("reassign")) {
+                        a.remove('Reassign Invoice');
+                      } else {
+                        a.remove('Assign Invoice');
+                      }
+                      if (!event_list.contains("assign")) {
+                        a.remove('Assign Invoice');
+                      }
+                      if (!event_list.contains("close")) {
+                        a.remove('Close Invoice');
+                      }
+                      if (!event_list.contains("cancel")) {
+                        a.remove('Cancel Invoice');
+                      }
+                      if (!event_list.contains("receive_payment")) {
+                        a.remove('Receive Payment');
+                      }
+                      if (!event_list.contains("reopen")) {
+                        a.remove('Reopen Invoice');
+                      }
+                      return a.map((String choice) {
                         return PopupMenuItem<String>(
                           value: choice,
                           child: Text(choice,

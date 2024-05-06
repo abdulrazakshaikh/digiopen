@@ -19,4 +19,17 @@ class InvoiceRepository {
     // var newAPIResponse = NewAPIResponse.fromJson(response);
     return response!;
   }
+
+  Future<NewAPIResponse> addInvoiceDetailData(Map map) async {
+    NewAPIResponse response =
+        await _netoworkService.post(AppUrl.invoice_details, map);
+    return response!;
+  }
+
+  Future<NewAPIResponse> updateInvoiceDetailData(
+      String subscriberId, Map map) async {
+    NewAPIResponse response = await _netoworkService.patch(
+        AppUrl.invoice_details + "/$subscriberId", map);
+    return response!;
+  }
 }

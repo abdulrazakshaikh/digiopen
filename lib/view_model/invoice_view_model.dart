@@ -17,6 +17,12 @@ class InvoiceViewModel extends ChangeNotifier {
     return _isLoading;
   }
 
+  bool _isUpdateLoading = false;
+
+  bool get isUpdateLoading {
+    return _isUpdateLoading;
+  }
+
   Future<bool> getInvoiceListData(
       {String search = "",
       String nextIndex = "0",
@@ -112,6 +118,58 @@ class InvoiceViewModel extends ChangeNotifier {
       print("getSubscriberListData");
       print(e);
       _isLoading = false;
+      _error = e.toString();
+      notifyListeners();
+      return false;
+    }
+  }
+
+  Future<bool> addInvoice(Map map) async {
+    try {
+      //map['status_event'] = 'create_new';
+      _isLoading = true;
+      notifyListeners();
+      invoiceListData = [];
+      var _userdata = await new InvoiceRepository()
+          .addInvoiceDetailData({"subscriber_invoice": map});
+      print(_userdata);
+      _isLoading = false;
+      notifyListeners();
+      if (_userdata.isSuccess) {
+        return true;
+      } else {
+        _error = _userdata.message;
+        return false;
+      }
+    } catch (e) {
+      print("addSubscriber");
+      print(e);
+      _isLoading = false;
+      _error = e.toString();
+      notifyListeners();
+      return false;
+    }
+  }
+
+  Future<bool> updateInvoice(String subscriberId, Map map) async {
+    try {
+      //map['status_event'] = 'create_new';
+      _isUpdateLoading = true;
+      notifyListeners();
+      var _userdata = await new InvoiceRepository()
+          .updateInvoiceDetailData(subscriberId, {"subscriber_invoice": map});
+      _isUpdateLoading = false;
+      notifyListeners();
+      if (_userdata.isSuccess) {
+        return true;
+      } else {
+        _error = _userdata.message;
+        return false;
+      }
+    } catch (e) {
+      print("updateSubscriber");
+      print(e);
+      _isUpdateLoading = false;
       _error = e.toString();
       notifyListeners();
       return false;

@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -22,7 +21,7 @@ class _PaymentDetailsState extends State<PaymentDetails>
     with TickerProviderStateMixin {
   late TabController _tabController;
   late PaymentViewModel paymentViewModel;
-  Map? invoiceDetail;
+  Map? paymentDetail;
 
   @override
   void initState() {
@@ -41,8 +40,8 @@ class _PaymentDetailsState extends State<PaymentDetails>
     bool a = await paymentViewModel.getPaymentDetailData(
         invoiceId: widget.invoiceId['subscriber_payments.id'].toString());
     if (a) {
-      invoiceDetail = paymentViewModel.paymentDetail;
-      invoiceDetail!['user_profiles.name'] =
+      paymentDetail = paymentViewModel.paymentDetail;
+      paymentDetail!['user_profiles.name'] =
           widget.invoiceId['user_profiles.name'];
     }
   }
@@ -76,7 +75,7 @@ class _PaymentDetailsState extends State<PaymentDetails>
       backgroundColor: Theme.of(context).colorScheme.background,
       floatingActionButton: paymentViewModel.isLoading
           ? null
-          : !invoiceDetail!['status_events']!.toString().contains("edit")
+          : !paymentDetail!['status_events']!.toString().contains("edit")
               ? null
               : FloatingActionButton(
                   isExtended: true,
@@ -89,7 +88,7 @@ class _PaymentDetailsState extends State<PaymentDetails>
                                 opacity: animation,
                                 child: PaymentAdd(
                                   isEdit: true,
-                                  paymentDetails: invoiceDetail,
+                                  paymentDetails: paymentDetail,
                                 )),
                       ),
                     );
@@ -122,7 +121,7 @@ class _PaymentDetailsState extends State<PaymentDetails>
                         Row(
                           children: [
                             Text(
-                              'Payment #${invoiceDetail!['paymentid']}',
+                              'Payment #${paymentDetail!['paymentid']}',
                               style: GoogleFonts.roboto(
                                   textStyle: Theme.of(context)
                                       .appBarTheme
@@ -137,15 +136,15 @@ class _PaymentDetailsState extends State<PaymentDetails>
                                   left: 3, right: 3, top: 1, bottom: 1),
                               alignment: Alignment.center,
                               decoration: BoxDecoration(
-                                color: invoiceDetail!['status'] != "open" &&
-                                        invoiceDetail!['status'] != "reopened"
+                                color: paymentDetail!['status'] != "open" &&
+                                        paymentDetail!['status'] != "reopened"
                                     ? Colors.red
                                     : Colors.green,
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(5.0)),
                               ),
                               child: Text(
-                                "${invoiceDetail!['status']}",
+                                "${paymentDetail!['status']}",
                                 style: TextStyle(color: Colors.white),
                               ),
                             )
@@ -162,7 +161,11 @@ class _PaymentDetailsState extends State<PaymentDetails>
                   height: 54,
                   child: PopupMenuButton<String>(
                     shape: RoundedRectangleBorder(),
-                    icon: Icon(Icons.more_vert_outlined),
+                    icon: Icon(
+                      Icons.more_vert_outlined,
+                      color:
+                          Theme.of(context).iconTheme.color!.withOpacity(0.75),
+                    ),
                     onSelected: _onChoiceSelected,
                     color: Theme.of(context).colorScheme.surface,
                     position: PopupMenuPosition.under,
@@ -173,10 +176,10 @@ class _PaymentDetailsState extends State<PaymentDetails>
                         'Cancel Payment',
                         'Reopen Payment'
                       ];
-                      if (invoiceDetail!['status'] == 'open' ||
-                          invoiceDetail!['status'] == 'reopened') {
+                      if (paymentDetail!['status'] == 'open' ||
+                          paymentDetail!['status'] == 'reopened') {
                         a.remove("Reopen Payment");
-                      } else if (invoiceDetail!['status'] == 'closed') {
+                      } else if (paymentDetail!['status'] == 'closed') {
                         a.remove("Close Payment");
                         a.remove("Cancel Payment");
                       }
@@ -224,7 +227,7 @@ class _PaymentDetailsState extends State<PaymentDetails>
                           .colorScheme
                           .secondary
                           .withOpacity(0.5),
-                      child: PaymentDetailsCard(invoiceDetail!),
+                      child: PaymentDetailsCard(paymentDetail!),
                     ),
                   ),
                   SliverAppBar(
@@ -262,7 +265,7 @@ class _PaymentDetailsState extends State<PaymentDetails>
                 // physics: NeverScrollableScrollPhysics(),
                 controller: _tabController,
                 children: [
-                  PaymentTabDetails(invoiceDetail!), // TabAuditTrail(),
+                  PaymentTabDetails(paymentDetail!), // TabAuditTrail(),
                 ],
               ),
             ),

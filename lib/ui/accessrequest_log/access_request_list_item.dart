@@ -1,6 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_html/flutter_html.dart';
+//import 'package:flutter_html/flutter_html.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class AccessRequestListItem extends StatefulWidget {
@@ -190,16 +189,16 @@ class AccessRequestListItemState extends State<AccessRequestListItem> {
                               letterSpacing: 1.5),
                         ),
                         SizedBox(height: 3),
-                        Html(
+                        /*Html(
                           data:
                               '${item["subscriber_access_requests.nas_ip_address"]}',
-                          /*style: GoogleFonts.roboto(
+                          */ /*style: GoogleFonts.roboto(
                               textStyle: Theme.of(context).textTheme.bodyMedium,
                               fontSize: 13,
                               fontWeight: FontWeight.w500,
                               letterSpacing: 1.2
-                          ),*/
-                        ),
+                          ),*/ /*
+                        ),*/
                       ],
                     ),
                   ),

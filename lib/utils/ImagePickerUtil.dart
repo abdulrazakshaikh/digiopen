@@ -54,7 +54,7 @@ class ImagePickerUtil {
     String source,
   ) async {
     final picker = ImagePicker();
-    final pickedFile = await picker.getImage(
+    final pickedFile = await picker.pickImage(
         imageQuality: 10,
         source: source == "Camera" ? ImageSource.camera : ImageSource.gallery);
 

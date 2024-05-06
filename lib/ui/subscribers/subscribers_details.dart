@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -294,7 +293,11 @@ class _SubscribersDetailsState extends State<SubscribersDetails>
                   height: 54,
                   child: PopupMenuButton<String>(
                     shape: RoundedRectangleBorder(),
-                    icon: Icon(Icons.more_vert_outlined),
+                    icon: Icon(
+                      Icons.more_vert_outlined,
+                      color:
+                          Theme.of(context).iconTheme.color!.withOpacity(0.75),
+                    ),
                     onSelected: _onChoiceSelected,
                     color: Theme.of(context).colorScheme.surface,
                     position: PopupMenuPosition.under,

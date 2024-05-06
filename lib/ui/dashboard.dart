@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -475,7 +474,8 @@ class _DashboardState extends State<Dashboard> {
                                                                 .contains("-")
                                                             ? Colors.redAccent
                                                             : Colors.green
-                                                        : Colors.black,
+                                                        : Theme.of(context)
+                                                            .hintColor,
                                                     letterSpacing: 1,
                                                     fontWeight:
                                                         FontWeight.bold),

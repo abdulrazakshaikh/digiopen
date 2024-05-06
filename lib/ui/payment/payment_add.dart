@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -21,15 +20,6 @@ class PaymentAdd extends StatefulWidget {
 }
 
 class _PaymentAddState extends State<PaymentAdd> {
-  var subscriberList = [
-    "Subscriber 1",
-    "Subscriber 2",
-    "Subscriber 3",
-    "Subscriber 4",
-    "Subscriber 5",
-    "Subscriber 6",
-    "Subscriber 7",
-  ];
   var list = [
     "cash",
     "cheque",
@@ -65,11 +55,11 @@ class _PaymentAddState extends State<PaymentAdd> {
   void initState() {
     // TODO: implement initState
     if (widget.isEdit) {
-      paymentController.text = widget.paymentDetails!['payment_no'];
+      paymentController.text = widget.paymentDetails!['payment_no'] ?? "";
       dateController.text = widget.paymentDetails!['payment_date'];
       subscriberController.text = widget.paymentDetails!['subscriber_name'];
-      receiptController.text = widget.paymentDetails!['receipt_no'];
-      descriptionController.text = widget.paymentDetails!['description'];
+      receiptController.text = widget.paymentDetails!['receipt_no'] ?? "";
+      descriptionController.text = widget.paymentDetails!['description'] ?? "";
       amountController.text =
           (widget.paymentDetails!['amount_cents'] / 100).toInt().toString();
       selectedPaymentMode = widget.paymentDetails!['mode_of_payment'];

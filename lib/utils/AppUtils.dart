@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
@@ -31,6 +32,16 @@ class AppUtils {
       return null;
   }
 
+  static List<dynamic> countries = [];
+
+  void getCountries(BuildContext context) async {
+    String data = await DefaultAssetBundle.of(context)
+        .loadString("assets/countries.json");
+    print("sdvdsvvsdvv");
+    countries = jsonDecode(data);
+    //return data;
+  }
+
   static InputDecoration getTextForField(BuildContext context, String hint) {
     return InputDecoration(
       floatingLabelBehavior: FloatingLabelBehavior.never,
@@ -48,11 +59,11 @@ class AppUtils {
       ),
       errorBorder: OutlineInputBorder(
         borderSide:
-            BorderSide(color: Theme.of(context).colorScheme.primary, width: 1),
+        BorderSide(color: Theme.of(context).colorScheme.primary, width: 1),
       ),
       focusedErrorBorder: OutlineInputBorder(
         borderSide:
-            BorderSide(color: Theme.of(context).colorScheme.primary, width: 1),
+        BorderSide(color: Theme.of(context).colorScheme.primary, width: 1),
       ),
     );
   }
@@ -85,12 +96,12 @@ class AppUtils {
           d.options.headers = {'Authentication': SharedPrefs().authTokenn!};
           await d.download(url, savePath,
               onReceiveProgress: (received, total) async {
-            if (total != -1) {
-              print((received / total * 100).toStringAsFixed(0) + "%");
-              //you can build progressbar feature too
+                if (total != -1) {
+                  print((received / total * 100).toStringAsFixed(0) + "%");
+                  //you can build progressbar feature too
 
-            }
-          });
+                }
+              });
           OpenFilex.open(savePath);
           print("File is saved to download folder.");
         } on DioError catch (e) {

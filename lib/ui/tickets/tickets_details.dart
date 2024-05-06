@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:xceednet/ui/tickets/assignticket_bottomsheet.dart';
@@ -126,7 +125,10 @@ void _onChoiceSelected(String choice) {
             height: 54,
             child: PopupMenuButton<String>(
               shape: RoundedRectangleBorder(),
-              icon: Icon(Icons.more_vert_outlined),
+              icon: Icon(
+                Icons.more_vert_outlined,
+                color: Theme.of(context).iconTheme.color!.withOpacity(0.75),
+              ),
               onSelected: _onChoiceSelected,
               color: Theme.of(context).colorScheme.surface,
               position: PopupMenuPosition.under,
@@ -135,7 +137,8 @@ void _onChoiceSelected(String choice) {
                 return Constants.choices.map((String choice) {
                   return PopupMenuItem<String>(
                     value: choice,
-                    child: Text(choice, style: Theme.of(context).textTheme.bodyMedium),
+                    child: Text(choice,
+                        style: Theme.of(context).textTheme.bodyMedium),
                   );
                 }).toList();
               },

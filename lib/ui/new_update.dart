@@ -11,6 +11,8 @@ class NewUpdateScreen extends StatefulWidget{
 class NewUpdateScreenState extends State<NewUpdateScreen>{
   @override
   Widget build(BuildContext context) {
+    var loadRequest = WebViewController();
+    loadRequest.loadRequest(Uri.parse('https://www.xceednet.com/'));
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
       appBar: AppBar(
@@ -19,10 +21,9 @@ class NewUpdateScreenState extends State<NewUpdateScreen>{
         actions: [],
       ),
       body: Container(
-      child: WebView(
-        initialUrl: 'https://www.xceednet.com/',
-      ),
-      ),
+          child: WebViewWidget(
+        controller: loadRequest,
+      )),
     );
   }
 

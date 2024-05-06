@@ -400,7 +400,10 @@ class _MenuDrawerState extends State<MenuDrawer> {
                 shrinkWrap: true,
                 itemCount: menuList == null ? 0 : menuList.length,
                 separatorBuilder: (BuildContext context, int index) {
-                  return Divider(height: 1);
+                  return Divider(
+                    height: 1,
+                    color: Colors.black12,
+                  );
                 },
                 itemBuilder: (BuildContext context, int index) {
                   Map item = menuList[index];

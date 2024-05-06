@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:xceednet/ui/splashscreen.dart';
 import 'package:xceednet/ui/theme/color_schemes.g.dart';
+import 'package:xceednet/utils/AppUtils.dart';
 import 'package:xceednet/view_model/access_request_view_model.dart';
 import 'package:xceednet/view_model/auth_view_model.dart';
 import 'package:xceednet/view_model/dashboard_view_model.dart';
@@ -32,8 +33,8 @@ Future<void> main() async {
   await FirebaseApi().initNotification();
   FirebaseMessaging.onBackgroundMessage(handleBackgroundNotification);
 
-  SystemChrome.setEnabledSystemUIOverlays(
-      [SystemUiOverlay.top, SystemUiOverlay.bottom]).then((_) {
+  SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
+      overlays: [SystemUiOverlay.top, SystemUiOverlay.bottom]).then((_) {
     SharedPreferences.getInstance().then((prefs) {
       var darkModeOn = prefs.getBool('darkMode') ?? false;
       runApp(MultiProvider(
@@ -77,6 +78,7 @@ class _MyAppState extends State<MyApp> {
     super.initState();
     //  call();
     SharedPrefs().init();
+    AppUtils().getCountries(context);
   }
 
   @override

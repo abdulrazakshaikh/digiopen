@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -6,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:xceednet/utils/AppUtils.dart';
 import 'package:xceednet/view_model/utils_view_model.dart';
 
+import '../../utils/country_bottomsheet.dart';
 import '../../view_model/subscriber_view_model.dart';
 
 class SubscribersAdd extends StatefulWidget {
@@ -90,10 +90,17 @@ class _SubscribersAddState extends State<SubscribersAdd> {
   TextEditingController noteController = TextEditingController();
   TextEditingController pinController = TextEditingController();
 
+  Map? countryMap;
+
   @override
   void initState() {
     if (widget.isEdit) {
-      countryController.text = widget.subscriberDetails!["country"] ?? "";
+      countryMap = AppUtils.countries
+          .where((element) =>
+              element['name'] == widget.subscriberDetails!["country"] ||
+              element['iso2'] == widget.subscriberDetails!["country"])
+          .firstOrNull;
+      countryController.text = countryMap!['name'];
       stateController.text = widget.subscriberDetails!["state"] ?? "";
       cityController.text = widget.subscriberDetails!["city"] ?? "";
       accountNoController.text = widget.subscriberDetails!["account_no"] ?? "";
@@ -308,7 +315,7 @@ class _SubscribersAddState extends State<SubscribersAdd> {
                                     fontWeight: FontWeight.w600,
                                     letterSpacing: 1.2,
                                   ),
-                                  maxLength: 10,
+                                  maxLength: 15,
                                   inputFormatters: <TextInputFormatter>[
                                     FilteringTextInputFormatter.digitsOnly
                                   ],
@@ -693,9 +700,9 @@ class _SubscribersAddState extends State<SubscribersAdd> {
                           fontWeight: FontWeight.w400,
                         ),
                       ),
-                        ),
-                        TextFormField(
-                          controller: address1Controller,
+                    ),
+                    TextFormField(
+                      controller: address1Controller,
                       style: GoogleFonts.roboto(
                         textStyle: Theme.of(context).textTheme.bodyMedium,
                         fontWeight: FontWeight.w600,
@@ -796,8 +803,8 @@ class _SubscribersAddState extends State<SubscribersAdd> {
                             letterSpacing: 1.2,
                           ),
                           maxLength: 6,
-                          onChanged: (v) async {
-                            if (v.length == 6 && !widget.isEdit) {
+                          /*onChanged: (v) async {
+                            if (v.length >= 4 && !widget.isEdit) {
                               bool status =
                                   await utilsViewModel.getAddressViaPin(v);
                               if (status) {
@@ -819,7 +826,7 @@ class _SubscribersAddState extends State<SubscribersAdd> {
                               countryController.text = "";
                               stateController.text = "";
                             }
-                          },
+                          },*/
                           inputFormatters: <TextInputFormatter>[
                             FilteringTextInputFormatter.digitsOnly
                           ],
@@ -846,22 +853,21 @@ class _SubscribersAddState extends State<SubscribersAdd> {
                       ],
                     )),
                 Container(
-                    margin: EdgeInsets.only(bottom: 10),
-                    child: Column(
-                      children: [
-                        Container(
-                          alignment: Alignment.topLeft,
-                          padding: EdgeInsets.symmetric(vertical: 5),
-                          child: Text(
-                            'Country',
-                            style: GoogleFonts.robotoCondensed(
-                              textStyle: Theme.of(context).textTheme.labelLarge,
-                              letterSpacing: 1.75,
-                              fontWeight: FontWeight.w400,
-                            ),
+                  child: Column(
+                    children: [
+                      Container(
+                        alignment: Alignment.topLeft,
+                        padding: const EdgeInsets.symmetric(vertical: 5),
+                        child: Text(
+                          'Country',
+                          style: GoogleFonts.robotoCondensed(
+                            textStyle: Theme.of(context).textTheme.labelLarge,
+                            letterSpacing: 1.75,
+                            fontWeight: FontWeight.w400,
                           ),
                         ),
-                        TextFormField(
+                      ),
+                      TextFormField(
                           readOnly: true,
                           controller: countryController,
                           style: GoogleFonts.roboto(
@@ -871,17 +877,44 @@ class _SubscribersAddState extends State<SubscribersAdd> {
                           ),
                           validator: (value) {
                             if (value!.isEmpty) {
-                              return "Please enter county ";
+                              return "please select country";
                             } else {
-                              data['country'] = "IN";
+                              data['country'] = countryMap!['iso2'];
                               return null;
                             }
                           },
+                          onTap: widget.isEdit
+                              ? null
+                              : () async {
+                                  showModalBottomSheet(
+                                    elevation: 2,
+                                    shape: const RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.only(
+                                        topLeft: Radius.circular(20),
+                                        topRight: Radius.circular(20),
+                                      ),
+                                    ),
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return CountrySingleSelectionBottomSheet(
+                                          countryMap, (selectedItem) {
+                                        setState(() {
+                                          countryMap = selectedItem;
+                                          countryController.text =
+                                              countryMap!['name'];
+                                        });
+                                      });
+                                    },
+                                  );
+                                },
                           decoration: AppUtils.getTextForField(
-                              context, "Select Country"),
-                        ),
-                      ],
-                    )),
+                                  context, "Select Country")
+                              .copyWith(
+                                  suffixIcon:
+                                      const Icon(Icons.arrow_drop_down))),
+                    ],
+                  ),
+                ),
                 Container(
                     margin: EdgeInsets.only(bottom: 10),
                     child: Column(
@@ -899,7 +932,6 @@ class _SubscribersAddState extends State<SubscribersAdd> {
                           ),
                         ),
                         TextFormField(
-                          readOnly: true,
                           controller: stateController,
                           style: GoogleFonts.roboto(
                             textStyle: Theme.of(context).textTheme.bodyMedium,
@@ -935,7 +967,6 @@ class _SubscribersAddState extends State<SubscribersAdd> {
                           ),
                         ),
                         TextFormField(
-                          readOnly: false,
                           controller: cityController,
                           style: GoogleFonts.roboto(
                             textStyle: Theme.of(context).textTheme.bodyMedium,
