@@ -45,3 +45,13 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+/windows/flutter/ephemeral/.plugin_symlinks/connectivity_plus/
+/windows/flutter/ephemeral/.plugin_symlinks/file_selector_windows/
+/windows/flutter/ephemeral/.plugin_symlinks/firebase_core/
+/windows/flutter/ephemeral/.plugin_symlinks/image_picker_windows/
+/windows/flutter/ephemeral/.plugin_symlinks/permission_handler_windows/
+/windows/flutter/ephemeral/.plugin_symlinks/connectivity_plus/
+/windows/flutter/ephemeral/.plugin_symlinks/file_selector_windows/
+/windows/flutter/ephemeral/.plugin_symlinks/firebase_core/
+/windows/flutter/ephemeral/.plugin_symlinks/image_picker_windows/
+/windows/flutter/ephemeral/.plugin_symlinks/permission_handler_windows/
