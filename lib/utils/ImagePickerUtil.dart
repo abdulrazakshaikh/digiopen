@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
+//import 'package:image_picker/image_picker.dart';
 
 class ImagePickerUtil {
   static void showPicker(context, Function image) {
@@ -53,7 +53,7 @@ class ImagePickerUtil {
   static Future getImage(
     String source,
   ) async {
-    final picker = ImagePicker();
+    /* final picker = ImagePicker();
     final pickedFile = await picker.pickImage(
         imageQuality: 10,
         source: source == "Camera" ? ImageSource.camera : ImageSource.gallery);
@@ -67,6 +67,6 @@ class ImagePickerUtil {
     } else {
       print('No image selected.');
       return null;
-    }
+    }*/
   }
 }

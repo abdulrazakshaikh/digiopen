@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
@@ -317,7 +316,7 @@ class InvoiceListItemState extends State<InvoiceListItem> {
                           decoration: BoxDecoration(
                             color: item['subscriber_invoices.status']
                                         .toString()
-                                        .toUpperCase() ==
+                                        .toUpperCase() !=
                                     'closed'.toUpperCase()
                                 ? Colors.green
                                 : Colors.red,

@@ -138,7 +138,7 @@ class _InvoiceDetailsState extends State<InvoiceDetails>
                                   left: 3, right: 3, top: 1, bottom: 1),
                               alignment: Alignment.center,
                               decoration: BoxDecoration(
-                                color: invoiceDetail!['status'] != "closed"
+                                color: invoiceDetail!['status'] == "closed"
                                     ? Colors.red
                                     : Colors.green,
                                 borderRadius:
@@ -173,8 +173,8 @@ class _InvoiceDetailsState extends State<InvoiceDetails>
                     tooltip: 'Options',
                     itemBuilder: (BuildContext context) {
                       List<String> a = [
-                        'Reassign Invoice',
-                        'Assign Invoice',
+                        // 'Reassign Invoice',
+                        // 'Assign Invoice',
                         'Close Invoice',
                         'Cancel Invoice',
                         //'Receive Payment',
@@ -182,14 +182,14 @@ class _InvoiceDetailsState extends State<InvoiceDetails>
                       ];
                       var event_list =
                           invoiceDetail!['status_events'].toString();
-                      if (!event_list.contains("reassign")) {
+                      /* if (!event_list.contains("reassign")) {
                         a.remove('Reassign Invoice');
                       } else {
                         a.remove('Assign Invoice');
                       }
                       if (!event_list.contains("assign")) {
                         a.remove('Assign Invoice');
-                      }
+                      }*/
                       if (!event_list.contains("close")) {
                         a.remove('Close Invoice');
                       }
@@ -345,12 +345,12 @@ class _InvoiceDetailsState extends State<InvoiceDetails>
 }
 
 class Constants {
-  static const String FirstItem = 'Assign Invoice';
+  // static const String FirstItem = 'Assign Invoice';
   static const String SecondItem = 'Received Payment';
   static const String ThirdItem = 'Cancel Invoice';
   static const String FourthItem = 'Close Invoice';
   static const List<String> choices = <String>[
-    FirstItem,
+    // FirstItem,
     SecondItem,
     ThirdItem,
     FourthItem
